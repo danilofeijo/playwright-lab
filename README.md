@@ -5,18 +5,16 @@
 ![GitHub](https://img.shields.io/github/license/danilofeijo/playwright-lab)
 
 # playwright-lab
-<!--
-![Icon laboratori][cy-logo] ![Icon laboratory][flask-icon]
--->
+![Icon Playwright][pw-logo] ![Icon laboratory][flask-icon]
 
 A E2E test automation setup that you can apply in the real world.
 
-This project is inspired by the [cypress-lab repo][tool-cylabrepo]. It has the same purpose within Cypress framework.
+This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has the same purpose but using Cypress framework.
 
 ## Features
 ### Test suite
+* ✅ [Playwright][tool-pw], to create and run E2E tests
 * ❌ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
-* ❌ [Cypress][tool-cy], to create and run E2E tests
 * ❌ [Faker][tool-faker], to generate randon data for tests
 * ❌ "Page Action" custom pattern, to organize test structure
 * ❌ [Environment config][tool-envConfig], to run tests in multiple environment
@@ -82,7 +80,7 @@ Cypress Reference
 
 <!-- Links list -->
 [flask-icon]: img/icon-lab-128.png "Flask icon"
-[cy-logo]: img/cy-logo.png "Cypress logo"
+[pw-logo]: img/playwright-logo.png "Playwright logo"
 
 [ref-1]: https://docs.cypress.io/guides/guides/command-line#Commands
 [ref-2]: https://medium.com/testbean/utilizando-cypress-na-vida-real-a93eec549128
@@ -96,7 +94,7 @@ Cypress Reference
 [ref-10]: https://www.alura.com.br/artigos/como-escolher-uma-licenca-para-seu-projeto
 
 [tool-cylabrepo]: https://github.com/danilofeijo/cypress-lab
-[tool-cy]: https://www.cypress.io/how-it-works
+[tool-pw]: https://playwright.dev/docs/running-tests
 [tool-faker]: https://www.npmjs.com/package/faker
 [tool-prettier]: https://www.npmjs.com/package/prettier
 [tool-eslint]: https://www.npmjs.com/package/eslint
