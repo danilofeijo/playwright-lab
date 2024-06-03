@@ -13,12 +13,12 @@ This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has th
 
 ## Features
 ### Test suite
-* ✅ [Playwright][tool-pw], to create and run E2E tests
+* ✅ [Playwright][pw-tool], to create and run E2E tests
 * ❌ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
 * ✅ [Faker][tool-faker], to generate randon data for tests
 * ❌ "Page Action" custom pattern, to organize test structure
-* ❌ [Environment config][tool-envConfig], to run tests in multiple environment
-* ❌ [Test retry ][tool-retry], to repeat failed tests and avoid flakiness
+* ❌ [Environment config][pw-envConfig], to run tests in multiple environment
+* ❌ [Test retry ][pw-retry], to repeat failed tests and avoid flakiness
 
 ### Code quality
 * ❌ [Prettier][tool-prettier] - to format the code
@@ -27,74 +27,72 @@ This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has th
 * ❌ [commitlint][tool-commitlint], to mantain better commit messages based on [Conventional Commits][tool-convCommits]
 
 ### CI/CD
-* ❌ [GitHub Actions][tool-ghactions], to automatically trigger test execution in CI/CD
+* ✅ [GitHub Actions][tool-ghactions], to automatically trigger test execution in CI/CD
+* ✅ [Testing Parallelization][pw-parallelization], to accelerate test execution
 * ❌ [mochawesome][tool-mochawesome], to provide feedback about test execution
-* ❌ [Testing Parallelization][tool-parallelization], to accelerate test execution
 
 ## Setup
-Will be done soon
+1. Clone repo and access project folder
 
-<!--
-1. Clone and access the cloned repo folder
+    `https://github.com/danilofeijo/playwright-lab.git && cd playwright-lab`
 
-    `$ git clone https://github.com/danilofeijo/cypress-lab.git && cd cypress-lab`
+2. Install project dependencies
 
-2. Install the project dependencies
-
-    `$ npm install`
+    `npm install`
 
 ## CLI commands
+
 ### Tests Execution
-
-Run `npx cypress open`, to open the Cypress Test Runner.
-
-Check more available commands by visiting `scripts` session on `package.json` file.
+`npx playwright test` is the default command. It runs tests in headless mode (default)
 
 ### Relevant parameters
+* `--ui` run tests in UI mode (better dev experience)
+* `--project firefox` specify which browser you would like to run the tests
+* `--headed` show you how Playwright interacts with the website.
+* `-g "critical"` run a test with a specific title
+* ~~`--loremIpsum` specify which environment you would like to run the tests~~
 
-* from Cypress
-  * `--browser chrome`, to set browser (default is Electron)
-  * `--headless`, to headless execution (default for Electron)
-  * `--headed`, to non headless execution (default for Chrome/Firefox)
-  * `--env configFile=<env>`, to set an environment (default is 'qa')
-  * `--spec '<file-path>/test-file.cy.js'`, to run specific test file
+The full list of parameters is available at [Running Tests page][ref-1] on Playwright docs.
 
-Check other nice parameters by visiting the [Command Line Cypress page][ref-1].
+<!--
+COmbined commands available in `scripts` session on `package.json` file.
 -->
 
 ## References
-
-* To be added
+* [Playwright Docs][ref-4]
+* [Choose an open source license][ref-9]
+* [Como escolher uma licença para seu projeto][ref-10]
+* [ServeRest][tool-serverest]
+* More itens to be added
 <!--
 Cypress Reference
-* [Cypress Docs][ref-4]
 * [Utilizando Cypress na vida real][ref-2]
 * [Keep passwords secret in E2E tests][ref-3]
-* [ServeRest][ref-6]
 * [Publish your Cypress Test Report with GitHub Actions][ref-5]
 * [Conventional Commits][ref-7]
 * [ESLint + Prettier, a dupla perfeita para produtividade e padronização de código.][ref-8]
-* [Choose an open source license][ref-9]
-* [Como escolher uma licença para seu projeto][ref-10]
 -->
 
 <!-- Links list -->
 [flask-icon]: img/icon-lab-128.png "Flask icon"
 [pw-logo]: img/playwright-logo.png "Playwright logo"
 
-[ref-1]: https://docs.cypress.io/guides/guides/command-line#Commands
+[pw-tool]: https://playwright.dev/
+[pw-parallelization]: https://playwright.dev/docs/test-parallel
+[pw-retry]: https://playwright.dev/docs/test-retries#retries
+[pw-envConfig]: https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
+
+[ref-1]: https://playwright.dev/docs/running-tests#running-tests
 [ref-2]: https://medium.com/testbean/utilizando-cypress-na-vida-real-a93eec549128
 [ref-3]: https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/
-[ref-4]: https://docs.cypress.io/guides/
+[ref-4]: https://playwright.dev/docs/intro
 [ref-5]: https://medium.com/swlh/publish-your-cypress-test-report-with-github-actions-47248788713a
-[ref-6]: https://serverest.dev/
 [ref-7]: https://www.conventionalcommits.org/en/v1.0.0/#summary
 [ref-8]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-9]: https://choosealicense.com/
 [ref-10]: https://www.alura.com.br/artigos/como-escolher-uma-licenca-para-seu-projeto
 
 [tool-cylabrepo]: https://github.com/danilofeijo/cypress-lab
-[tool-pw]: https://playwright.dev/docs/running-tests
 [tool-faker]: https://www.npmjs.com/package/faker
 [tool-prettier]: https://www.npmjs.com/package/prettier
 [tool-eslint]: https://www.npmjs.com/package/eslint
@@ -104,6 +102,3 @@ Cypress Reference
 [tool-commitlint]: https://commitlint.js.org/#/
 [tool-mochawesome]: https://www.npmjs.com/package/mochawesome
 [tool-serverest]: https://serverest.dev/
-[tool-envConfig]: https://glebbahmutov.com/blog/load-cypress-env-settings/
-[tool-retry]: https://docs.cypress.io/guides/guides/test-retries#Configure-Test-Retries
-[tool-parallelization]: https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization
