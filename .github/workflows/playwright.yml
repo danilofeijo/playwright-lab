@@ -1,9 +1,12 @@
 name: Playwright Tests
 on:
+  schedule:
+    - cron: '0 12 * * *'
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
   test:
     timeout-minutes: 60
