@@ -15,7 +15,7 @@ This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has th
 ### Test suite
 * ✅ [Playwright][tool-pw], to create and run E2E tests
 * ❌ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
-* ❌ [Faker][tool-faker], to generate randon data for tests
+* ✅ [Faker][tool-faker], to generate randon data for tests
 * ❌ "Page Action" custom pattern, to organize test structure
 * ❌ [Environment config][tool-envConfig], to run tests in multiple environment
 * ❌ [Test retry ][tool-retry], to repeat failed tests and avoid flakiness
