@@ -30,3 +30,9 @@ test('Should create a new admin user', async ({ page }) => {
   await expect(page.locator('h1')).toBeVisible()
   await expect(page.locator('h1')).toContainText(USER.nome)
 });
+
+test('Should create a common user',  async ({ page }) => {
+  // Arrange
+  // Act
+  // Assert
+});
