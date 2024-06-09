@@ -22,7 +22,7 @@ class Utils {
     if (!alias) {
       alias = this.setRandomName()
     }
-    return `${alias.toLowerCase().replace(/\s+/g, '')}@e2efeijo.com`
+    return `${alias.toLowerCase().replace(/\s+/g, '')}@pwlab-feijo.com`
   }
 }
 

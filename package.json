@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "<!-- [![E2E tests](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml/badge.svg)](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml) --> [![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/) ![GitHub](https://img.shields.io/github/license/danilofeijo/playwright-lab)",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:e2e": "npx playwright test e2e/ --project=qa-env",
+    "test:e2e:example": "npx playwright test tests-examples/ --project=all-browsers-examples",
+    "test:e2e:ci": "CI=1 npx playwright test --project=ci --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL",
+    "test:e2e:dev": "npx playwright test tests-examples/ --project=chrome-examples --retries=0 --reporter=dot",
+    "test:e2e:smoke": "npx playwright test tests-examples/ --grep @smoke --project=all-browsers-examples",
+    "test:e2e:non-smoke": "npx playwright test tests-examples/ --grep-invert @smoke --project=chrome-examples"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danilofeijo/playwright-lab.git"
