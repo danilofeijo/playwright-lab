@@ -21,7 +21,7 @@ test.describe('New Todo', () => {
 
     // Make sure the list only has one todo item.
     await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[0]
+      TODO_ITEMS[1]
     ]);
 
     // Create 2nd todo.
@@ -198,7 +198,8 @@ test.describe('Editing', () => {
   });
 
   test('should hide other controls when editing', async ({ page }) => {
-    const todoItem = page.getByTestId('todo-item').nth(1);
+    // const todoItem = page.getByTestId('todo-item').nth(1);
+    const todoItem = page.getByTestId('todo-item');
     await todoItem.dblclick();
     await expect(todoItem.getByRole('checkbox')).not.toBeVisible();
     await expect(todoItem.locator('label', {
