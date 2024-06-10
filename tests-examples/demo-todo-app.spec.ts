@@ -11,7 +11,7 @@ const TODO_ITEMS = [
 ];
 
 test.describe('New Todo', () => {
-  test('should allow me to add todo items', async ({ page }) => {
+  test('@smoke - should allow me to add todo items', async ({ page }) => {
     // create a new todo locator
     const newTodo = page.getByPlaceholder('What needs to be done?');
 
@@ -37,7 +37,7 @@ test.describe('New Todo', () => {
     await checkNumberOfTodosInLocalStorage(page, 2);
   });
 
-  test('should clear text input field when an item is added', async ({ page }) => {
+  test('@smoke - should clear text input field when an item is added', async ({ page }) => {
     // create a new todo locator
     const newTodo = page.getByPlaceholder('What needs to be done?');
 
@@ -50,7 +50,7 @@ test.describe('New Todo', () => {
     await checkNumberOfTodosInLocalStorage(page, 1);
   });
 
-  test('should append new items to the bottom of the list', async ({ page }) => {
+  test('@smoke - should append new items to the bottom of the list', async ({ page }) => {
     // Create 3 items.
     await createDefaultTodos(page);
 
