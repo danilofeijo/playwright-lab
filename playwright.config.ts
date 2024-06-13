@@ -25,6 +25,7 @@ export default defineConfig({
   // reporter: [['html', { open: 'always' }]], //always, never and on-failure (default).
   // reporter: [['html', { outputFolder: 'my-report' }]], // report is written into the playwright-report folder in the current working directory. override it using the PLAYWRIGHT_HTML_REPORT
   // reporter: 'dot',
+  // reporter: 'line',
   reporter: 'list',
   /**
     reporter: [
