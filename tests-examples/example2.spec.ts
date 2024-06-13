@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
-import { HomePage } from './pages/home.page'
-import { HeaderPage } from './pages/header.page'
+import { HomePage } from './pages-examples/home.page'
+import { HeaderPage } from './pages-examples/header.page'
 
 const URL = 'https://playwright.dev/'
 
