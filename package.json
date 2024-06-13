@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test:e2e": "npx playwright test e2e/ --project=qa-env",
-    "test:e2e:example": "npx playwright test tests-examples/ --project=all-browsers-examples",
-    "test:e2e:ci": "CI=1 npx playwright test --project=ci --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL",
-    "test:e2e:dev": "npx playwright test tests-examples/ --project=chrome-examples --retries=0 --reporter=dot",
-    "test:e2e:smoke": "npx playwright test tests-examples/ --grep @smoke --project=all-browsers-examples",
-    "test:e2e:non-smoke": "npx playwright test tests-examples/ --grep-invert @smoke --project=chrome-examples"
+    "test:example": "npx playwright test tests-examples/ --project=chrome-examples",
+    "test:example:dev": "npx playwright test tests-examples/ --project=chrome-examples --retries=0 --reporter=dot",
+    "test:example:smoke": "npx playwright test tests-examples/ --project=chrome-examples --grep @smoke",
+    "test:example:non-smoke": "npx playwright test tests-examples/ --project=chrome-examples --grep-invert @smoke",
+    "test:example:ci": "CI=1 npx playwright test --project=ci --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL"
   },
   "repository": {
     "type": "git",
