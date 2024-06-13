@@ -1,4 +1,4 @@
-import { base } from '@faker-js/faker';
+import envUrl from './utils/environment';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -40,7 +40,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://front.serverest.dev',
+    baseURL: envUrl.development.home,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -63,23 +63,28 @@ export default defineConfig({
   /* Configure projects for environments */
   projects: [
     {
-      name: 'qa-env',
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+      name: 'local-env',
+      use: {
+        baseURL: envUrl.local.home,
+      },
     },
 
     {
       name: 'dev-env',
       use: {
-        baseURL: 'http://dev.realworld.io.fakeurl/#'
+        baseURL: envUrl.development.home
       }
     },
 
-    // {
-    //   name: 'local',
-    //   use: {
-    //     baseURL: baseEnvUrl.local.home,
-    //   },
-    // },
+    {
+      name: 'qa-env',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    },
+
+    {
+      name: 'qa-env',
+        ...devices['Desktop Safari']
+    },
 
     // Example only
     // {
@@ -96,25 +101,25 @@ export default defineConfig({
     // },
     
     {
-      name: 'chrome-examples',
+      name: 'examples-chrome',
       use: { 
-        baseURL: 'https://playwright.dev/',
+        baseURL: envUrl.example.home,
         ...devices['Desktop Chrome']
       },
     },
 
     {
-      name: 'all-browsers-examples',
+      name: 'examples-all-browsers',
       use: {
-        baseURL: 'https://playwright.dev/',
+        baseURL: envUrl.example.home,
         ...devices['Desktop Chrome']
       },
     },
 
     {
-      name: 'all-browsers-examples',
+      name: 'examples-all-browsers',
       use: {
-        baseURL: 'https://playwright.dev/',
+        baseURL: envUrl.example.home,
         ...devices['Desktop Safari']
       },
     },
