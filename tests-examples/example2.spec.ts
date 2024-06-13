@@ -33,7 +33,7 @@ test.describe('Playwright website', async () => {
     await expect(homePage.headerInstallation).toBeVisible();
   });
   
-  test.only('check Java page', async ({ page }) => {
+  test('check Java page', async ({ page }) => {
     await homePage.clickGetStarted()
     await headerPage.menuNode.hover()
     await headerPage.submenuJava.click()
