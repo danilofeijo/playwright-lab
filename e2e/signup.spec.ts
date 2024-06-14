@@ -45,6 +45,38 @@ test('Should create a new admin user', async ({ page }) => {
 
 test('Should create a common user',  async ({ page }) => {
   // Arrange
+  const nome = Utils.setRandomName()
+  const email = Utils.setRandomEmail(nome)
+
+  USER = {
+    nome,
+    email,
+    pass: `Test;123`,
+  };
+
+  await page.goto('/cadastrarusuarios')
+
   // Act
+  await page.getByTestId('nome').fill(USER.nome)
+  await page.getByTestId('email').fill(USER.email)
+  await page.getByTestId('password').fill(USER.pass)
+  await page.locator('data-testid=cadastrar').click()
+
   // Assert
+  await expect(page).toHaveURL('/home')
+  await expect(page).not.toHaveURL('/admin/home')
+  await expect(page.locator('h1')).toBeVisible()
+  await expect(page.locator('h1')).toContainText('Serverest Store')
+
+  // TODO - Develop assertions
+  // await expect(menuListaCompras).toHaveText('Lista de Compras')
+  // await expect(menuCarrinho).toHaveText('Carrinho')
+  // await expect(buttonLogout).toBeVisible()
+  // await expect(buttonLogout).toBeVisible()
+
+  // await expect (menuCadastrarUsuarios).toBeHidden()
+  // await expect (menuListarUsuarios).toBeHidden()
+  // await expect (menuCadastrarProdutos).toBeHidden()
+  // await expect (menuListarProdutos).toBeHidden()
+  // await expect (menuRelatorios).toBeHidden()
 });
