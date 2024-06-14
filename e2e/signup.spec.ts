@@ -26,9 +26,21 @@ test('Should create a new admin user', async ({ page }) => {
   await page.locator('data-testid=cadastrar').click()
 
   // Assert
-  await expect(page).toHaveURL(/\/admin\/home$/)
+  await expect(page).toHaveURL('/admin/home')
   await expect(page.locator('h1')).toBeVisible()
+  await expect(page.locator('h1')).not.toBeHidden()
   await expect(page.locator('h1')).toContainText(USER.nome)
+
+  // TODO - Develop assertions
+  // await expect(menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
+  // await expect(menuListarUsuarios).toHaveText('Listar Usuários')
+  // await expect(menuCadastrarProdutos).toHaveText('Cadastrar Produtos')
+  // await expect(menuListarProdutos).toHaveText('Listar Produtos')
+  // await expect(menuRelatorios).toHaveText('Relatórios')
+  // await expect(buttonLogout).toBeVisible()
+
+  // await expect(menuListaCompras).not.toBeVisible() // or .toBeHidden()
+  // await expect(menuCarrinho).not.toBeVisible()
 });
 
 test('Should create a common user',  async ({ page }) => {
