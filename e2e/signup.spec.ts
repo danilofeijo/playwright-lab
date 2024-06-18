@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { Utils } from '../utils/utils'
+import { SignupPage } from '../pages/signup.page'
 
 let USER: { nome: string; email: string; pass: string }
+let signupPage: SignupPage
 
 test.describe('On Signup page', () => {
   test.beforeEach(async ({page}) => {
+    signupPage = new SignupPage(page)
+    
     const userName = Utils.setFullName()
 
     USER = {
@@ -16,13 +20,13 @@ test.describe('On Signup page', () => {
     await page.goto('/cadastrarusuarios')
   });
 
-  test('Should create a new admin user', async ({ page }) => {
+  test.only('Should create a new admin user', async ({ page }) => {
     // Act
-    await page.getByTestId('nome').fill(USER.nome)
-    await page.getByTestId('email').fill(USER.email)
-    await page.getByTestId('password').fill(USER.pass)
-    await page.getByTestId('checkbox').click()
-    await page.locator('data-testid=cadastrar').click()
+    await signupPage.fieldName.fill(USER.nome)
+    await signupPage.fieldEmail.fill(USER.email)
+    await signupPage.fieldPassword.fill(USER.pass)
+    await signupPage.checkboxAdmin.click()
+    await signupPage.buttonSignup.click()
 
     // Assert
     await expect(page).toHaveURL('/admin/home')
