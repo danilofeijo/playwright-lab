@@ -16,7 +16,7 @@ export class SignupPage {
     this.fieldEmail = page.getByTestId('email')
     this.fieldPassword = page.getByTestId('password')
     this.checkboxAdmin = page.getByTestId('checkbox')
-    this.buttonSignup = page.locator('data-testid=cadastrar')
+    this.buttonSignup = page.locator('data-testid=cadastrar') // A generic option to get a locator
   }
 
   // Methods

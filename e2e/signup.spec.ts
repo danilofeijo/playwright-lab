@@ -1,13 +1,16 @@
 import { test, expect } from '@playwright/test'
 import { Utils } from '../utils/utils'
 import { SignupPage } from '../pages/signup.page'
+import { HomePage } from "../pages/home.page";
 
 let USER: { nome: string; email: string; pass: string }
 let signupPage: SignupPage
+let homePage: HomePage
 
 test.describe('On Signup page', () => {
   test.beforeEach(async ({page}) => {
     signupPage = new SignupPage(page)
+    homePage = new HomePage(page)
     
     const userName = Utils.setFullName()
 
@@ -20,7 +23,7 @@ test.describe('On Signup page', () => {
     await page.goto('/cadastrarusuarios')
   });
 
-  test.only('Should create a new admin user', async ({ page }) => {
+  test('Should create a new admin user', async ({ page }) => {
     // Act
     await signupPage.fieldName.fill(USER.nome)
     await signupPage.fieldEmail.fill(USER.email)
@@ -29,10 +32,11 @@ test.describe('On Signup page', () => {
     await signupPage.buttonSignup.click()
 
     // Assert
-    await expect(page).toHaveURL('/admin/home')
-    await expect(page.locator('h1')).toBeVisible()
-    await expect(page.locator('h1')).not.toBeHidden()
-    await expect(page.locator('h1')).toContainText(USER.nome)
+    await expect(page).toHaveURL(homePage.urlHomeAdmin)
+
+    await expect(homePage.headerAdmin).toBeVisible()
+    await expect(homePage.headerAdmin).not.toBeHidden()
+    await expect(homePage.headerAdmin).toContainText(USER.nome)
 
     // TODO - Develop assertions
     // await expect(menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
@@ -48,16 +52,16 @@ test.describe('On Signup page', () => {
 
   test('Should create a common user',  async ({ page }) => {
     // Act
-    await page.getByTestId('nome').fill(USER.nome)
-    await page.getByTestId('email').fill(USER.email)
-    await page.getByTestId('password').fill(USER.pass)
-    await page.locator('data-testid=cadastrar').click()
+    await signupPage.fieldName.fill(USER.nome)
+    await signupPage.fieldEmail.fill(USER.email)
+    await signupPage.fieldPassword.fill(USER.pass)
+    await signupPage.buttonSignup.click()
 
     // Assert
-    await expect(page).toHaveURL('/home')
-    await expect(page).not.toHaveURL('/admin/home')
-    await expect(page.locator('h1')).toBeVisible()
-    await expect(page.locator('h1')).toContainText('Serverest Store')
+    await expect(page).toHaveURL(homePage.urlHomeCommon)
+    await expect(page).not.toHaveURL(homePage.urlHomeAdmin)
+    await expect(homePage.headerCommon).toBeVisible()
+    await expect(homePage.headerCommon).toContainText('Serverest Store')
 
     // TODO - Develop assertions
     // await expect(menuListaCompras).toHaveText('Lista de Compras')
