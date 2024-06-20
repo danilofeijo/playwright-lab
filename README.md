@@ -14,11 +14,11 @@ This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has th
 ## Features
 ### Test suite
 * ✅ [Playwright][pw-tool], to create and run E2E tests
-* ❌ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
+* ✅ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
 * ✅ [Faker][tool-faker], to generate randon data for tests
-* ❌ "Page Action" custom pattern, to organize test structure
-* ❌ [Environment config][pw-envConfig], to run tests in multiple environment
-* ❌ [Test retry ][pw-retry], to repeat failed tests and avoid flakiness
+* ✅ Page Object model, to organize test structure
+* ✅ [Environment config][pw-envConfig], to run tests in multiple environment
+* ✅ [Test retry ][pw-retry], to repeat failed tests and avoid flakiness
 
 ### Code quality
 * ❌ [Prettier][tool-prettier] - to format the code
