@@ -1,8 +1,10 @@
 import { type Locator, type Page, } from '@playwright/test';
+import { GlobalPage } from '../pages/global.page'
 
-export class SignupPage {
+export class SignupPage extends GlobalPage {
   // Variables
   readonly page: Page
+  readonly pageUrl: string
   readonly fieldName: Locator
   readonly fieldEmail: Locator
   readonly fieldPassword: Locator
@@ -11,7 +13,8 @@ export class SignupPage {
 
   // Constructor
   constructor(page: Page) {
-    this.page = page
+    super(page)
+    this.pageUrl = '/cadastrarusuarios'
     this.fieldName = page.getByTestId('nome')
     this.fieldEmail = page.getByTestId('email')
     this.fieldPassword = page.getByTestId('password')
