@@ -62,7 +62,6 @@ test.describe('On Signup page', () => {
     await expect(homePage.headerCommon).toBeVisible()
     await expect(homePage.headerCommon).toContainText('Serverest Store')
 
-    // TODO - Develop assertions
     await expect(homePage.menuListarCompras).toHaveText('Lista de Compras')
     await expect(homePage.menuCarrinho).toHaveText('Carrinho')
     await expect(homePage.buttonLogout).toBeVisible()
