@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { Utils } from '../utils/utils'
 import { SignupPage } from '../pages/signup.page'
-import { HomePage } from "../pages/home.page";
+import { HomePage } from "../pages/home.page"
 
 let USER: { nome: string; email: string; pass: string }
 let signupPage: SignupPage
@@ -18,10 +18,10 @@ test.describe('On Signup page', () => {
       nome: userName,
       email: Utils.setEmail(userName),
       pass: Utils.setPassword()
-    };
+    }
 
-    await page.goto('/cadastrarusuarios')
-  });
+    await page.goto(signupPage.pageUrl)
+  })
 
   test('Should create a new admin user', async ({ page }) => {
     // Act
@@ -38,17 +38,16 @@ test.describe('On Signup page', () => {
     await expect(homePage.headerAdmin).not.toBeHidden()
     await expect(homePage.headerAdmin).toContainText(USER.nome)
 
-    // TODO - Develop assertions
-    // await expect(menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
-    // await expect(menuListarUsuarios).toHaveText('Listar Usuários')
-    // await expect(menuCadastrarProdutos).toHaveText('Cadastrar Produtos')
-    // await expect(menuListarProdutos).toHaveText('Listar Produtos')
-    // await expect(menuRelatorios).toHaveText('Relatórios')
-    // await expect(buttonLogout).toBeVisible()
+    await expect(homePage.menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
+    await expect(homePage.menuListarUsuarios).toHaveText('Listar Usuários')
+    await expect(homePage.menuCadastrarProdutos).toHaveText('Cadastrar Produtos')
+    await expect(homePage.menuListarProdutos).toHaveText('Listar Produtos')
+    await expect(homePage.menuRelatorios).toHaveText('Relatórios')
+    await expect(homePage.buttonLogout).toBeVisible()
 
-    // await expect(menuListaCompras).not.toBeVisible() // or .toBeHidden()
-    // await expect(menuCarrinho).not.toBeVisible()
-  });
+    await expect(homePage.menuListarCompras).not.toBeVisible() // or .toBeHidden()
+    await expect(homePage.menuCarrinho).toBeHidden() // not.toBeVisible()
+  })
 
   test('Should create a common user',  async ({ page }) => {
     // Act
@@ -64,15 +63,14 @@ test.describe('On Signup page', () => {
     await expect(homePage.headerCommon).toContainText('Serverest Store')
 
     // TODO - Develop assertions
-    // await expect(menuListaCompras).toHaveText('Lista de Compras')
-    // await expect(menuCarrinho).toHaveText('Carrinho')
-    // await expect(buttonLogout).toBeVisible()
-    // await expect(buttonLogout).toBeVisible()
+    await expect(homePage.menuListarCompras).toHaveText('Lista de Compras')
+    await expect(homePage.menuCarrinho).toHaveText('Carrinho')
+    await expect(homePage.buttonLogout).toBeVisible()
 
-    // await expect (menuCadastrarUsuarios).toBeHidden()
-    // await expect (menuListarUsuarios).toBeHidden()
-    // await expect (menuCadastrarProdutos).toBeHidden()
-    // await expect (menuListarProdutos).toBeHidden()
-    // await expect (menuRelatorios).toBeHidden()
-  });
+    await expect (homePage.menuCadastrarUsuarios).toBeHidden()
+    await expect (homePage.menuListarUsuarios).toBeHidden()
+    await expect (homePage.menuCadastrarProdutos).toBeHidden()
+    await expect (homePage.menuListarProdutos).toBeHidden()
+    await expect (homePage.menuRelatorios).toBeHidden()
+  })
 })
