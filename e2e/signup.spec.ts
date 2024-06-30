@@ -57,8 +57,8 @@ test.describe('On Signup page', () => {
     await signupPage.buttonSignup.click()
 
     // Assert
-    await expect(page).toHaveURL(homePage.urlPathAdmin)
-    await expect(page).not.toHaveURL(homePage.urlPathCommon)
+    await expect(page).toHaveURL(homePage.urlPathCommon)
+    await expect(page).not.toHaveURL(homePage.urlPathAdmin)
     await expect(homePage.headerCommon).toBeVisible()
     await expect(homePage.headerCommon).toContainText('Serverest Store')
 
