@@ -11,7 +11,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  // testDir: './e2e',
+  testDir: './e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -102,6 +102,7 @@ export default defineConfig({
     
     {
       name: 'examples-chrome',
+      testDir: './tests-examples',
       use: { 
         baseURL: envUrl.example.home,
         ...devices['Desktop Chrome']
@@ -110,6 +111,7 @@ export default defineConfig({
 
     {
       name: 'examples-all-browsers',
+      testDir: './tests-examples',
       use: {
         baseURL: envUrl.example.home,
         ...devices['Desktop Chrome']
@@ -118,6 +120,7 @@ export default defineConfig({
 
     {
       name: 'examples-all-browsers',
+      testDir: './tests-examples',
       use: {
         baseURL: envUrl.example.home,
         ...devices['Desktop Safari']
