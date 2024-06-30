@@ -20,7 +20,7 @@ test.describe('On Signup page', () => {
       pass: Utils.setPassword()
     }
 
-    await page.goto(signupPage.pageUrl)
+    await page.goto(signupPage.urlPath)
   })
 
   test('Should create a new admin user', async ({ page }) => {
@@ -32,7 +32,7 @@ test.describe('On Signup page', () => {
     await signupPage.buttonSignup.click()
 
     // Assert
-    await expect(page).toHaveURL(homePage.urlHomeAdmin)
+    await expect(page).toHaveURL(homePage.urlPathAdmin)
 
     await expect(homePage.headerAdmin).toBeVisible()
     await expect(homePage.headerAdmin).not.toBeHidden()
@@ -57,8 +57,8 @@ test.describe('On Signup page', () => {
     await signupPage.buttonSignup.click()
 
     // Assert
-    await expect(page).toHaveURL(homePage.urlHomeCommon)
-    await expect(page).not.toHaveURL(homePage.urlHomeAdmin)
+    await expect(page).toHaveURL(homePage.urlPathAdmin)
+    await expect(page).not.toHaveURL(homePage.urlPathCommon)
     await expect(homePage.headerCommon).toBeVisible()
     await expect(homePage.headerCommon).toContainText('Serverest Store')
 
