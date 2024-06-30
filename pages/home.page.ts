@@ -1,13 +1,13 @@
-import { type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
 export class HomePage extends GlobalPage {
   // Variables
   readonly page: Page
-  readonly urlHomeAdmin: string
+  readonly urlPathAdmin: string
   readonly headerAdmin: Locator
 
-  readonly urlHomeCommon: string
+  readonly urlPathCommon: string
   readonly headerCommon: Locator
 
   readonly buttonSignup: Locator
@@ -15,10 +15,10 @@ export class HomePage extends GlobalPage {
   // Constructor
   constructor(page: Page) {
     super(page)
-    this.urlHomeAdmin = '/admin/home'
+    this.urlPathAdmin = '/admin/home'
     this.headerAdmin = page.getByRole('heading', { name: /Bem Vindo/})
 
-    this.urlHomeCommon = '/home'
+    this.urlPathCommon = '/home'
     this.headerCommon = page.getByRole('heading', { name: /Serverest Store/ })
   }
 
