@@ -1,9 +1,9 @@
-import { type Locator, type Page, } from '@playwright/test'
+import { type Locator, type Page, type APIRequestContext, expect, request } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
 export class SignupPage extends GlobalPage {
   // Variables
-  readonly page: Page
+  readonly request: APIRequestContext
   readonly urlPath: string
   readonly fieldName: Locator
   readonly fieldEmail: Locator
@@ -12,8 +12,9 @@ export class SignupPage extends GlobalPage {
   readonly buttonSignup: Locator
 
   // Constructor
-  constructor(page: Page) {
+  constructor(page: Page, request: APIRequestContext) {
     super(page)
+    this.request = request
     this.urlPath = '/cadastrarusuarios'
     this.fieldName = page.getByTestId('nome')
     this.fieldEmail = page.getByTestId('email')
@@ -23,6 +24,19 @@ export class SignupPage extends GlobalPage {
   }
 
   // Methods
+  async apiCreateUser(userData: { nome: string; email: string; password: string; administrador: string }) {
+    const apiContext = await request.newContext()
+    const response = await apiContext.post(
+      'https://serverest.dev/usuarios',
+      { data: userData }
+    )
+
+    expect(response.ok()).toBeTruthy()
+    const responseBody = await response.json()
+    expect(responseBody.message).toBe('Cadastro realizado com sucesso')
+
+    return userData
+  }
 }
 
 export default SignupPage

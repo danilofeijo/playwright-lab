@@ -8,8 +8,8 @@ let signupPage: SignupPage
 let homePage: HomePage
 
 test.describe('On Signup page', () => {
-  test.beforeEach(async ({page}) => {
-    signupPage = new SignupPage(page)
+  test.beforeEach(async ({page, request}) => {
+    signupPage = new SignupPage(page, request)
     homePage = new HomePage(page)
     
     const userName = Utils.setFullName()
@@ -23,7 +23,7 @@ test.describe('On Signup page', () => {
     await page.goto(signupPage.urlPath)
   })
 
-  test('Should create a new admin user', async ({ page }) => {
+  test('Should create an admin user', async ({ page }) => {
     // Act
     await signupPage.fieldName.fill(USER.nome)
     await signupPage.fieldEmail.fill(USER.email)

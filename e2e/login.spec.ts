@@ -1,32 +1,23 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, request } from '@playwright/test'
 import { Utils } from '../utils/utils'
+import { SignupPage } from '../pages/signup.page'
 import { LoginPage } from '../pages/login.page'
+import { HomePage } from '../pages/home.page'
 
+let signupPage: SignupPage
 let loginPage: LoginPage
+let homePage: HomePage
 let USER: { nome: string; email: string; password: string; administrador: string }
 
-const createUserViaApi = async (userData: { nome: string; email: string; password: string; administrador: string }) => {
-  const apiContext = await request.newContext()
-  const response = await apiContext.post(
-    'https://serverest.dev/usuarios',
-    { data: userData }
-  )
-
-  expect(response.ok()).toBeTruthy()
-  const responseBody = await response.json()
-  expect(responseBody.message).toBe('Cadastro realizado com sucesso')
-
-  console.log(responseBody)
-
-  return userData
-}
-
 test.describe('On login page', () => {
+  test.beforeEach(async ({ page, request }) => {
+    signupPage = new SignupPage(page, request)
+    loginPage = new LoginPage(page)
+    homePage = new HomePage(page)
+  })
+
   test.describe('as Admin user', () => {
     test.beforeEach(async ({ page }) => {
-      loginPage = new LoginPage(page)
-      // signupPage = new SignupPage(page)
-      // homePage = new HomePage(page)
 
       const randomName = Utils.setFullName()
 
@@ -36,13 +27,12 @@ test.describe('On login page', () => {
         password: Utils.setPassword(),
         administrador: 'true'
       }
-  
-      createUserViaApi(USER)
+
+      await signupPage.apiCreateUser(USER)
       await page.goto(loginPage.urlPath)
     })
 
-    test('Should log in with valid credentials', async ({ page }) => {
-      // TODO - Develop test scenario
+    test('Should log in with valid credentials', async () => {
       // Arrange
       const loginCredentials: { email: string, password: string} = {
         email: USER.email,
@@ -55,7 +45,7 @@ test.describe('On login page', () => {
       await loginPage.entrarButton.click()
 
       // Assert
-      await expect(page.getByRole('heading', { name: 'Bem Vindo' })).toContainText(USER.nome)
+      await expect(homePage.headerAdmin).toContainText(USER.nome)
     })
 
     test('Should not log in with wrong credentials', async ({ page }) => {
