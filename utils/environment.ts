@@ -4,11 +4,11 @@ export default {
     home: 'https://local-myapp.mydomain.com',
   },
   development: {
-    api: 'TBD',
+    api: 'https://serverest.dev',
     home: 'https://front.serverest.dev'
   },
   qa: {
-    api: 'TBD',
+    api: 'https://serverest.dev',
     home: 'https://front.serverest.dev'
   },
   staging: {
