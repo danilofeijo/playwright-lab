@@ -3,7 +3,6 @@ import { GlobalPage } from '../pages/global.page'
 
 export class HomePage extends GlobalPage {
   // Variables
-  readonly page: Page
   readonly urlPathAdmin: string
   readonly headerAdmin: Locator
 
