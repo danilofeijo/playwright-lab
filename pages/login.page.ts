@@ -18,6 +18,9 @@ export class LoginPage extends GlobalPage {
   }
 
   // Methods
+  async visitPage() {
+    this.page.goto(this.urlPath)
+  }
 }
 
 export default LoginPage

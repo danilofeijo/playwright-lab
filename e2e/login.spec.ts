@@ -17,7 +17,7 @@ test.describe('On login page', () => {
   })
 
   test.describe('as Admin user', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async () => {
 
       const randomName = Utils.setFullName()
 
@@ -29,7 +29,7 @@ test.describe('On login page', () => {
       }
 
       await signupPage.apiCreateUser(USER)
-      await page.goto(loginPage.urlPath)
+      await loginPage.visitPage()
     })
 
     test('Should log in with valid credentials', async () => {
