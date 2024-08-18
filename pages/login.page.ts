@@ -19,11 +19,11 @@ export class LoginPage extends GlobalPage {
 
   // Methods
   async visitPage() {
-    this.page.goto(this.urlPath)
+    await this.page.goto(this.urlPath)
 
-    expect(this.fieldEmail).toBeVisible()
-    expect(this.fieldPassword).toBeVisible()
-    expect(this.buttonLogout).toBeVisible()
+    await expect(this.fieldEmail).toBeVisible()
+    await expect(this.fieldPassword).toBeVisible()
+    await expect(this.buttonEntrar).toBeVisible()
   }
 }
 
