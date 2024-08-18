@@ -1,4 +1,4 @@
-import { type Locator, type Page } from '@playwright/test'
+import { type Locator, type Page, expect } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
 export class LoginPage extends GlobalPage {
@@ -20,6 +20,10 @@ export class LoginPage extends GlobalPage {
   // Methods
   async visitPage() {
     this.page.goto(this.urlPath)
+
+    expect(this.fieldEmail).toBeVisible()
+    expect(this.fieldPassword).toBeVisible()
+    expect(this.buttonLogout).toBeVisible()
   }
 }
 
