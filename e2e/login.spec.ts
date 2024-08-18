@@ -40,9 +40,9 @@ test.describe('On login page', () => {
       }
 
       // Act
-      await loginPage.emailField.fill(loginCredentials.email)
-      await loginPage.passwordField.fill(loginCredentials.password)
-      await loginPage.entrarButton.click()
+      await loginPage.fieldEmail.fill(loginCredentials.email)
+      await loginPage.fieldPassword.fill(loginCredentials.password)
+      await loginPage.buttonEntrar.click()
 
       // Assert
       await expect(homePage.headerAdmin).toContainText(USER.nome)
