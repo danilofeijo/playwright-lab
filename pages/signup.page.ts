@@ -27,6 +27,7 @@ export class SignupPage extends GlobalPage {
   async apiCreateUser(userData: { nome: string; email: string; password: string; administrador: string }) {
     const apiContext = await request.newContext()
     const response = await apiContext.post(
+      // TODO - Apply environmet variable
       'https://serverest.dev/usuarios',
       { data: userData }
     )
