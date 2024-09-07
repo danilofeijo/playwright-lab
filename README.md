@@ -91,6 +91,7 @@ Cypress Reference
 [ref-8]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-9]: https://choosealicense.com/
 [ref-10]: https://www.alura.com.br/artigos/como-escolher-uma-licenca-para-seu-projeto
+[ref-11]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-8-adding-eslint-prettier-and-husky/
 
 [tool-cylabrepo]: https://github.com/danilofeijo/cypress-lab
 [tool-faker]: https://www.npmjs.com/package/faker
