@@ -1,12 +1,14 @@
 // @ts-check
 
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import eslint from '@eslint/js'
+import prettierConfig from 'eslint-config-prettier'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
+  prettierConfig,
   {
     ignores: [
       // Playwright Specific
@@ -21,7 +23,7 @@ export default tseslint.config(
       'Thumbs.db',
       '{"mode":"full","isActive":false}',
       // Docs files
-      '*_spec3.json'
-    ]
-  }
+      '*_spec3.json',
+    ],
+  },
 )
