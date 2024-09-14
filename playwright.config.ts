@@ -1,5 +1,5 @@
-import envUrl from './utils/environment';
-import { defineConfig, devices } from '@playwright/test';
+import envUrl from './utils/environment'
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
@@ -34,8 +34,8 @@ export default defineConfig({
     ],
   */
   /**
-   * custom reports: https://playwright.dev/docs/test-reporters#custom-reporters 
-  */
+   * custom reports: https://playwright.dev/docs/test-reporters#custom-reporters
+   */
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -51,14 +51,14 @@ export default defineConfig({
     // ignoreHTTPSErrors: true,
   },
 
-    // timeout: 30000, //https://playwright.dev/docs/test-timeouts
-    expect: {
-      /**
-       * Maximum time expect() should wait for the condition to be met.
-       * For example in `await expect(locator).toHaveText();`
-       */
-      timeout: 6000,
-    },
+  // timeout: 30000, //https://playwright.dev/docs/test-timeouts
+  expect: {
+    /**
+     * Maximum time expect() should wait for the condition to be met.
+     * For example in `await expect(locator).toHaveText();`
+     */
+    timeout: 6000,
+  },
 
   /* Configure projects for environments */
   projects: [
@@ -72,8 +72,8 @@ export default defineConfig({
     {
       name: 'dev-env',
       use: {
-        baseURL: envUrl.development.home
-      }
+        baseURL: envUrl.development.home,
+      },
     },
 
     {
@@ -83,7 +83,7 @@ export default defineConfig({
 
     {
       name: 'qa-env',
-        ...devices['Desktop Safari']
+      ...devices['Desktop Safari'],
     },
 
     // Example only
@@ -94,18 +94,18 @@ export default defineConfig({
     //       ? baseEnvUrl.ci.prefix + process.env.GITHUB_REF_NAME + baseEnvUrl.ci.suffix //https://dev-myapp-chapter-2.mydomain.com
     //       : baseEnvUrl.staging.home,
     //   },
-      /**
-       * GitHub variables: https://docs.github.com/en/actions/learn-github-actions/variables
-       * GitLab variables: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-reference
-       */
+    /**
+     * GitHub variables: https://docs.github.com/en/actions/learn-github-actions/variables
+     * GitLab variables: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#predefined-variables-reference
+     */
     // },
-    
+
     {
       name: 'examples-chrome',
       testDir: './tests-examples',
-      use: { 
+      use: {
         baseURL: envUrl.example.home,
-        ...devices['Desktop Chrome']
+        ...devices['Desktop Chrome'],
       },
     },
 
@@ -114,7 +114,7 @@ export default defineConfig({
       testDir: './tests-examples',
       use: {
         baseURL: envUrl.example.home,
-        ...devices['Desktop Chrome']
+        ...devices['Desktop Chrome'],
       },
     },
 
@@ -123,7 +123,7 @@ export default defineConfig({
       testDir: './tests-examples',
       use: {
         baseURL: envUrl.example.home,
-        ...devices['Desktop Safari']
+        ...devices['Desktop Safari'],
       },
     },
   ],
@@ -134,4 +134,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})

@@ -15,7 +15,7 @@ export class HomePage extends GlobalPage {
   constructor(page: Page) {
     super(page)
     this.urlPathAdmin = '/admin/home'
-    this.headerAdmin = page.getByRole('heading', { name: /Bem Vindo/})
+    this.headerAdmin = page.getByRole('heading', { name: /Bem Vindo/ })
 
     this.urlPathCommon = '/home'
     this.headerCommon = page.getByRole('heading', { name: /Serverest Store/ })

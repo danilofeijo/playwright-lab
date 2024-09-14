@@ -1,23 +1,23 @@
 import { test, expect } from '@playwright/test'
 import * as utils from '../utils/utils'
 import { SignupPage } from '../pages/signup.page'
-import { HomePage } from "../pages/home.page"
+import { HomePage } from '../pages/home.page'
 
 let USER: { nome: string; email: string; pass: string }
 let signupPage: SignupPage
 let homePage: HomePage
 
 test.describe('On Signup page', () => {
-  test.beforeEach(async ({page, request}) => {
+  test.beforeEach(async ({ page, request }) => {
     signupPage = new SignupPage(page, request)
     homePage = new HomePage(page)
-    
+
     const userName = utils.generateFullName()
 
     USER = {
       nome: userName,
       email: utils.generateEmail(userName),
-      pass: utils.generatePassword()
+      pass: utils.generatePassword(),
     }
 
     await page.goto(signupPage.urlPath)
@@ -49,7 +49,7 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toBeHidden() // not.toBeVisible()
   })
 
-  test('Should create a common user',  async ({ page }) => {
+  test('Should create a common user', async ({ page }) => {
     // Act
     await signupPage.fieldName.fill(USER.nome)
     await signupPage.fieldEmail.fill(USER.email)
@@ -66,10 +66,10 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toHaveText('Carrinho')
     await expect(homePage.buttonLogout).toBeVisible()
 
-    await expect (homePage.menuCadastrarUsuarios).toBeHidden()
-    await expect (homePage.menuListarUsuarios).toBeHidden()
-    await expect (homePage.menuCadastrarProdutos).toBeHidden()
-    await expect (homePage.menuListarProdutos).toBeHidden()
-    await expect (homePage.menuRelatorios).toBeHidden()
+    await expect(homePage.menuCadastrarUsuarios).toBeHidden()
+    await expect(homePage.menuListarUsuarios).toBeHidden()
+    await expect(homePage.menuCadastrarProdutos).toBeHidden()
+    await expect(homePage.menuListarProdutos).toBeHidden()
+    await expect(homePage.menuRelatorios).toBeHidden()
   })
 })

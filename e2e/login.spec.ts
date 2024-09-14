@@ -18,14 +18,13 @@ test.describe('On login page', () => {
 
   test.describe('as Admin user', () => {
     test.beforeEach(async () => {
-
       const randomName = utils.generateFullName()
 
       USER = {
         nome: randomName,
         email: utils.generateEmail(randomName),
         password: utils.generatePassword(),
-        administrador: 'true'
+        administrador: 'true',
       }
 
       await signupPage.apiCreateUser(USER)
@@ -34,9 +33,9 @@ test.describe('On login page', () => {
 
     test('Should log in with valid credentials', async () => {
       // Arrange
-      const loginCredentials: { email: string, password: string} = {
+      const loginCredentials: { email: string; password: string } = {
         email: USER.email,
-        password: USER.password
+        password: USER.password,
       }
 
       // Act

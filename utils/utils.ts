@@ -28,7 +28,7 @@ export function generateEmail(givenAlias?: string): string {
  */
 export function generatePassword(): string {
   return faker.internet.password({
-    length: 12
+    length: 12,
     // pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,12}$/
     // Have between 8 and 12 characters being
     // Uppercase, lowercase, number and special

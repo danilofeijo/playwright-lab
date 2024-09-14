@@ -7,7 +7,7 @@ export class LoginPage extends GlobalPage {
   readonly fieldEmail: Locator
   readonly fieldPassword: Locator
   readonly buttonEntrar: Locator
-  
+
   // Constructor
   constructor(page: Page) {
     super(page)

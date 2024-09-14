@@ -5,16 +5,16 @@ export default {
   },
   development: {
     api: 'https://serverest.dev',
-    home: 'https://front.serverest.dev'
+    home: 'https://front.serverest.dev',
   },
   qa: {
     api: 'https://serverest.dev',
-    home: 'https://front.serverest.dev'
+    home: 'https://front.serverest.dev',
   },
   staging: {
     api: 'https://staging-myapp.mydomain.com/api',
     home: 'https://staging-myapp.mydomain.com',
-    },
+  },
   production: {
     api: 'https://myapp.mydomain.com/api',
     home: 'https://myapp.mydomain.com',
@@ -24,6 +24,6 @@ export default {
     suffix: '.mydomain.com',
   },
   example: {
-    home: 'https://playwright.dev'
-  }
-};
+    home: 'https://playwright.dev',
+  },
+}
