@@ -1,5 +1,5 @@
-import { test, expect, request } from '@playwright/test'
-import { Utils } from '../utils/utils'
+import { test, expect } from '@playwright/test'
+import * as utils from '../utils/utils'
 import { SignupPage } from '../pages/signup.page'
 import { LoginPage } from '../pages/login.page'
 import { HomePage } from '../pages/home.page'
@@ -19,12 +19,12 @@ test.describe('On login page', () => {
   test.describe('as Admin user', () => {
     test.beforeEach(async () => {
 
-      const randomName = Utils.setFullName()
+      const randomName = utils.generateFullName()
 
       USER = {
         nome: randomName,
-        email: Utils.setEmail(randomName),
-        password: Utils.setPassword(),
+        email: utils.generateEmail(randomName),
+        password: utils.generatePassword(),
         administrador: 'true'
       }
 
@@ -48,7 +48,7 @@ test.describe('On login page', () => {
       await expect(homePage.headerAdmin).toContainText(USER.nome)
     })
 
-    test('Should not log in with wrong credentials', async ({ page }) => {
+    test('Should not log in with wrong credentials', async () => {
       // TODO - Develop test scenario
       // Arrange
       // Act
@@ -56,5 +56,7 @@ test.describe('On login page', () => {
     })
   })
 
-  test.describe('as Common user', () => {})
+  test.describe('as Common user', () => {
+    // TODO - List tests to develop
+  })
 })

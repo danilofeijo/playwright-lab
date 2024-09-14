@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { Utils } from '../utils/utils'
+import * as utils from '../utils/utils'
 import { SignupPage } from '../pages/signup.page'
 import { HomePage } from "../pages/home.page"
 
@@ -12,12 +12,12 @@ test.describe('On Signup page', () => {
     signupPage = new SignupPage(page, request)
     homePage = new HomePage(page)
     
-    const userName = Utils.setFullName()
+    const userName = utils.generateFullName()
 
     USER = {
       nome: userName,
-      email: Utils.setEmail(userName),
-      pass: Utils.setPassword()
+      email: utils.generateEmail(userName),
+      pass: utils.generatePassword()
     }
 
     await page.goto(signupPage.urlPath)
