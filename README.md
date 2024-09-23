@@ -1,37 +1,42 @@
-<!--
-[![E2E tests](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml/badge.svg)](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml)
--->
-
-[![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/)
+[![Playwright Tests](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml) [![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/)
 ![GitHub](https://img.shields.io/github/license/danilofeijo/playwright-lab)
 
 # playwright-lab
 
 ![Icon Playwright][pw-logo] ![Icon laboratory][flask-icon]
 
-A E2E test automation setup that you can apply in the real world.
+A setup for E2E tests with all you need in a real world.
 
 This project was inspired by the [cypress-lab repo][tool-cylabrepo] which has the same purpose but using Cypress framework.
 
 ## Features
 
-### Test suite
+### Essencial
 
-- ✅ [Playwright][pw-tool], to create and run E2E tests
-- ✅ [ServeRest][tool-serverest], an amazing server that simulates an e-commerce to be tested
-- ✅ [Faker][tool-faker], to generate randon data for tests
-- ✅ Page Object model, to organize test structure
-- ✅ [Environment config][pw-envConfig], to run tests in multiple environment
-- ✅ [Test retry ][pw-retry], to repeat failed tests and avoid flakiness
+- ✅ Some application to be tested - [ServeRest][tool-serverest], which simulates an e-commerce application
+- ✅ E2E framework to place and run your tests - [Playwright framework][pw-tool] 
 
-### Code quality
+### Basic
+
+- ✅ Clean and organized test structure - Page Object model
+- ✅ Random data generator - [Faker][tool-faker]
+- ✅ Test retry mechanis, toa avoid flakiness - [Playright test retry ][pw-retry]
+- ❌ [Environment config][pw-envConfig], to run tests in multiple environment
+
+<!-- ### Mid
+
+### High -->
+
+### No level applied yet
+
+#### Code quality
 
 - ✅ Code static analysis with [typescript-esLint][tool-tseslint]
 - ✅ [Prettier][tool-prettier] - to format the code
 - ❌ [Husky][tool-husky], to check enhance commits
 - ❌ [commitlint][tool-commitlint], to mantain better commit messages based on [Conventional Commits][tool-convCommits]
 
-### CI/CD
+#### CI/CD
 
 - ✅ [GitHub Actions][tool-ghactions], to automatically trigger test execution in CI/CD
 - ✅ [Testing Parallelization][pw-parallelization], to accelerate test execution
@@ -111,3 +116,4 @@ Cypress Reference
 [tool-commitlint]: https://commitlint.js.org/#/
 [tool-mochawesome]: https://www.npmjs.com/package/mochawesome
 [tool-serverest]: https://serverest.dev/
+[tool-cylabrepo]: https://github.com/danilofeijo/cypress-lab
