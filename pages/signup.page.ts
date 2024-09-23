@@ -29,7 +29,7 @@ export class SignupPage extends GlobalPage {
     const response = await apiContext.post(
       // TODO - Apply environmet variable
       'https://serverest.dev/usuarios',
-      { data: userData },
+      { data: userData }
     )
 
     expect(response.ok()).toBeTruthy()

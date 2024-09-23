@@ -1,5 +1,3 @@
-// @ts-check
-
 import eslint from '@eslint/js'
 import prettierConfig from 'eslint-config-prettier'
 import tseslint from 'typescript-eslint'
@@ -25,5 +23,5 @@ export default tseslint.config(
       // Docs files
       '*_spec3.json',
     ],
-  },
+  }
 )
