@@ -7,12 +7,8 @@
     "e2e:dev": "npx playwright test e2e/ --project=dev-env --retries=0",
     "e2e:ui-dev": "npx playwright test e2e/ --project=dev-env --retries=0 --ui",
     "e2e:homolog": "npx playwright test e2e/ --project=qa-env --reporter=dot",
-    "example": "npx playwright test tests-examples/ --project=examples-all-browsers",
-    "example:dev": "npx playwright test tests-examples/ --project=examples-chrome --retries=0 --reporter=dot",
-    "example:ui-dev": "npx playwright test tests-examples/ --project=examples-chrome --ui",
-    "example:smoke": "npx playwright test tests-examples/ --project=examples-chrome --grep @smoke",
-    "example:non-smoke": "npx playwright test tests-examples/ --project=examples-chrome --grep-invert @smoke",
-    "example:ci": "CI=1 npx playwright test --project=ci --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL"
+    "check:eslint": "npx eslint .",
+    "check:prettier": "npx prettier --check ."
   },
   "repository": {
     "type": "git",
