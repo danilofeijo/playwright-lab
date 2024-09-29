@@ -1,4 +1,5 @@
-[![Playwright Tests](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml) [![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/)
+[![Playwright Tests](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/danilofeijo/playwright-lab/actions/workflows/playwright.yml)
+[![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/)
 ![GitHub](https://img.shields.io/github/license/danilofeijo/playwright-lab)
 
 # playwright-lab
@@ -7,14 +8,9 @@
 
 A setup for E2E tests with all you need in a real world.
 
-This project was inspired by the [cypress-lab repo][ref-repo-cylab] which has the same purpose but using Cypress framework.
+This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was my first lab dedicated to have testing real world needs.
 
 ## Features
-<!--
-### Test suite
-### Code quality
-### CI/CD
--->
 
 ### Essential
 
@@ -61,8 +57,7 @@ This project was inspired by the [cypress-lab repo][ref-repo-cylab] which has th
 - `--headed` show you how Playwright interacts with the website.
 - `-g "critical"` run a test with a specific title
 
-The full list of parameters is available at [Running Tests page][ref-1] on Playwright docs.
-[ref-1]: https://playwright.dev/docs/running-tests#running-tests
+More about these parameters at [Running Tests page][ref-doc-runTests] on Playwright docs.
 
 ### Shortcuts
 
@@ -72,10 +67,6 @@ This repo have some script shortcuts to help you along test development
 - `npm run e2e:ui-dev` - opens UI Mode, 0 retries. Gives you a better dev experience
 - `npm run check:eslint` - eslint checks - code static analysis
 - `npm run check:prettier` - prettier checks - code formatter
-
-<!--
-Combined commands available in `scripts` session on `package.json` file.
--->
 
 ## More References
 
@@ -94,8 +85,6 @@ Cypress Reference
 [ref-3]: https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/
 [ref-5]: https://medium.com/swlh/publish-your-cypress-test-report-with-github-actions-47248788713a
   -->
-
-<!-- Links list -->
 
 <!-- Intro Links -->
 [img-icon-flask]: img/icon-lab-128.png 'Flask icon'
@@ -119,6 +108,9 @@ Cypress Reference
 [tool-convCommits]: https://www.conventionalcommits.org/
 [tool-husky]: https://typicode.github.io/husky/
 [tool-mochawesome]: https://www.npmjs.com/package/mochawesome
+
+<!-- Setup Links -->
+[ref-doc-runTests]: https://playwright.dev/docs/running-tests#running-tests
 
 <!-- References Links -->
 [ref-doc-playwright]: https://playwright.dev/docs/intro
