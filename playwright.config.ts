@@ -40,7 +40,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: envUrl.development.home,
+    baseURL: envUrl.dev.home,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -52,38 +52,29 @@ export default defineConfig({
   },
 
   // timeout: 30000, //https://playwright.dev/docs/test-timeouts
-  expect: {
-    /**
-     * Maximum time expect() should wait for the condition to be met.
-     * For example in `await expect(locator).toHaveText();`
-     */
-    timeout: 6000,
-  },
+  /**
+   * Maximum time expect() should wait for the condition to be met.
+   * For example in `await expect(locator).toHaveText();`
+  */
+  expect: { timeout: 6000, },
 
   /* Configure projects for environments */
   projects: [
     {
       name: 'local-env',
-      use: {
-        baseURL: envUrl.local.home,
-      },
+      use: { baseURL: envUrl.local.home, },
     },
-
     {
       name: 'dev-env',
+      use: { baseURL: envUrl.dev.home, },
+    },
+    {
+      name: 'qa-env',
       use: {
-        baseURL: envUrl.development.home,
+        ...devices['Desktop Chrome'],
+        baseURL: envUrl.qa.home,
+        channel: 'chrome'
       },
-    },
-
-    {
-      name: 'qa-env',
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    },
-
-    {
-      name: 'qa-env',
-      ...devices['Desktop Safari'],
     },
 
     // Example only

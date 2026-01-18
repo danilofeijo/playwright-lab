@@ -3,7 +3,7 @@ export default {
     api: 'https://local-myapp.mydomain.com/api',
     home: 'https://local-myapp.mydomain.com',
   },
-  development: {
+  dev: {
     api: 'https://serverest.dev',
     home: 'https://front.serverest.dev',
   },
@@ -15,7 +15,7 @@ export default {
     api: 'https://staging-myapp.mydomain.com/api',
     home: 'https://staging-myapp.mydomain.com',
   },
-  production: {
+  prod: {
     api: 'https://myapp.mydomain.com/api',
     home: 'https://myapp.mydomain.com',
   },
