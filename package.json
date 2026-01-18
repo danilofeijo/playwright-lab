@@ -25,6 +25,7 @@
     "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.44.1",
     "@types/eslint__js": "^8.42.3",
+    "@types/node": "^25.0.9",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "3.3.3",
