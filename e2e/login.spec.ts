@@ -16,7 +16,7 @@ test.describe('On login page', () => {
     homePage = new HomePage(page)
   })
 
-  test.describe('as Admin user', () => {
+  test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
     test.beforeEach(async () => {
       const randomName = utils.generateFullName()
 
@@ -55,7 +55,7 @@ test.describe('On login page', () => {
     })
   })
 
-  test.describe('as Common user', () => {
+  test.describe('as Common user', { tag: ['@commonUser'] }, () => {
     // TODO - List tests to develop
   })
 })
