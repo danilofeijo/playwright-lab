@@ -36,39 +36,48 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 
 ## Setup
 
-1. Clone repo and access project folder
-
-   `https://github.com/danilofeijo/playwright-lab.git && cd playwright-lab`
+1. Clone the repo and access project folder
+   `git clone https://github.com/danilofeijo/playwright-lab.git && cd playwright-lab`
 
 2. Install project dependencies
-
    `npm install`
 
+3. Install Playwright
+   `npx playwright install`
+
+** Remember to assure that you have NodeJs up and running, once we are talking about npm.
+  
 ## CLI commands
 
 ### Tests Execution
 
-- `npx playwright test` is the default command. It runs tests on all browsers as configured (headless mode by default)
+`npx playwright test` is the [Playwright's default command][ref-doc-runTests]. When you run it here, it will:
+- Run scenarios of the whole test suite;
+- Against all of 3 configured environments (Local, Dev, QA);
+- On default browser (Chrome headless mode)
 
-### Relevant parameters
+### Additional Parameters
 
-- `--ui` run tests in UI mode (better dev experience)
-- `--project firefox` specify which browser you would like to run the tests
-- `--headed` show you how Playwright interacts with the website.
-- `-g "critical"` run a test with a specific title
-
-More about these parameters at [Running Tests page][ref-doc-runTests] on Playwright docs.
+Playwright has many [parameters to run tests][ref-doc-runTests]. You might like these below:
+- `--ui` to run tests in UI mode (better dev experience)
+- `--project projectName` to specify a project/browser to run the test suite
+- `-g "@critical"` to filter [tests with tag][ref-doc-tagTests]
+- `--debug` to debug test file or specific test scenario.
 
 ### Shortcuts
-
-This repo have some script shortcuts to help you along test development
-
-- `npm run e2e:dev` - runs all tests, feedback on terminal, 1 retry
-- `npm run e2e:ui-dev` - opens UI Mode, 0 retries. Gives you a better dev experience
+Here are some shortcuts to help you develop, debug and fix tests. Often used for in common days.
+- `npm run e2e:ui-dev` - Gives you a better dev experience.
+  - Open Playwright UI Mode (*--ui*);
+  - In a specific Project environment (*--project dev-env*);
+  - Without any retry in case of failure (*--retries 0*)
+- `npm run e2e:dev` - Better for a sanity check after some code change.
+  - Runs all tests scenarios;
+  - In a specific Project environment (*--project dev-env*);
+  - With one retry in case of failure  (*--retries 1*)
 - `npm run check:eslint` - eslint checks - code static analysis
 - `npm run check:prettier` - prettier checks - code formatter
 
-## More References
+## References
 
 - [Playwright Docs][ref-doc-playwright]
 - [Choose an open source license][ref-doc-license]
@@ -78,13 +87,6 @@ This repo have some script shortcuts to help you along test development
 - [ESLint + Prettier, a dupla perfeita para produtividade e padronização de código.][ref-article-eslintAndPrettier]
 - [Adding ESlint, Prettier, and Husky][ref-article-playwrightCombo]
 - < More itens will be added soon >
-<!--
-Cypress Reference
-- [Keep passwords secret in E2E tests][ref-3]
-- [Publish your Cypress Test Report with GitHub Actions][ref-5]
-[ref-3]: https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/
-[ref-5]: https://medium.com/swlh/publish-your-cypress-test-report-with-github-actions-47248788713a
-  -->
 
 <!-- Intro Links -->
 [img-icon-flask]: img/icon-lab-128.png 'Flask icon'
@@ -111,6 +113,7 @@ Cypress Reference
 
 <!-- Setup Links -->
 [ref-doc-runTests]: https://playwright.dev/docs/running-tests#running-tests
+[ref-doc-tagTests]: https://playwright.dev/docs/test-annotations#tag-tests
 
 <!-- References Links -->
 [ref-doc-playwright]: https://playwright.dev/docs/intro
