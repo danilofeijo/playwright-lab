@@ -5,7 +5,9 @@ import { defineConfig, devices } from '@playwright/test'
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// require('dotenv').config();
+// import dotenv from 'dotenv';
+// import path from 'path';
+// dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -16,17 +18,15 @@ export default defineConfig({
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI and anyother envs */
-  retries: process.env.CI ? 2 : 1,
+  /* Retry on CI (2) and anyother envs (0) */
+  retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   // reporter: 'html',
   // reporter: [['html', { open: 'always' }]], //always, never and on-failure (default).
   // reporter: [['html', { outputFolder: 'my-report' }]], // report is written into the playwright-report folder in the current working directory. override it using the PLAYWRIGHT_HTML_REPORT
-  // reporter: 'dot',
-  // reporter: 'line',
-  reporter: 'list',
+  reporter: 'list', // dot / line / html are other options
   /**
     reporter: [
       ['list'],
@@ -58,7 +58,7 @@ export default defineConfig({
   */
   expect: { timeout: 6000, },
 
-  /* Configure projects for environments */
+  /* Configure projects for environments (not major browsers yet) */
   projects: [
     {
       name: 'local-env',
@@ -117,6 +117,45 @@ export default defineConfig({
         ...devices['Desktop Safari'],
       },
     },
+
+    /* 
+    <<<<<<<<<< Default Examples for Future Reference >>>>>>>>>>
+    */
+
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
+
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
+
+    /* Test against mobile viewports. */
+    // {
+    //   name: 'Mobile Chrome',
+    //   use: { ...devices['Pixel 5'] },
+    // },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: { ...devices['iPhone 12'] },
+    // },
+
+    /* Test against branded browsers. */
+    // {
+    //   name: 'Microsoft Edge',
+    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    // },
+    // {
+    //   name: 'Google Chrome',
+    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    // },
   ],
 
   /* Run your local dev server before starting the tests */
@@ -125,4 +164,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-})
+});
