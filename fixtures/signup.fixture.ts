@@ -2,7 +2,12 @@ import {test as base } from '@playwright/test'
 import * as utils from '../utils/utils'
 
 type SignupFixtures = {
-  signupData: { nome: string, email: string, pass: string }
+  signupData: {
+    nome: string,
+    email: string,
+    password: string,
+    administrador: string
+  }
 }
 
 export const signupTest = base.extend<SignupFixtures>({
@@ -12,7 +17,8 @@ export const signupTest = base.extend<SignupFixtures>({
     await use({
       nome: userName,
       email: utils.generateEmail(userName),
-      pass: utils.generatePassword(),
+      password: utils.generatePassword(),
+      administrador: 'true'
     })
   },
 })

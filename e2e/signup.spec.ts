@@ -1,5 +1,4 @@
-import { expect } from '@playwright/test'
-import { mergeTests } from '@playwright/test'
+import { mergeTests, expect } from '@playwright/test'
 
 import { pageTest } from '../fixtures/pages.fixtures'
 import { signupTest } from '../fixtures/signup.fixture'
@@ -15,7 +14,7 @@ test.describe('On Signup page', () => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
-    await signupPage.fieldPassword.fill(signupData.pass)
+    await signupPage.fieldPassword.fill(signupData.password)
     await signupPage.checkboxAdmin.click()
     await signupPage.buttonSignup.click()
 
@@ -41,7 +40,7 @@ test.describe('On Signup page', () => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
-    await signupPage.fieldPassword.fill(signupData.pass)
+    await signupPage.fieldPassword.fill(signupData.password)
     await signupPage.buttonSignup.click()
 
     // Assert
