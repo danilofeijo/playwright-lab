@@ -2,7 +2,7 @@ import { request } from '@playwright/test'
 // TODO Apply url by environment
 // import envUrl from './utils/environment'
 
-export class ServeRestAPI {
+class ServeRestAPI {
   private baseURL = 'https://serverest.dev'
 
   async createUser(userData: { nome: string, email: string, password: string, administrador: string }) {
@@ -29,3 +29,5 @@ export class ServeRestAPI {
     return response.ok()
   }
 }
+
+export const api = new ServeRestAPI()
