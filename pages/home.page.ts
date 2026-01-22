@@ -9,8 +9,6 @@ export class HomePage extends GlobalPage {
   readonly urlPathCommon: string
   readonly headerCommon: Locator
 
-  readonly buttonSignup: Locator
-
   // Constructor
   constructor(page: Page) {
     super(page)
@@ -22,6 +20,7 @@ export class HomePage extends GlobalPage {
   }
 
   // Methods
+  // No Home Page methods yet
 }
 
 export default HomePage

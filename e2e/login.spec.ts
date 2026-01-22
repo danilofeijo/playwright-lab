@@ -1,19 +1,19 @@
 import { test, expect } from '@playwright/test'
 import * as utils from '../utils/utils'
-import { SignupPage } from '../pages/signup.page'
 import { LoginPage } from '../pages/login.page'
 import { HomePage } from '../pages/home.page'
+import { ServeRestAPI } from '../helpers/api/serverest-client'
 
-let signupPage: SignupPage
 let loginPage: LoginPage
 let homePage: HomePage
 let USER: { nome: string; email: string; password: string; administrador: string }
+let serveRestAPI: ServeRestAPI
 
 test.describe('On login page', () => {
-  test.beforeEach(async ({ page, request }) => {
-    signupPage = new SignupPage(page, request)
+  test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page)
     homePage = new HomePage(page)
+    serveRestAPI = new ServeRestAPI()
   })
 
   test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
@@ -27,7 +27,7 @@ test.describe('On login page', () => {
         administrador: 'true',
       }
 
-      await signupPage.apiCreateUser(USER)
+      await serveRestAPI.createUser(USER)
       await loginPage.visitPage()
     })
 
