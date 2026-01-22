@@ -1,27 +1,17 @@
 import { expect } from '@playwright/test'
 import { mergeTests } from '@playwright/test'
 
-import * as utils from '../utils/utils'
-import { SignupPage } from '../pages/signup.page'
-import { HomePage } from '../pages/home.page'
+import { pageTest } from '../fixtures/pages.fixtures'
 import { signupTest } from '../fixtures/signup.fixture'
 
-const test = mergeTests(signupTest)
-
-let signupPage: SignupPage
-let homePage: HomePage
+const test = mergeTests(pageTest, signupTest)
 
 test.describe('On Signup page', () => {
-  test.beforeEach(async ({ page, request }) => {
-    signupPage = new SignupPage(page, request)
-    homePage = new HomePage(page)
-
-    const userName = utils.generateFullName()
-
+  test.beforeEach(async ({ page, signupPage }) => {
     await page.goto(signupPage.urlPath)
   })
 
-  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ page, signupData }) => {
+  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ page, signupPage, homePage, signupData }) => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
@@ -47,7 +37,7 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toBeHidden() // not.toBeVisible()
   })
 
-  test('Should create a common user', { tag: ['@commonUser'] }, async ({ page, signupData }) => {
+  test('Should create a common user', { tag: ['@commonUser'] }, async ({ page, signupPage, homePage, signupData }) => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
