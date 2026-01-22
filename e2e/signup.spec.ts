@@ -1,33 +1,20 @@
-import { test, expect } from '@playwright/test'
-import * as utils from '../utils/utils'
-import { SignupPage } from '../pages/signup.page'
-import { HomePage } from '../pages/home.page'
+import { mergeTests, expect } from '@playwright/test'
 
-let USER: { nome: string; email: string; pass: string }
-let signupPage: SignupPage
-let homePage: HomePage
+import { pageTest } from '../fixtures/pages.fixtures'
+import { signupTest } from '../fixtures/signup.fixture'
+
+const test = mergeTests(pageTest, signupTest)
 
 test.describe('On Signup page', () => {
-  test.beforeEach(async ({ page, request }) => {
-    signupPage = new SignupPage(page, request)
-    homePage = new HomePage(page)
-
-    const userName = utils.generateFullName()
-
-    USER = {
-      nome: userName,
-      email: utils.generateEmail(userName),
-      pass: utils.generatePassword(),
-    }
-
+  test.beforeEach(async ({ page, signupPage }) => {
     await page.goto(signupPage.urlPath)
   })
 
-  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ page }) => {
+  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ page, signupPage, homePage, signupData }) => {
     // Act
-    await signupPage.fieldName.fill(USER.nome)
-    await signupPage.fieldEmail.fill(USER.email)
-    await signupPage.fieldPassword.fill(USER.pass)
+    await signupPage.fieldName.fill(signupData.nome)
+    await signupPage.fieldEmail.fill(signupData.email)
+    await signupPage.fieldPassword.fill(signupData.password)
     await signupPage.checkboxAdmin.click()
     await signupPage.buttonSignup.click()
 
@@ -36,7 +23,7 @@ test.describe('On Signup page', () => {
 
     await expect(homePage.headerAdmin).toBeVisible()
     await expect(homePage.headerAdmin).not.toBeHidden()
-    await expect(homePage.headerAdmin).toContainText(USER.nome)
+    await expect(homePage.headerAdmin).toContainText(signupData.nome)
 
     await expect(homePage.menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
     await expect(homePage.menuListarUsuarios).toHaveText('Listar Usuários')
@@ -49,11 +36,11 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toBeHidden() // not.toBeVisible()
   })
 
-  test('Should create a common user', { tag: ['@commonUser'] }, async ({ page }) => {
+  test('Should create a common user', { tag: ['@commonUser'] }, async ({ page, signupPage, homePage, signupData }) => {
     // Act
-    await signupPage.fieldName.fill(USER.nome)
-    await signupPage.fieldEmail.fill(USER.email)
-    await signupPage.fieldPassword.fill(USER.pass)
+    await signupPage.fieldName.fill(signupData.nome)
+    await signupPage.fieldEmail.fill(signupData.email)
+    await signupPage.fieldPassword.fill(signupData.password)
     await signupPage.buttonSignup.click()
 
     // Assert

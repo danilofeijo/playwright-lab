@@ -19,7 +19,7 @@ export function generateFullName(): string {
 export function generateEmail(givenAlias?: string): string {
   const alias = givenAlias ?? generateFullName()
 
-  return `${alias.toLowerCase().replace(/\s+/g, '')}@pwlab-feijo.com`
+  return `${alias.toLowerCase().replace(/\s+/g, '')}@playwright-lab.com`
 }
 
 /**

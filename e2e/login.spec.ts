@@ -1,50 +1,28 @@
-import { test, expect } from '@playwright/test'
-import * as utils from '../utils/utils'
-import { SignupPage } from '../pages/signup.page'
-import { LoginPage } from '../pages/login.page'
-import { HomePage } from '../pages/home.page'
+import { mergeTests, expect } from '@playwright/test'
+import { pageTest } from '../fixtures/pages.fixtures'
+import { signupTest } from '../fixtures/signup.fixture'
+import { api } from '../api/serverest-client'
 
-let signupPage: SignupPage
-let loginPage: LoginPage
-let homePage: HomePage
-let USER: { nome: string; email: string; password: string; administrador: string }
+const test = mergeTests(pageTest, signupTest)
 
 test.describe('On login page', () => {
-  test.beforeEach(async ({ page, request }) => {
-    signupPage = new SignupPage(page, request)
-    loginPage = new LoginPage(page)
-    homePage = new HomePage(page)
+  test.beforeEach(async () => {
   })
 
   test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
-    test.beforeEach(async () => {
-      const randomName = utils.generateFullName()
-
-      USER = {
-        nome: randomName,
-        email: utils.generateEmail(randomName),
-        password: utils.generatePassword(),
-        administrador: 'true',
-      }
-
-      await signupPage.apiCreateUser(USER)
+    test.beforeEach(async ({ signupData, loginPage }) => {
+      await api.createUser(signupData)
       await loginPage.visitPage()
     })
 
-    test('Should log in with valid credentials', async () => {
-      // Arrange
-      const loginCredentials: { email: string; password: string } = {
-        email: USER.email,
-        password: USER.password,
-      }
-
+    test('Should log in with valid credentials', async ({ signupData, loginPage, homePage }) => {
       // Act
-      await loginPage.fieldEmail.fill(loginCredentials.email)
-      await loginPage.fieldPassword.fill(loginCredentials.password)
+      await loginPage.fieldEmail.fill(signupData.email)
+      await loginPage.fieldPassword.fill(signupData.password)
       await loginPage.buttonEntrar.click()
 
       // Assert
-      await expect(homePage.headerAdmin).toContainText(USER.nome)
+      await expect(homePage.headerAdmin).toContainText(signupData.nome)
     })
 
     test('Should not log in with wrong credentials', async () => {
