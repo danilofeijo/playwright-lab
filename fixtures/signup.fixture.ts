@@ -1,5 +1,5 @@
-import {test as base } from '@playwright/test'
-import * as utils from '../utils/utils'
+import { test as base } from '@playwright/test'
+import * as utils from '../helpers/utils'
 
 type SignupFixtures = {
   signupData: {

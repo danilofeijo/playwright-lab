@@ -1,7 +1,7 @@
 import { mergeTests, expect } from '@playwright/test'
 import { pageTest } from '../fixtures/pages.fixtures'
 import { signupTest } from '../fixtures/signup.fixture'
-import { api } from '../helpers/api/serverest-client'
+import { api } from '../api/serverest-client'
 
 const test = mergeTests(pageTest, signupTest)
 

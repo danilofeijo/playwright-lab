@@ -1,4 +1,4 @@
-import envUrl from './utils/environment'
+import envUrl from './helpers/environment'
 import { defineConfig, devices } from '@playwright/test'
 
 /**
