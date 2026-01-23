@@ -10,21 +10,15 @@ test.describe('On login page', () => {
   })
 
   test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
-    test.beforeEach(async ({ signupData, loginPage }) => {
-      console.log('signupData / before --> ', signupData)
-
+    test.beforeEach(async ({ signupData, createdUserData, loginPage }) => {
       const res = await api.createUser(signupData)
-      signupData.id = res.userId
-
-      console.log('resCreate / before --> ', res)
-      console.log('signupData com ID / before --> ', signupData)
+      createdUserData.id = res.userId
 
       await loginPage.visitPage()
     })
 
-    test.afterEach(async ({ signupData }) => {
-      console.log('signupData ID / after --> ', signupData.id)
-      await api.deleteUser(signupData.id)
+    test.afterEach(async ({ createdUserData }) => {
+      await api.deleteUser(createdUserData.id)
     })
 
     test('Should log in with valid credentials', async ({ signupData, loginPage, homePage }) => {
