@@ -30,6 +30,7 @@ export class GlobalPage {
   }
 
   // Methods
+  // No Home Page methods yet
 }
 
 export default GlobalPage

@@ -24,9 +24,9 @@ class ServeRestAPI {
 
   async deleteUser(userId: string) {
     const context = await request.newContext()
-    const response = await context.delete(`${this.baseURL}/usuarios/${userId}`)
+    const res = await context.delete(`${this.baseURL}/usuarios/${userId}`)
     await context.dispose()
-    return response.ok()
+    return res.ok()
   }
 }
 
