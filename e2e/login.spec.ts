@@ -21,7 +21,7 @@ test.describe('On login page', () => {
       await api.deleteUser(createdUserData.id)
     })
 
-    test('Should log in with valid credentials', async ({ signupData, loginPage, homePage }) => {
+    test('Should log in with valid credentials', async ({ loginPage, signupData, homePage }) => {
       // Act
       await loginPage.fieldEmail.fill(signupData.email)
       await loginPage.fieldPassword.fill(signupData.password)

@@ -10,7 +10,7 @@ test.describe('On Signup page', () => {
     await page.goto(signupPage.urlPath)
   })
 
-  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ page, signupPage, homePage, signupData }) => {
+  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
@@ -36,7 +36,7 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toBeHidden() // not.toBeVisible()
   })
 
-  test('Should create a common user', { tag: ['@commonUser'] }, async ({ page, signupPage, homePage, signupData }) => {
+  test('Should create a common user', { tag: ['@commonUser'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Act
     await signupPage.fieldName.fill(signupData.nome)
     await signupPage.fieldEmail.fill(signupData.email)
