@@ -1,6 +1,13 @@
 import { type Locator, type Page, type APIRequestContext, expect, request } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
+interface UserData {
+  nome: string
+  email: string
+  password: string
+  administrador?: string | 'true'
+}
+
 export class SignupPage extends GlobalPage {
   // Variables
   readonly urlPath: string
@@ -22,7 +29,15 @@ export class SignupPage extends GlobalPage {
   }
 
   // Methods
-  // No Signup methods yet
+  async signup(user: UserData ) {
+    await this.fieldName.fill(user.nome)
+    await this.fieldEmail.fill(user.email)
+    await this.fieldPassword.fill(user.password)
+
+    user.administrador === 'true' && await this.checkboxAdmin.check()
+
+    await this.buttonSignup.click()
+  }
 }
 
 export default SignupPage

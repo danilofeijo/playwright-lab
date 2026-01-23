@@ -12,11 +12,7 @@ test.describe('On Signup page', () => {
 
   test('Should create an admin user', { tag: ['@adminUser'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Act
-    await signupPage.fieldName.fill(signupData.nome)
-    await signupPage.fieldEmail.fill(signupData.email)
-    await signupPage.fieldPassword.fill(signupData.password)
-    await signupPage.checkboxAdmin.click()
-    await signupPage.buttonSignup.click()
+    await signupPage.signup(signupData)
 
     // Assert
     await expect(page).toHaveURL(homePage.urlPathAdmin)
@@ -27,11 +23,11 @@ test.describe('On Signup page', () => {
   })
 
   test('Should create a common user', { tag: ['@commonUser'] }, async ({ signupPage, signupData, page, homePage }) => {
+    // Arrange
+    signupData.administrador = 'false'
+
     // Act
-    await signupPage.fieldName.fill(signupData.nome)
-    await signupPage.fieldEmail.fill(signupData.email)
-    await signupPage.fieldPassword.fill(signupData.password)
-    await signupPage.buttonSignup.click()
+    await signupPage.signup(signupData)
 
     // Assert
     await expect(page).toHaveURL(homePage.urlPathCommon)
