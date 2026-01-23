@@ -3,7 +3,6 @@ import { GlobalPage } from '../pages/global.page'
 
 export class SignupPage extends GlobalPage {
   // Variables
-  readonly request: APIRequestContext
   readonly urlPath: string
   readonly fieldName: Locator
   readonly fieldEmail: Locator
@@ -12,9 +11,8 @@ export class SignupPage extends GlobalPage {
   readonly buttonSignup: Locator
 
   // Constructor
-  constructor(page: Page, request: APIRequestContext) {
+  constructor(page: Page) {
     super(page)
-    this.request = request
     this.urlPath = '/cadastrarusuarios'
     this.fieldName = page.getByTestId('nome')
     this.fieldEmail = page.getByTestId('email')
