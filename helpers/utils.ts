@@ -44,7 +44,7 @@ export function generateUserData(isAdmin: boolean = false): {
   nome: string,
   email: string,
   password: string,
-  administrador: string
+  administrador: 'true' | 'false'
 } {
   const fullName = generateFullName()
   return {

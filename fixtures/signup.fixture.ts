@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test'
-import * as utils from '../helpers/utils'
+import { generateUserData } from '../helpers/utils'
 
 type SignupFixtures = {
   signupData: {
@@ -19,7 +19,7 @@ type SignupFixtures = {
 
 export const signupTest = base.extend<SignupFixtures>({
   signupData: async ({}, use) => {
-    const userData = utils.generateUserData(true)
+    const userData = generateUserData(true)
     await use(userData)
   },
 
