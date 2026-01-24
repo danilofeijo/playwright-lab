@@ -16,7 +16,7 @@ type LoginFixtures = {
   commonUser: LoginUser
 }
 
-export const authTest = base.extend<LoginFixtures>({
+export const loginTest = base.extend<LoginFixtures>({
   adminUser: async ({}, use) => {
     const userData = generateUserData(true)
     const res = await api.createUser(userData)

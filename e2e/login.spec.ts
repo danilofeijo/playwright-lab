@@ -1,34 +1,26 @@
 import { mergeTests, expect } from '@playwright/test'
 import { pageTest } from '../fixtures/pages.fixtures'
-import { signupTest } from '../fixtures/signup.fixture'
-import { api } from '../api/serverest-client'
+import { loginTest } from '../fixtures/login.fixture'
 
-const test = mergeTests(pageTest, signupTest)
+const test = mergeTests(
+  pageTest,
+  loginTest
+)
 
 test.describe('On login page', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ loginPage}) => {
+    await loginPage.visitPage()
   })
 
   test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
-    test.beforeEach(async ({ signupData, createdUserData, loginPage }) => {
-      const res = await api.createUser(signupData)
-      createdUserData.id = res.userId
-
-      await loginPage.visitPage()
-    })
-
-    test.afterEach(async ({ createdUserData }) => {
-      await api.deleteUser(createdUserData.id)
-    })
-
-    test('Should log in with valid credentials', async ({ loginPage, signupData, homePage }) => {
+    test('Should log in with valid credentials', async ({ loginPage, adminUser, homePage }) => {
       // Act
-      await loginPage.fieldEmail.fill(signupData.email)
-      await loginPage.fieldPassword.fill(signupData.password)
+      await loginPage.fieldEmail.fill(adminUser.email)
+      await loginPage.fieldPassword.fill(adminUser.password)
       await loginPage.buttonEntrar.click()
 
       // Assert
-      await expect(homePage.headerAdmin).toContainText(signupData.nome)
+      await expect(homePage.headerAdmin).toContainText(adminUser.nome)
     })
 
     test('Should not log in with wrong credentials', async () => {
