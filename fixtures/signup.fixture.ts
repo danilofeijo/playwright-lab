@@ -19,24 +19,13 @@ type SignupFixtures = {
 
 export const signupTest = base.extend<SignupFixtures>({
   signupData: async ({}, use) => {
-    const userName = utils.generateFullName()
-
-    await use({
-      nome: userName,
-      email: utils.generateEmail(userName),
-      password: utils.generatePassword(),
-      administrador: 'true',
-    })
+    const userData = utils.generateUserData(true)
+    await use(userData)
   },
 
   createdUserData: async ({ signupData }, use) => {
-    const { nome, email, password, administrador } = signupData
-
     await use({
-      nome,
-      email,
-      password,
-      administrador,
+      ...signupData,
       id: ''
     })
   }
