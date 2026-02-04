@@ -26,12 +26,12 @@ export const loginTest = base.extend<LoginFixtures>({
       id: res.userId,
     }
 
-    console.log(`[login.fixture] Admin user created: ${userCreated}`)
+    console.log('[login.fixture] Admin user created: ', userCreated.email)
     await use(userCreated)
 
     // Cleanup
     await api.deleteUser(userCreated.id)
-    console.log(`[login.fixture] Admin user deleted: ${userCreated.id}`)
+    console.log('[login.fixture] Admin user deleted: ', userCreated.id)
   },
 
   commonUser: async ({}, use) => {
@@ -43,12 +43,12 @@ export const loginTest = base.extend<LoginFixtures>({
       id: res.userId,
     }
 
-    console.log(`[login.fixture] Common user criado: ${userCreated.email}`)
+    console.log('[login.fixture] Common user criado: ', userCreated.email)
     await use(userCreated)
 
     // Cleanup
     await api.deleteUser(userCreated.id)
-    console.log(`[login.fixture] Common user deletado: ${userCreated.id}`)
+    console.log('[login.fixture] Common user deletado: ', userCreated.id)
   },
 })
 
