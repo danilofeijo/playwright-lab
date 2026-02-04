@@ -15,9 +15,7 @@ test.describe('On login page', () => {
   test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
     test('Should log in with valid credentials', async ({ loginPage, adminUser, homePage }) => {
       // Act
-      await loginPage.fieldEmail.fill(adminUser.email)
-      await loginPage.fieldPassword.fill(adminUser.password)
-      await loginPage.buttonEntrar.click()
+      await loginPage.loginUser(adminUser.email, adminUser.password)
 
       // Assert
       await expect(homePage.headerAdmin).toContainText(adminUser.nome)
