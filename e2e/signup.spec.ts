@@ -6,10 +6,6 @@ import { signupTest } from '../fixtures/signup.fixture'
 const test = mergeTests(pageTest, signupTest)
 
 test.describe('On Signup page', () => {
-  test.beforeEach(async ({ page, signupPage }) => {
-    await page.goto(signupPage.urlPath)
-  })
-
   test('Should create an admin user', { tag: ['@adminUser'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Act
     await signupPage.signup(signupData)
