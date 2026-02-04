@@ -1,42 +1,31 @@
 import { test as base } from '@playwright/test'
-import * as utils from '../helpers/utils'
+import { generateUserData } from '../helpers/utils'
 
 type SignupFixtures = {
   signupData: {
     nome: string,
     email: string,
     password: string,
-    administrador: string
+    administrador: 'true' | 'false'
   }
   createdUserData: {
     nome: string,
     email: string,
     password: string,
-    administrador: string,
+    administrador: 'true' | 'false',
     id: string
   }
 }
 
 export const signupTest = base.extend<SignupFixtures>({
   signupData: async ({}, use) => {
-    const userName = utils.generateFullName()
-
-    await use({
-      nome: userName,
-      email: utils.generateEmail(userName),
-      password: utils.generatePassword(),
-      administrador: 'true',
-    })
+    const userData = generateUserData(true)
+    await use(userData)
   },
 
   createdUserData: async ({ signupData }, use) => {
-    const { nome, email, password, administrador } = signupData
-
     await use({
-      nome,
-      email,
-      password,
-      administrador,
+      ...signupData,
       id: ''
     })
   }

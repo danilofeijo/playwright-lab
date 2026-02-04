@@ -13,11 +13,11 @@ export function generateFullName(): string {
 
 /**
  * Generates a random email
- * @param {string} [alias] - Optional alias for email
+ * @param {string} [emailAlias] - The alias for email
  * @returns {string} A random email address
  */
-export function generateEmail(givenAlias?: string): string {
-  const alias = givenAlias ?? generateFullName()
+export function generateEmail(emailAlias?: string): string {
+  const alias = emailAlias ?? generateFullName()
 
   return `${alias.toLowerCase().replace(/\s+/g, '')}@playwright-lab.com`
 }
@@ -33,4 +33,24 @@ export function generatePassword(): string {
     // Have between 8 and 12 characters being
     // Uppercase, lowercase, number and special
   })
+}
+
+/**
+ * Generates user data to be signed up
+ * @param {boolean} [isAdmin=false] - Set true to get Admin user data
+ * @returns {object} An object containing fake and random User Data
+ */
+export function generateUserData(isAdmin: boolean = false): {
+  nome: string,
+  email: string,
+  password: string,
+  administrador: 'true' | 'false'
+} {
+  const fullName = generateFullName()
+  return {
+    nome: fullName,
+    email: generateEmail(fullName),
+    password: generatePassword(),
+    administrador: isAdmin ? 'true' : 'false',
+  }
 }

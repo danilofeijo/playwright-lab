@@ -18,12 +18,23 @@ export class LoginPage extends GlobalPage {
   }
 
   // Methods
+
+  /**
+   * Visit login page
+   */
   async visitPage() {
     await this.page.goto(this.urlPath)
+  }
 
-    await expect(this.fieldEmail).toBeVisible()
-    await expect(this.fieldPassword).toBeVisible()
-    await expect(this.buttonEntrar).toBeVisible()
+  /**
+   * 
+   * @param {string} [userEmail] - Login user e-mail
+   * @param {string} userPass - Login user pass
+   */
+  async loginUser(userEmail: string, userPass: string) {
+    await this.fieldEmail.fill(userEmail)
+    await this.fieldPassword.fill(userPass)
+    await this.buttonEntrar.click()
   }
 }
 

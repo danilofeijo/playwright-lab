@@ -17,8 +17,9 @@ export const pageTest = base.extend<PagesFixtures>({
     await use(globalPage)
   },
 
-  signupPage: async ({ page, request }, use) => {
-    const signupPage = new SignupPage(page, request)
+  signupPage: async ({ page }, use) => {
+    const signupPage = new SignupPage(page)
+    await page.goto(signupPage.urlPath)
     await use(signupPage)
   },
 
