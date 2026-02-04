@@ -5,7 +5,7 @@ interface UserData {
   nome: string
   email: string
   password: string
-  administrador?: string | 'true'
+  administrador?: 'true' | 'false'
 }
 
 export class SignupPage extends GlobalPage {

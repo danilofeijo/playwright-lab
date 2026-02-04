@@ -6,13 +6,13 @@ type SignupFixtures = {
     nome: string,
     email: string,
     password: string,
-    administrador: string
+    administrador: 'true' | 'false'
   }
   createdUserData: {
     nome: string,
     email: string,
     password: string,
-    administrador: string,
+    administrador: 'true' | 'false',
     id: string
   }
 }
