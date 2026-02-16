@@ -4,11 +4,14 @@
   "description": "<!-- [![E2E tests](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml/badge.svg)](https://github.com/danilofeijo/cypress-lab/actions/workflows/node.js.yml) --> [![Badge ServeRest](https://img.shields.io/badge/API-ServeRest-green)](https://github.com/ServeRest/ServeRest/) ![GitHub](https://img.shields.io/github/license/danilofeijo/playwright-lab)",
   "main": "index.js",
   "scripts": {
-    "ui:dev": "ENV=dev npx playwright test e2e/ --retries=0",
-    "ui:devui": "ENV=dev npx playwright test e2e/ --retries=0 --ui",
-    "ui:stage": "ENV=stg npx playwright test e2e/ --retries=1 --reporter=dot",
+    "ui:dev": "ENV=dev npx playwright test e2e/",
+    "ui:devui": "ENV=dev npx playwright test e2e/ --ui",
+    "ui:stg": "ENV=stg npx playwright test e2e/ --retries=1 --reporter=dot",
+    "test:dev": "ENV=dev npx playwright test e2e/",
+    "test:stg": "ENV=stg npx playwright test e2e/",
     "check:eslint": "npx eslint .",
-    "check:prettier": "npx prettier --check ."
+    "check:prettier": "npx prettier --check .",
+    "check:all": "npm run check:eslint && npm run check:prettier && npm run test:dev"
   },
   "repository": {
     "type": "git",
