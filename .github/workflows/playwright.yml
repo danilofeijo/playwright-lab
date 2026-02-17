@@ -45,4 +45,4 @@ jobs:
       with:
         name: Playwright Tests
         path: playwright-report/index.html
-        # reporter: jest-junit
+        reporter: jest-junit
