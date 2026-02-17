@@ -21,7 +21,7 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 
 - ✅ Test structure to ease maintenance - [Page Object model][ref-doc-pom]
 - ✅ Fake but realistic test data - [Faker][tool-faker]
-- ❌ Multi-environment support - [Environment variables configuration][ref-article-multienv]
+- ✅ Multi-environment support - [Environment variables configuration][ref-article-multienv]
 - ✅ Test retry to identify and mitigate flakiness - [Playright test retry ][ref-doc-retry]
 - ✅ Triggered and scheduled execution - [GitHub Actions][ref-doc-ghactions]
 - ✅ Code static analysis - [typescript-esLint][tool-tseslint]
@@ -30,6 +30,8 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 
 - ✅ Test Parallelism - [Playwright config][ref-doc-parallelism]
 - ✅ Defined code format - [Prettier][tool-prettier], an opinionated code formatter
+- ✅ CI test execution - Run scheduled tests against multiple environments (Dev and Stage)
+- 🔄 API Mocking - to simulate external unpredictable scenarios
 - ❌ Readable commit messages - [Conventional Commits][tool-convCommits] defines convention, [commitlint][tool-commitlint] assure them
 - ❌ Enhanced commits - [Husky][tool-husky], automatically lint commit messages, code, and run tests
 - ❌ Visual repport about test results - [mochawesome][tool-mochawesome]
@@ -45,7 +47,7 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 3. Install Playwright
    `npx playwright install`
 
-** Remember to assure that you have NodeJs up and running, once we are talking about npm.
+** Important! Assure that you have NodeJs up and running, given we are talking about npm.
   
 ## CLI commands
 
@@ -66,16 +68,17 @@ Playwright has many [parameters to run tests][ref-doc-runTests]. You might like 
 
 ### Shortcuts
 Here are some shortcuts to help you develop, debug and fix tests. Often used for in common days.
-- `npm run e2e:ui-dev` - Gives you a better dev experience.
+- `npm run ui:devui` - Gives you a better dev experience.
   - Open Playwright UI Mode (*--ui*);
-  - In a specific Project environment (*--project dev-env*);
-  - Without any retry in case of failure (*--retries 0*)
-- `npm run e2e:dev` - Better for a sanity check after some code change.
+  - In dev environment (*ENV=dev*);
+  - With no retries on failure (*--retries 0*)
+- `npm run ui:dev` - Better for a sanity check after some code change.
   - Runs all tests scenarios;
-  - In a specific Project environment (*--project dev-env*);
-  - With one retry in case of failure  (*--retries 1*)
+  - In dev environment (*ENV=dev*);
+  - With no retries on failure (*--retries 0*)
 - `npm run check:eslint` - eslint checks - code static analysis
 - `npm run check:prettier` - prettier checks - code formatter
+- `npm run check:all` - eslint and prettier checks, test execution
 
 ## References
 
