@@ -33,8 +33,7 @@ test.describe('On login page', () => {
   test.describe('as Common user', () => {
     test('Should not log in after Internal Server Error', async ({ page, loginPage, adminUser, homePage }) => {
       // Arrange
-      // TODO use BASE_URL_API ENV variable
-      await page.route('https://serverest.dev/login', serverestMocks.error500)
+      await page.route(`${process.env.BASE_URL_API}/login`, serverestMocks.error500)
 
       const userData = {
         ...adminUser,
@@ -51,8 +50,7 @@ test.describe('On login page', () => {
       )
 
       // Assert
-      // TODO use dynamic URL
-      await expect(page.url()).toBe('https://front.serverest.dev/login')
+      await expect(page.url()).toBe(`${process.env.BASE_URL_FRONT}/login`)
       await expect(homePage.headerAdmin).toHaveCount(0)
       await expect(response.status()).toBe(500)
       await expect(response.statusText()).toBe('Internal Server Error')
