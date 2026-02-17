@@ -1,19 +1,27 @@
-import { request } from '@playwright/test'
-// TODO Apply url by environment
-// import envUrl from './utils/environment'
+import { request, APIRequestContext } from '@playwright/test'
 
 class ServeRestAPI {
-  private baseURL = 'https://serverest.dev'
+  private baseURL: string
+  private context?: APIRequestContext
+
+  constructor(baseURL?: string) {
+    this.baseURL = baseURL ?? process.env.BASE_URL_API ?? 'https://serverest.dev'
+  }
+
+  private async getContext(): Promise<APIRequestContext> {
+    if (!this.context) {
+      this.context = await request.newContext({
+        baseURL: this.baseURL,
+        extraHTTPHeaders: { 'Content-Type': 'application/json' }
+      })
+    }
+    return this.context
+  }
 
   async createUser(userData: { nome: string, email: string, password: string, administrador: string }) {
-    const context = await request.newContext()
-    const response = await context.post(
-      `${this.baseURL}/usuarios`,
-      { data: userData }
-    )
-
+    const ctx = await this.getContext()
+    const response = await ctx.post('/usuarios', { data: userData })
     const body = await response.json()
-    await context.dispose()
 
     return {
       success: response.ok(),
@@ -23,10 +31,16 @@ class ServeRestAPI {
   }
 
   async deleteUser(userId: string) {
-    const context = await request.newContext()
-    const res = await context.delete(`${this.baseURL}/usuarios/${userId}`)
-    await context.dispose()
-    return res.ok()
+    const ctx = await this.getContext()
+    const response = await ctx.delete(`/usuarios/${userId}`)
+    return response.ok()
+  }
+
+  async dispose() {
+    if (this.context) {
+      await this.context.dispose()
+      this.context = undefined
+    }
   }
 }
 

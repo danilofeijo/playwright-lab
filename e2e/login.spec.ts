@@ -12,7 +12,7 @@ test.describe('On login page', () => {
     await loginPage.visitPage()
   })
 
-  test.describe('as Admin user', { tag: ['@adminUser'] }, () => {
+  test.describe('as Admin user', { tag: ['@smoke'] }, () => {
     test('Should log in with valid credentials', async ({ loginPage, adminUser, homePage }) => {
       // Act
       await loginPage.loginUser(adminUser.email, adminUser.password)
@@ -29,7 +29,7 @@ test.describe('On login page', () => {
     })
   })
 
-  test.describe('as Common user', { tag: ['@commonUser'] }, () => {
+  test.describe('as Common user', () => {
     // TODO - List tests to develop
   })
 })

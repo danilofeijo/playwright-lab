@@ -11,6 +11,10 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [dev, stg]
+      fail-fast: true # If one job fail, abbort parallel jobs
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -20,12 +24,25 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      # run: npx playwright test
-      run: npx playwright test e2e/ --project=qa-env --reporter=dot
+    - name: Run Playwright tests (${{ matrix.env }})
+      env:
+        ENV: ${{ matrix.env }}
+        BASE_URL_FRONT: ${{ secrets.BASE_URL_FRONT }}
+        BASE_URL_API: ${{ secrets.BASE_URL_API }}
+        HEADLESS: 'true'
+        CI: 'true'
+      # run: ENV=stg npx playwright test e2e/ --reporter=dot
+      run: npm run test:${{ matrix.env }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: playwright-report-${{ matrix.env }}
         path: playwright-report/
         retention-days: 30
+    # - name: Generate HTML report
+    #   uses: dorny/test-reporter@v1
+    #   if: always()
+    #   with:
+    #     name: Playwright Tests
+    #     path: playwright-report/index.html
+    #     reporter: jest-junit
