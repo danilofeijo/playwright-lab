@@ -1,6 +1,7 @@
 import { mergeTests, expect } from '@playwright/test'
 import { pageTest } from '../fixtures/pages.fixtures'
 import { loginTest } from '../fixtures/login.fixture'
+import { serverestMocks } from './mocks'
 
 const test = mergeTests(
   pageTest,
@@ -8,7 +9,7 @@ const test = mergeTests(
 )
 
 test.describe('On login page', () => {
-  test.beforeEach(async ({ loginPage}) => {
+  test.beforeEach(async ({ loginPage }) => {
     await loginPage.visitPage()
   })
 
@@ -30,6 +31,33 @@ test.describe('On login page', () => {
   })
 
   test.describe('as Common user', () => {
-    // TODO - List tests to develop
+    test('Should not log in after Internal Server Error', async ({ page, loginPage, adminUser, homePage }) => {
+      // Arrange
+      // TODO use BASE_URL_API ENV variable
+      await page.route('https://serverest.dev/login', serverestMocks.error500)
+
+      const userData = {
+        ...adminUser,
+        administrador: 'false',
+        }
+
+      // Act
+      await loginPage.loginUser(userData.email, userData.password)
+
+      const response = await page.waitForResponse(
+        response =>
+          response.status() === 500 &&
+          response.request().method() === 'POST'
+      )
+
+      // Assert
+      // TODO use dynamic URL
+      await expect(page.url()).toBe('https://front.serverest.dev/login')
+      await expect(homePage.headerAdmin).toHaveCount(0)
+      await expect(response.status()).toBe(500)
+      await expect(response.statusText()).toBe('Internal Server Error')
+    })
+
+    // TODO - List more tests to develop
   })
 })
