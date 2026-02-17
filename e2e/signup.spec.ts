@@ -6,7 +6,7 @@ import { signupTest } from '../fixtures/signup.fixture'
 const test = mergeTests(pageTest, signupTest)
 
 test.describe('On Signup page', () => {
-  test('Should create an admin user', { tag: ['@adminUser'] }, async ({ signupPage, signupData, page, homePage }) => {
+  test('Should create an admin user', { tag: ['@smoke'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Act
     await signupPage.signup(signupData)
 
@@ -18,7 +18,7 @@ test.describe('On Signup page', () => {
     await expect(homePage.menuCarrinho).toBeHidden() // or .not.toBeVisible()
   })
 
-  test('Should create a common user', { tag: ['@commonUser'] }, async ({ signupPage, signupData, page, homePage }) => {
+  test('Should create a common user', { tag: ['@smoke'] }, async ({ signupPage, signupData, page, homePage }) => {
     // Arrange
     signupData.administrador = 'false'
 
