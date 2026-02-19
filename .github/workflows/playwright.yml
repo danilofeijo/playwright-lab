@@ -8,23 +8,23 @@ on:
     branches: [main]
   workflow_dispatch:
 jobs:
-  # lint-checks:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-  #   strategy:
-  #     matrix:
-  #       check: [eslint, prettier]  # Define Parallel checks
-  #     fail-fast: true
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - uses: actions/setup-node@v4
-  #     with:
-  #       node-version: lts/*
-  #       cache: 'npm'  # Cache 50% faster
-  #   - name: Install dependencies
-  #     run: npm ci --frozen-lockfile
-  #   - name: ${{ matrix.check }}
-  #     run: npm run check:${{ matrix.check }}
+  lint-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        check: [eslint, prettier] # Define Parallel checks
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm' # Cache 50% faster
+      - name: Install dependencies
+        run: npm ci --frozen-lockfile
+      - name: ${{ matrix.check }}
+        run: npm run check:${{ matrix.check }}
   ui-tests:
     timeout-minutes: 30
     runs-on: ubuntu-latest
