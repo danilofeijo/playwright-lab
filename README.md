@@ -32,10 +32,10 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 - ✅ Defined code format - [Prettier][tool-prettier], an opinionated code formatter
 - ✅ CI test execution - Run scheduled tests against multiple environments (Dev and Stage)
 - ✅ API Mocking - to simulate external unpredictable scenarios
-- 🔄 Test Tagging - to filter and prioritize more relevant tests
+- ✅ Test Tagging - to filter and prioritize more relevant tests
+- 🔄 Visual repport about test results - [mochawesome][tool-mochawesome]
 - ❌ Readable commit messages - [Conventional Commits][tool-convCommits] defines convention, [commitlint][tool-commitlint] assure them
 - ❌ Enhanced commits - [Husky][tool-husky], automatically lint commit messages, code, and run tests
-- ❌ Visual repport about test results - [mochawesome][tool-mochawesome]
 
 ## Setup
 
@@ -160,11 +160,11 @@ Fase adicional
 • ✅ Jobs rodando separadamente (test e linters)
 
 Próximas Fases
-🔄 Fase 4: Testes por Tags (0%)
+✅ Fase 4: Testes por Tags (0%)
   1. Definir tags  @smoke ,  @regression
   2. Scripts filtrados no  package.json 
   3. Workflow CI com execução seletiva
-⏳ Fase 5: Relatórios e Análise (0%)
+🔄 Fase 5: Relatórios e Análise (0%)
   1. Allure Report integrado
   2. Screenshots em falhas
   3. Métricas de cobertura
