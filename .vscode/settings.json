@@ -7,5 +7,13 @@
     "msedge",
     "testid",
     "usuarios"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint":"explicit",
+    "source.fixAll.prettier": "explicit"
+  },
+  "eslint.validate": ["typescript", "javascript"]
 }

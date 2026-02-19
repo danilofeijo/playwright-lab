@@ -47,8 +47,8 @@ test.describe('On login page', () => {
 
       // Assert
       await expect(homePage.headerAdmin).toHaveCount(0)
-      await expect(response.status()).toBe(500)
-      await expect(response.statusText()).toBe('Internal Server Error')
+      expect(response.status()).toBe(500)
+      expect(response.statusText()).toBe('Internal Server Error')
       await expect(page).toHaveURL(loginPage.urlPath)
     })
 
