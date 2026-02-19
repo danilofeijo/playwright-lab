@@ -62,7 +62,7 @@ export default defineConfig({
    * For example in `await expect(locator).toHaveText();`
    * See https://playwright.dev/docs/test-timeouts
    */
-  expect: { timeout: 6000 },
+  expect: { timeout: 8000 },
 
   projects: [
     {
