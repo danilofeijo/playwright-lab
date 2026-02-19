@@ -16,8 +16,8 @@ jobs:
         check: [eslint, prettier] # Define Parallel checks
       fail-fast: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: 'npm' # Cache 50% faster
@@ -34,15 +34,17 @@ jobs:
         env: [dev, stg] # Define parallel execution
       fail-fast: true # If one job fail, abbort parallel jobs
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: 'npm'
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
+      # - name: Run Playwright  # ← Docker mágico
+      #   uses: microsoft/playwright-github-action@v2
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium --with-deps
       - name: Run Playwright tests (${{ matrix.env }})
         env:
           ENV: ${{ matrix.env }}
@@ -52,7 +54,7 @@ jobs:
           CI: 'true'
         # run: ENV=stg npx playwright test e2e/ --reporter=dot
         run: npm run test:${{ matrix.env }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.env }}
