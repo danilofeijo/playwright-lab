@@ -1,4 +1,4 @@
-import { type Locator, type Page, type APIRequestContext, expect, request } from '@playwright/test'
+import { type Locator, type Page } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
 interface UserData {
@@ -31,15 +31,17 @@ export class SignupPage extends GlobalPage {
   // Methods
 
   /**
-   * 
+   *
    * @param {object} user - User data do be signed up
    */
-  async signup(user: UserData ) {
+  async signup(user: UserData) {
     await this.fieldName.fill(user.nome)
     await this.fieldEmail.fill(user.email)
     await this.fieldPassword.fill(user.password)
 
-    user.administrador === 'true' && await this.checkboxAdmin.check()
+    if (user.administrador === 'true') {
+      await this.checkboxAdmin.check()
+    }
 
     await this.buttonSignup.click()
   }

@@ -1,18 +1,18 @@
 import { test as base } from '@playwright/test'
 import { generateUserData } from '../helpers/utils'
 
-type SignupFixtures = {
+interface SignupFixtures {
   signupData: {
-    nome: string,
-    email: string,
-    password: string,
+    nome: string
+    email: string
+    password: string
     administrador: 'true' | 'false'
   }
   createdUserData: {
-    nome: string,
-    email: string,
-    password: string,
-    administrador: 'true' | 'false',
+    nome: string
+    email: string
+    password: string
+    administrador: 'true' | 'false'
     id: string
   }
 }
@@ -26,7 +26,7 @@ export const signupTest = base.extend<SignupFixtures>({
   createdUserData: async ({ signupData }, use) => {
     await use({
       ...signupData,
-      id: ''
+      id: '',
     })
-  }
+  },
 })

@@ -12,13 +12,13 @@ class ServeRestAPI {
     if (!this.context) {
       this.context = await request.newContext({
         baseURL: this.baseURL,
-        extraHTTPHeaders: { 'Content-Type': 'application/json' }
+        extraHTTPHeaders: { 'Content-Type': 'application/json' },
       })
     }
     return this.context
   }
 
-  async createUser(userData: { nome: string, email: string, password: string, administrador: string }) {
+  async createUser(userData: { nome: string; email: string; password: string; administrador: string }) {
     const ctx = await this.getContext()
     const response = await ctx.post('/usuarios', { data: userData })
     const body = await response.json()
@@ -26,7 +26,7 @@ class ServeRestAPI {
     return {
       success: response.ok(),
       userId: body._id,
-      message: body.message
+      message: body.message,
     }
   }
 

@@ -2,8 +2,7 @@ import { test as base } from '@playwright/test'
 import { generateUserData } from '../helpers/utils'
 import { api } from '../api/serverest-client' // ou do path que você definiu
 
-// Tipo de usuário que os testes vão receber
-type LoginUser = {
+interface LoginUser {
   id: string
   nome: string
   email: string
@@ -11,7 +10,7 @@ type LoginUser = {
   administrador: 'true' | 'false'
 }
 
-type LoginFixtures = {
+interface LoginFixtures {
   adminUser: LoginUser
   commonUser: LoginUser
 }

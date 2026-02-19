@@ -40,10 +40,10 @@ export function generatePassword(): string {
  * @param {boolean} [isAdmin=false] - Set true to get Admin user data
  * @returns {object} An object containing fake and random User Data
  */
-export function generateUserData(isAdmin: boolean = false): {
-  nome: string,
-  email: string,
-  password: string,
+export function generateUserData(isAdmin = false): {
+  nome: string
+  email: string
+  password: string
   administrador: 'true' | 'false'
 } {
   const fullName = generateFullName()

@@ -1,10 +1,10 @@
-import {test as base } from '@playwright/test'
+import { test as base } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 import { SignupPage } from '../pages/signup.page'
 import { LoginPage } from '../pages/login.page'
 import { HomePage } from '../pages/home.page'
 
-type PagesFixtures = {
+interface PagesFixtures {
   globalPage: GlobalPage
   signupPage: SignupPage
   loginPage: LoginPage

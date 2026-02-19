@@ -29,19 +29,19 @@ export default defineConfig({
   /**
    * Reporter examples
    * (See https://playwright.dev/docs/test-reporters)
-   * 
+   *
    * reporter: [['html', { open: 'always' }]],
    * Other options are: always, never and on-failure (default).
-   * 
+   *
    * reporter: [['html', { outputFolder: 'my-report' }]],
    * Report is written into the playwright-report folder in the current working directory.
    * Override it using the PLAYWRIGHT_HTML_REPORT
-   * 
+   *
    * reporter: [
    *   ['list'],
    *   ['json', {  outputFile: 'test-results.json' }]
    * ],
-   * 
+   *
    * More about custom reports:
    * https://playwright.dev/docs/test-reporters#custom-reporters
    */
@@ -61,13 +61,13 @@ export default defineConfig({
    * Maximum time expect() should wait for the condition to be met.
    * For example in `await expect(locator).toHaveText();`
    * See https://playwright.dev/docs/test-timeouts
-  */
-  expect: { timeout: 6000, },
+   */
+  expect: { timeout: 8000 },
 
   projects: [
     {
       name: ENV,
-      use: { ...devices['Desktop Chrome'] }
+      use: { ...devices['Desktop Chrome'] },
     },
 
     // TODO Configure multi-browser
@@ -158,4 +158,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})

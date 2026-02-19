@@ -1,6 +1,7 @@
 import eslint from '@eslint/js'
 import prettierConfig from 'eslint-config-prettier'
 import tseslint from 'typescript-eslint'
+import playwright from 'eslint-plugin-playwright'
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -8,9 +9,18 @@ export default tseslint.config(
   ...tseslint.configs.stylistic,
   prettierConfig,
   {
+    files: ['e2e/**/*.ts', 'fixtures/**/*.ts', 'pages/**/*.ts', 'api/**/*.ts'],
+    plugins: { playwright },
+    rules: {
+      ...playwright.configs['recommended'].rules,
+    },
+    ignores: ['test-results/', 'playwright-report', 'summary.json'],
+  },
+  {
     ignores: [
-      // Playwright Specific
+      // Node
       'node_modules/',
+      // Playwright Specific
       'test-results/',
       'playwright-report',
       'summary.json',

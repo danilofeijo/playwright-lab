@@ -1,4 +1,4 @@
-import { type Locator, type Page, expect } from '@playwright/test'
+import { type Locator, type Page } from '@playwright/test'
 import { GlobalPage } from '../pages/global.page'
 
 export class LoginPage extends GlobalPage {
@@ -27,7 +27,7 @@ export class LoginPage extends GlobalPage {
   }
 
   /**
-   * 
+   *
    * @param {string} [userEmail] - Login user e-mail
    * @param {string} userPass - Login user pass
    */

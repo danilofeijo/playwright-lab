@@ -11,11 +11,11 @@ test.describe('On Signup page', () => {
     await signupPage.signup(signupData)
 
     // Assert
-    await expect(page).toHaveURL(homePage.urlPathAdmin)
     await expect(homePage.headerAdmin).toBeVisible() // or .not.toBeHidden()
     await expect(homePage.headerAdmin).toContainText(signupData.nome)
     await expect(homePage.menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
     await expect(homePage.menuCarrinho).toBeHidden() // or .not.toBeVisible()
+    await expect(page).toHaveURL(homePage.urlPathAdmin)
   })
 
   test('Should create a common user', { tag: ['@smoke'] }, async ({ signupPage, signupData, page, homePage }) => {
@@ -26,10 +26,10 @@ test.describe('On Signup page', () => {
     await signupPage.signup(signupData)
 
     // Assert
-    await expect(page).toHaveURL(homePage.urlPathCommon)
     await expect(homePage.headerCommon).toBeVisible()
     await expect(homePage.headerCommon).toContainText('Serverest Store')
     await expect(homePage.menuCarrinho).toHaveText('Carrinho')
     await expect(homePage.menuCadastrarUsuarios).toBeHidden()
+    await expect(page).toHaveURL(homePage.urlPathCommon)
   })
 })

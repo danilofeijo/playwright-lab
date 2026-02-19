@@ -8,37 +8,58 @@ on:
     branches: [main]
   workflow_dispatch:
 jobs:
-  test:
-    timeout-minutes: 60
+  lint-checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
-        env: [dev, stg]
+        check: [eslint, prettier] # Define Parallel checks
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm' # Cache 50% faster
+      - name: Install dependencies
+        run: npm ci --frozen-lockfile
+      - name: ${{ matrix.check }}
+        run: npm run check:${{ matrix.check }}
+  ui-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    needs: lint-checks # Expect lint-checks pass to start
+    strategy:
+      matrix:
+        env: [dev, stg] # Define parallel execution
       fail-fast: true # If one job fail, abbort parallel jobs
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests (${{ matrix.env }})
-      env:
-        ENV: ${{ matrix.env }}
-        BASE_URL_FRONT: ${{ secrets.BASE_URL_FRONT }}
-        BASE_URL_API: ${{ secrets.BASE_URL_API }}
-        HEADLESS: 'true'
-        CI: 'true'
-      # run: ENV=stg npx playwright test e2e/ --reporter=dot
-      run: npm run test:${{ matrix.env }}
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report-${{ matrix.env }}
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm ci
+      # - name: Run Playwright  # ← Docker mágico
+      #   uses: microsoft/playwright-github-action@v2
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+      - name: Run Playwright tests (${{ matrix.env }})
+        env:
+          ENV: ${{ matrix.env }}
+          BASE_URL_FRONT: ${{ secrets.BASE_URL_FRONT }}
+          BASE_URL_API: ${{ secrets.BASE_URL_API }}
+          HEADLESS: 'true'
+          CI: 'true'
+        # run: ENV=stg npx playwright test e2e/ --reporter=dot
+        run: npm run test:${{ matrix.env }}
+      - uses: actions/upload-artifact@v6
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-${{ matrix.env }}
+          path: playwright-report/
+          retention-days: 30
     # - name: Generate HTML report
     #   uses: dorny/test-reporter@v1
     #   if: always()
