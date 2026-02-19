@@ -3,7 +3,7 @@ import { generateUserData } from '../helpers/utils'
 import { api } from '../api/serverest-client' // ou do path que você definiu
 
 // Tipo de usuário que os testes vão receber
-type LoginUser = {
+interface LoginUser {
   id: string
   nome: string
   email: string
@@ -11,12 +11,13 @@ type LoginUser = {
   administrador: 'true' | 'false'
 }
 
-type LoginFixtures = {
+interface LoginFixtures {
   adminUser: LoginUser
   commonUser: LoginUser
 }
 
 export const loginTest = base.extend<LoginFixtures>({
+  /* eslint-disable-next-line no-empty-pattern */
   adminUser: async ({}, use) => {
     const userData = generateUserData(true)
     const res = await api.createUser(userData)
@@ -34,6 +35,7 @@ export const loginTest = base.extend<LoginFixtures>({
     console.log('[login.fixture] Admin user deleted: ', userCreated.id)
   },
 
+  /* eslint-disable-next-line no-empty-pattern */
   commonUser: async ({}, use) => {
     const userData = generateUserData(false)
     const res = await api.createUser(userData)

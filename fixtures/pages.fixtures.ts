@@ -4,7 +4,7 @@ import { SignupPage } from '../pages/signup.page'
 import { LoginPage } from '../pages/login.page'
 import { HomePage } from '../pages/home.page'
 
-type PagesFixtures = {
+interface PagesFixtures {
   globalPage: GlobalPage
   signupPage: SignupPage
   loginPage: LoginPage
