@@ -41,9 +41,9 @@ export function generatePassword(): string {
  * @returns {object} An object containing fake and random User Data
  */
 export function generateUserData(isAdmin = false): {
-  nome: string,
-  email: string,
-  password: string,
+  nome: string
+  email: string
+  password: string
   administrador: 'true' | 'false'
 } {
   const fullName = generateFullName()

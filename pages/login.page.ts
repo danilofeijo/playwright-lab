@@ -27,7 +27,7 @@ export class LoginPage extends GlobalPage {
   }
 
   /**
-   * 
+   *
    * @param {string} [userEmail] - Login user e-mail
    * @param {string} userPass - Login user pass
    */

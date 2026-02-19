@@ -3,10 +3,7 @@ import { pageTest } from '../fixtures/pages.fixtures'
 import { loginTest } from '../fixtures/login.fixture'
 import { serverestMocks } from './mocks'
 
-const test = mergeTests(
-  pageTest,
-  loginTest
-)
+const test = mergeTests(pageTest, loginTest)
 
 test.describe('On login page', () => {
   test.beforeEach(async ({ loginPage }) => {
@@ -39,15 +36,13 @@ test.describe('On login page', () => {
       const userData = {
         ...adminUser,
         administrador: 'false',
-        }
+      }
 
       // Act
       await loginPage.loginUser(userData.email, userData.password)
 
       const response = await page.waitForResponse(
-        response =>
-          response.status() === 500 &&
-          response.request().method() === 'POST'
+        (response) => response.status() === 500 && response.request().method() === 'POST'
       )
 
       // Assert

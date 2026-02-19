@@ -4,7 +4,7 @@ export const serverestMocks = {
   error500: async (route: Route) => {
     route.fulfill({
       status: 500,
-      body: 'Internal Server Error'
+      body: 'Internal Server Error',
     })
   },
 

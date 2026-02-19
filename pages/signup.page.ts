@@ -31,10 +31,10 @@ export class SignupPage extends GlobalPage {
   // Methods
 
   /**
-   * 
+   *
    * @param {object} user - User data do be signed up
    */
-  async signup(user: UserData ) {
+  async signup(user: UserData) {
     await this.fieldName.fill(user.nome)
     await this.fieldEmail.fill(user.email)
     await this.fieldPassword.fill(user.password)
