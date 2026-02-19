@@ -28,7 +28,7 @@ jobs:
   ui-tests:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    # needs: lint-checks  # Expect lint-checks pass to start
+    needs: lint-checks # Expect lint-checks pass to start
     strategy:
       matrix:
         env: [dev, stg] # Define parallel execution
