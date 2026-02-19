@@ -5,13 +5,13 @@ import { serverestMocks } from './mocks'
 
 const test = mergeTests(pageTest, loginTest)
 
-test.describe('On login page', () => {
+test.describe('On login page', { tag: ['@ui'] }, () => {
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.visitPage()
   })
 
-  test.describe('as Admin user', { tag: ['@smoke'] }, () => {
-    test('Should log in with valid credentials', async ({ page, loginPage, adminUser, homePage }) => {
+  test.describe('as Admin user', () => {
+    test('Should log in with valid credentials @smoke', async ({ page, loginPage, adminUser, homePage }) => {
       // Act
       await loginPage.loginUser(adminUser.email, adminUser.password)
 
