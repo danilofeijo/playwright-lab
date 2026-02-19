@@ -40,7 +40,7 @@ export function generatePassword(): string {
  * @param {boolean} [isAdmin=false] - Set true to get Admin user data
  * @returns {object} An object containing fake and random User Data
  */
-export function generateUserData(isAdmin: boolean = false): {
+export function generateUserData(isAdmin = false): {
   nome: string,
   email: string,
   password: string,
