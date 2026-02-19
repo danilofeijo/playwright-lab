@@ -24,14 +24,15 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 - ✅ Multi-environment support - [Environment variables configuration][ref-article-multienv]
 - ✅ Test retry to identify and mitigate flakiness - [Playright test retry ][ref-doc-retry]
 - ✅ Triggered and scheduled execution - [GitHub Actions][ref-doc-ghactions]
-- ✅ Code static analysis - [typescript-esLint][tool-tseslint]
+- ✅ Test Parallelism - [Playwright config][ref-doc-parallelism]
 
 ### Nice to Have
 
-- ✅ Test Parallelism - [Playwright config][ref-doc-parallelism]
+- ✅ Code static analysis - [typescript-esLint][tool-tseslint]
 - ✅ Defined code format - [Prettier][tool-prettier], an opinionated code formatter
 - ✅ CI test execution - Run scheduled tests against multiple environments (Dev and Stage)
-- 🔄 API Mocking - to simulate external unpredictable scenarios
+- ✅ API Mocking - to simulate external unpredictable scenarios
+- 🔄 Test Tagging - to filter and prioritize more relevant tests
 - ❌ Readable commit messages - [Conventional Commits][tool-convCommits] defines convention, [commitlint][tool-commitlint] assure them
 - ❌ Enhanced commits - [Husky][tool-husky], automatically lint commit messages, code, and run tests
 - ❌ Visual repport about test results - [mochawesome][tool-mochawesome]
@@ -132,3 +133,48 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [ref-doc-envConfig]: https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
 [ref-article-eslintAndPrettier]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-article-playwrightCombo]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-8-adding-eslint-prettier-and-husky/
+
+<!--
+Plano de Revisão
+Me apresente o Plano de Evolução com o status atualizado
+
+Fases Concluídas
+✅ Fase 1: Setup Inicial (100%)
+• ✅ Playwright configurado e funcionando
+• ✅ Primeiros testes rodando
+✅ Fase 2: Multi-Ambiente CI/CD (100%)
+• ✅ Arquivos  .env 
+• ✅  dotenv  no Playwright
+• ✅ Config multi-ambiente
+• ✅ Helpers/API adaptados
+• ✅ Scripts  package.json 
+• ✅ CI/CD base
+✅ Fase 3: API Mocking (100%)
+• ✅ Mocks nativos  page.route() 
+• ✅  e2e/mocks.ts  Serverest
+• ✅ Erro 500 validado
+• ✅  process.env.API_BASE_URL  dinâmica
+Fase adicional
+✅ Avaliar viabilidade de ter novos Jobs no workflow
+• ✅ Checks de eslint e prettier
+• ✅ Jobs rodando separadamente (test e linters)
+
+Próximas Fases
+🔄 Fase 4: Testes por Tags (0%)
+  1. Definir tags  @smoke ,  @regression
+  2. Scripts filtrados no  package.json 
+  3. Workflow CI com execução seletiva
+⏳ Fase 5: Relatórios e Análise (0%)
+  1. Allure Report integrado
+  2. Screenshots em falhas
+  3. Métricas de cobertura
+⏳ Fase 6: Otimização Performance (0%)
+  1. Paralelização otimizada
+  2. Cache de dependências
+  3. Dependências compartilhadas
+⏳ Fase 7: Deploy Automatizado (0%)
+  1. Deploy para staging via GitHub Actions
+  2. Aprovação manual para prod
+  3. Rollback automatizado
+
+ -->
