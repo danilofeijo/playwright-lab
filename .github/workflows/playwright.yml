@@ -52,8 +52,8 @@ jobs:
           BASE_URL_API: ${{ secrets.BASE_URL_API }}
           HEADLESS: 'true'
           CI: 'true'
-        # run: ENV=stg npx playwright test e2e/ --reporter=dot
-        run: npm run test:${{ matrix.env }}
+        # run: npm run test:${{ matrix.env }}
+        run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }}
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:

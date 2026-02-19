@@ -7,8 +7,10 @@
     "ui:dev": "ENV=dev npx playwright test e2e/",
     "ui:devui": "ENV=dev npx playwright test e2e/ --ui",
     "ui:stg": "ENV=stg npx playwright test e2e/ --retries=1 --reporter=dot",
-    "test:dev": "ENV=dev npx playwright test e2e/",
-    "test:stg": "ENV=stg npx playwright test e2e/",
+    "test:dev:smoke": "ENV=dev npx playwright test e2e/ --grep @smoke",
+    "test:dev:full": "ENV=dev npx playwright test e2e/",
+    "test:stg:smoke": "ENV=stg npx playwright test e2e/ --grep @smoke",
+    "test:stg:full": "ENV=stg npx playwright test e2e/",
     "check:eslint": "npx eslint .",
     "check:prettier": "npx prettier --check .",
     "check:all": "npm run check:eslint && npm run check:prettier && npm run test:dev"
