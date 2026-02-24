@@ -32,6 +32,7 @@ jobs:
     strategy:
       matrix:
         env: [dev, stg] # Define parallel execution
+        shard: [1/1]
       fail-fast: true # If one job fail, abbort parallel jobs
     steps:
       - uses: actions/checkout@v6
