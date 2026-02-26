@@ -89,7 +89,7 @@ jobs:
           path: downloaded-merged-reports-as-blob # Name of the folder where the download will be saved
       # User Playwright to generate a report and store it inside '/playwright-report' folder
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-report --reporter html ./downloaded-merged-reports-as-blob
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
 
       - name: /[OPTIONAL] Upload full html report to artifacts history
         if: always()
