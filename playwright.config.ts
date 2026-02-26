@@ -22,7 +22,7 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: true, // Run tests in files in parallel.
   forbidOnly: !!process.env.CI, // Fail the build on CI if you accidentally left test.only in the source code.
-  retries: process.env.CI ? 2 : 0, // Retry on CI (2) and anyother envs (0).
+  retries: process.env.CI ? 1 : 0, // Retry on CI (2) and anyother envs (0).
   workers: process.env.CI ? 1 : undefined, // Opt out of parallel tests on CI.
   reporter: process.env.CI ? [['list'], ['blob'], ['github']] : [['list'], ['blob']],
 
