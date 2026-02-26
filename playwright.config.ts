@@ -24,22 +24,18 @@ export default defineConfig({
   forbidOnly: !!process.env.CI, // Fail the build on CI if you accidentally left test.only in the source code.
   retries: process.env.CI ? 2 : 0, // Retry on CI (2) and anyother envs (0).
   workers: process.env.CI ? 1 : undefined, // Opt out of parallel tests on CI.
-  reporter: 'list', // Reporter output. Other options are: dot, line, html
+  reporter: process.env.CI ? [['list'], ['blob'], ['github']] : [['list'], ['blob']],
 
   /**
    * Reporter examples
    * (See https://playwright.dev/docs/test-reporters)
    *
-   * reporter: [['html', { open: 'always' }]],
-   * Other options are: always, never and on-failure (default).
-   *
-   * reporter: [['html', { outputFolder: 'my-report' }]],
-   * Report is written into the playwright-report folder in the current working directory.
-   * Override it using the PLAYWRIGHT_HTML_REPORT
-   *
+   * reporter: 'list', // Other options: dot, line
    * reporter: [
    *   ['list'],
-   *   ['json', {  outputFile: 'test-results.json' }]
+   *   ['html', { outputFolder: './report/html' }], // playwright-report is the default folder
+   *   ['blob', { outputDir: './report/blob' }], // blob-report is the default folder
+   *   ['json', { outputFile: './report/json/results.json' }], // Requires full path
    * ],
    *
    * More about custom reports:
