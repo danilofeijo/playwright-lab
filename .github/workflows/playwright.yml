@@ -53,29 +53,18 @@ jobs:
           BASE_URL_API: ${{ secrets.BASE_URL_API }}
           HEADLESS: 'true'
           CI: 'true'
-        run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }}
-        # run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
-      - uses: actions/upload-artifact@v6
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-${{ matrix.env }}
-          path: playwright-report/
-          retention-days: 30
-      # Create 'blob-report' folder where it will put all the reports
+        # run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }}
+        run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
+        # Create 'blob-report' folder where it will put all the reports
+
       - name: Upload Blob report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: merged-reports-as-blob # Naming the uploaded file
           path: blob-report # Path where reports are stored
-          retention-days: 30 # Suggested 90
-    # - name: Generate HTML report
-    #   uses: dorny/test-reporter@v1
-    #   if: always()
-    #   with:
-    #     name: Playwright Tests
-    #     path: playwright-report/index.html
-    #     reporter: jest-junit
+          retention-days: 15 # Suggested 90
+
   merge-reports-and-upload:
     if: always()
     needs: [ui-tests]
