@@ -57,11 +57,6 @@ jobs:
         run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
         # Create 'blob-report' folder where it will put all the reports
 
-      - name: DEBUG BLOB REPORT PATH
-        run: |
-          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
-          pwd
-
       - name: Upload Blob report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
@@ -69,11 +64,6 @@ jobs:
           name: ${{ matrix.env }}-merged-reports-as-blob # Naming the uploaded file
           path: blob-report-${{ matrix.env }} # Path where reports are stored
           retention-days: 15 # Suggested 90
-
-      - name: DEBUG BLOB REPORT PATH - again
-        run: |
-          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
-          pwd
 
   merge-reports-and-upload:
     if: always()
@@ -95,6 +85,11 @@ jobs:
       - name: Install Deps
         run: npm ci
       # Download report previously uploaded to merge then and create one single small html report
+      - name: DEBUG BLOB REPORT FILES
+        run: |
+          ls -la ./ || echo "blob-report NÃO existe!"
+          pwd
+
       - name: Download blob reports form Github Actions Artifacts
         uses: actions/download-artifact@v7
         with:
@@ -102,7 +97,7 @@ jobs:
           path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Name of the folder where the download will be saved
       # User Playwright to generate a report and store it inside '/playwright-report' folder
       - name: Merge the blobs into one single HTML Report
-        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob-${{ matrix.env }}
 
       - name: /[OPTIONAL] Upload full html report to artifacts history
         if: always()
