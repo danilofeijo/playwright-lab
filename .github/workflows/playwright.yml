@@ -65,6 +65,11 @@ jobs:
           path: blob-report-${{ matrix.env }} # Path where reports are stored
           retention-days: 15 # Suggested 90
 
+      - name: Debug blob-report
+        run: |
+          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
+          pwd
+
   merge-reports-and-upload:
     if: always()
     runs-on: ubuntu-latest
