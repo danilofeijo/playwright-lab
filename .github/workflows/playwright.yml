@@ -57,6 +57,11 @@ jobs:
         run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
         # Create 'blob-report' folder where it will put all the reports
 
+      - name: DEBUG REPORT - before UPLOAD BLOB
+        run: |
+          ls -la ./ || echo "blob-report NÃO existe!"
+          pwd
+
       - name: Upload Blob report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
@@ -106,7 +111,7 @@ jobs:
 
       - name: DEBUG REPORT - before UPLOAD
         run: |
-          ls -la ./ || echo "blob-report NÃO existe!"
+          ls -la ./playwright-report/ || echo "blob-report NÃO existe!"
           pwd
 
       - name: /[OPTIONAL] Upload full html report to artifacts history
@@ -114,5 +119,5 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: playwright-report-${{ matrix.env }}-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
-          path: playwright-report-${{ matrix.env }} # Path where the reports are
+          path: playwright-report # Path where the reports are
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
