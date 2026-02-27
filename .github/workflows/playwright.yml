@@ -70,6 +70,11 @@ jobs:
           path: blob-report-${{ matrix.env }} # Path where reports are stored
           retention-days: 15 # Suggested 90
 
+      - name: DEBUG BLOB REPORT PATH - again
+        run: |
+          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
+          pwd
+
   merge-reports-and-upload:
     if: always()
     runs-on: ubuntu-latest
@@ -93,7 +98,7 @@ jobs:
       - name: Download blob reports form Github Actions Artifacts
         uses: actions/download-artifact@v7
         with:
-          name: blob-report-${{ matrix.env }}/${{ matrix.env }}-merged-reports-as-blob # Name of the file stored as artifact (as uploaded at the previously job)
+          name: ${{ matrix.env }}-merged-reports-as-blob # Name of the file stored as artifact (as uploaded at the previously job)
           path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Name of the folder where the download will be saved
       # User Playwright to generate a report and store it inside '/playwright-report' folder
       - name: Merge the blobs into one single HTML Report
