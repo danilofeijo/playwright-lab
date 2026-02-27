@@ -59,7 +59,8 @@ jobs:
 
       - name: DEBUG REPORT - before UPLOAD BLOB
         run: |
-          ls -la ./ || echo "blob-report NÃO existe!"
+          ls -la ./ || echo "NOT FOUND !!!"
+          ls -la ./blob-report-${{ matrix.env }}/ || echo "NOT FOUND !!!"
           pwd
 
       - name: Upload Blob report to GitHub Actions Artifact
@@ -92,7 +93,7 @@ jobs:
       # Download report previously uploaded to merge then and create one single small html report
       - name: DEBUG REPORT - before DOWNLOAD
         run: |
-          ls -la ./ || echo "blob-report NÃO existe!"
+          ls -la ./ || echo "NOT FOUND !!!"
           pwd
 
       - name: Download blob reports form Github Actions Artifacts
@@ -104,6 +105,7 @@ jobs:
       - name: DEBUG REPORT - before MERGE
         run: |
           ls -la ./ || echo "blob-report NÃO existe!"
+          ls -la ./downloaded-merged-reports-as-blob-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
           pwd
 
       - name: Merge the blobs into one single HTML Report
@@ -111,6 +113,7 @@ jobs:
 
       - name: DEBUG REPORT - before UPLOAD
         run: |
+          ls -la ./ || echo "blob-report NÃO existe!"
           ls -la ./playwright-report/ || echo "blob-report NÃO existe!"
           pwd
 
