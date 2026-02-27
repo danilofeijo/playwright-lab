@@ -31,7 +31,7 @@ jobs:
     needs: lint-checks # Expect lint-checks pass to start
     strategy:
       matrix:
-        env: [stg] # [dev, stg] for multi-env parallel execution
+        env: [dev, stg] # [dev, stg] for multi-env parallel execution
         shard: [1/1]
       fail-fast: true # If one job fail, abbort parallel jobs
     steps:
