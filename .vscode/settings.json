@@ -6,6 +6,7 @@
     "mochawesome",
     "msedge",
     "testid",
+    "timestampid",
     "usuarios"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
