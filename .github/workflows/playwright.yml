@@ -57,6 +57,11 @@ jobs:
         run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
         # Create 'blob-report' folder where it will put all the reports
 
+      - name: DEBUG BLOB REPORT PATH
+        run: |
+          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
+          pwd
+
       - name: Upload Blob report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
@@ -64,11 +69,6 @@ jobs:
           name: ${{ matrix.env }}-merged-reports-as-blob # Naming the uploaded file
           path: blob-report-${{ matrix.env }} # Path where reports are stored
           retention-days: 15 # Suggested 90
-
-      - name: Debug blob-report
-        run: |
-          ls -la blob-report-${{ matrix.env }}/ || echo "blob-report NÃO existe!"
-          pwd
 
   merge-reports-and-upload:
     if: always()
