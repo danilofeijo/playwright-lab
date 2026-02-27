@@ -61,8 +61,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: merged-reports-as-blob # Naming the uploaded file
-          path: blob-report # Path where reports are stored
+          name: ${{ matrix.env }}-merged-reports-as-blob # Naming the uploaded file
+          path: blob-report-${{ matrix.env }} # Path where reports are stored
           retention-days: 15 # Suggested 90
 
   merge-reports-and-upload:
