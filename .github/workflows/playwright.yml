@@ -26,8 +26,8 @@ jobs:
       - name: ${{ matrix.check }}
         run: npm run check:${{ matrix.check }}
   ui-tests:
-    timeout-minutes: 30
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: lint-checks # Expect lint-checks pass to start
     strategy:
       matrix:
@@ -67,8 +67,11 @@ jobs:
 
   merge-reports-and-upload:
     if: always()
-    needs: [ui-tests]
     runs-on: ubuntu-latest
+    needs: [ui-tests]
+    strategy:
+      matrix:
+        env: [dev, stg]
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
     steps:
@@ -85,8 +88,8 @@ jobs:
       - name: Download blob reports form Github Actions Artifacts
         uses: actions/download-artifact@v7
         with:
-          name: merged-reports-as-blob # Name of the file stored as artifact (as uploaded at the previously job)
-          path: downloaded-merged-reports-as-blob # Name of the folder where the download will be saved
+          name: ${{ matrix.env }}-merged-reports-as-blob # Name of the file stored as artifact (as uploaded at the previously job)
+          path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Name of the folder where the download will be saved
       # User Playwright to generate a report and store it inside '/playwright-report' folder
       - name: Merge the blobs into one single HTML Report
         run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob
@@ -95,6 +98,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: playwright-report-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
-          path: playwright-report # Path where the reports are
+          name: playwright-report-${{ matrix.env }}-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
+          path: playwright-report-${{ matrix.env }} # Path where the reports are
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
