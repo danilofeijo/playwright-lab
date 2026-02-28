@@ -133,4 +133,4 @@ jobs:
           destination_dir: ${{ matrix.env }}/${{ steps.timestampid.outputs.timestamp }}
 
       - name: Share URL in summary
-        run: echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
+        run: echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
