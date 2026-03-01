@@ -33,7 +33,7 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 - ✅ CI test execution - Run scheduled tests against multiple environments (Dev and Stage)
 - ✅ API Mocking - to simulate external unpredictable scenarios
 - ✅ Test Tagging - to filter and prioritize more relevant tests
-- 🔄 Visual repport about test results - [mochawesome][tool-mochawesome]
+- ✅ Test Repport - Published on github pages with history by environment (based on [Martioli's article][ref-article-reportOnGithubPages])
 - ❌ Readable commit messages - [Conventional Commits][tool-convCommits] defines convention, [commitlint][tool-commitlint] assure them
 - ❌ Enhanced commits - [Husky][tool-husky], automatically lint commit messages, code, and run tests
 
@@ -117,7 +117,6 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [tool-commitlint]: https://commitlint.js.org/#/
 [tool-convCommits]: https://www.conventionalcommits.org/
 [tool-husky]: https://typicode.github.io/husky/
-[tool-mochawesome]: https://www.npmjs.com/package/mochawesome
 
 <!-- Setup Links -->
 
@@ -133,6 +132,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [ref-doc-envConfig]: https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
 [ref-article-eslintAndPrettier]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-article-playwrightCombo]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-8-adding-eslint-prettier-and-husky/
+[ref-article-reportOnGithubPages]: https://blog.martioli.com/publish-your-playwright-reports-to-github-pages/
 
 <!--
 Plano de Revisão
