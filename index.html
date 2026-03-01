@@ -135,9 +135,9 @@
         }
 
         .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .result-card {
@@ -150,12 +150,13 @@
             color: inherit;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         .result-card:hover {
             border-color: #667eea;
             box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
         }
 
         .result-card-header {
