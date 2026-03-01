@@ -134,7 +134,7 @@
             color: #999;
         }
 
-        .results-grid {
+        /* .results-grid {
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -151,7 +151,60 @@
             display: flex;
             flex-direction: column;
             width: 100%;
+        } */
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
         }
+
+        .results-table thead {
+            background: #f8f9ff;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .results-table th {
+            font-weight: 700;
+            color: #444;
+        }
+
+        .results-table tbody tr {
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .results-table tbody tr:hover {
+            background: #f4f6ff;
+        }
+
+        .results-table tbody tr:active {
+            transform: translateY(1px);
+        }
+
+        .results-table td.mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9em;
+        }
+
+        .results-table .muted {
+            color: #777;
+            font-weight: 500;
+        }
+
+        .results-table .empty-cell {
+            padding: 40px 16px;
+        }
+        /* End of new content */
 
         .result-card:hover {
             border-color: #667eea;
@@ -340,7 +393,7 @@
                     </div>
                 </div>
 
-                <div id="results-container" class="results-grid">
+                <div id="results-container">
                     <div style="grid-column: 1/-1; display: flex; justify-content: center; align-items: center; padding: 60px 20px;">
                         <div class="spinner"></div>
                     </div>
@@ -463,10 +516,80 @@
             return date.toLocaleDateString()
         }
 
+        // function renderResults() {
+        //     const container = document.getElementById("results-container")
+        //     const results = data[currentEnv]
+        //     const count = results.length
+
+        //     document.getElementById("result-count").textContent =
+        //         count === 0
+        //             ? "No results available"
+        //             : `${count} test run${count !== 1 ? "s" : ""}`
+
+        //     if (count === 0) {
+        //         container.innerHTML = `
+        //             <div style="grid-column: 1 / -1;">
+        //                 <div class="empty-state">
+        //                     <div class="empty-state-icon">📭</div>
+        //                     <h3>No Test Results</h3>
+        //                     <p>No test results available for this environment yet.</p>
+        //                 </div>
+        //             </div>
+        //         `
+        //         return
+        //     }
+
+        //     container.innerHTML = results
+        //         .map((folder) => {
+        //             let date
+        //             try {
+        //                 date = parseTimestamp(folder)
+        //             } catch (e) {
+        //                 date = new Date()
+        //             }
+
+        //             const formattedDate = formatDate(date)
+        //             const relativeTime = getRelativeTime(date)
+
+        //             const reportUrl = `${environments[currentEnv].path}${folder}/index.html`
+
+        //             return `
+        //                 <div class="result-card">
+        //                     <div class="result-card-header">
+        //                         <div class="result-icon">📋</div>
+        //                         <div class="result-title">${folder}</div>
+        //                     </div>
+        //                     <div class="result-meta">
+        //                         <div class="meta-item">
+        //                             <span class="meta-label">Date</span>
+        //                             <span class="meta-value">${formattedDate}</span>
+        //                         </div>
+        //                         <div class="meta-item">
+        //                             <span class="meta-label">Time</span>
+        //                             <span class="meta-value">${relativeTime}</span>
+        //                         </div>
+        //                     </div>
+        //                     <div class="result-actions">
+        //                         <a href="${reportUrl}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Report</a>
+        //                     </div>
+        //                 </div>
+        //             `
+        //         })
+        //         .join("")
+        // }
+
         function renderResults() {
             const container = document.getElementById("results-container")
-            const results = data[currentEnv]
-            const count = results.length
+
+            const sortedResults = [...data[currentEnv]].sort((a, b) => {
+                try {
+                    return parseTimestamp(b) - parseTimestamp(a)
+                } catch {
+                    return 0
+                }
+            })
+
+            const count = sortedResults.length
 
             document.getElementById("result-count").textContent =
                 count === 0
@@ -475,54 +598,70 @@
 
             if (count === 0) {
                 container.innerHTML = `
-                    <div style="grid-column: 1 / -1;">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">📭</div>
-                            <h3>No Test Results</h3>
-                            <p>No test results available for this environment yet.</p>
-                        </div>
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No Test Results</h3>
+                        <p>No test results available for this environment yet.</p>
                     </div>
                 `
                 return
             }
 
-            container.innerHTML = results
+            const envPrefix = currentEnv.toUpperCase()
+
+            const rowsHtml = sortedResults
                 .map((folder) => {
-                    let date
-                    try {
-                        date = parseTimestamp(folder)
-                    } catch (e) {
-                        date = new Date()
-                    }
+                    let dateObj
+                        try {
+                            dateObj = parseTimestamp(folder)
+                        } catch {
+                            dateObj = new Date()
+                        }
 
-                    const formattedDate = formatDate(date)
-                    const relativeTime = getRelativeTime(date)
+                    const iso = dateObj.toISOString().replace(".000", "")
+                    const headerLabel = `${envPrefix} ${iso}`
 
+                    const formattedDate = formatDate(dateObj)
+                    const relativeTime = getRelativeTime(dateObj)
                     const reportUrl = `${environments[currentEnv].path}${folder}/index.html`
 
-                    return `
-                        <div class="result-card">
-                            <div class="result-card-header">
-                                <div class="result-icon">📋</div>
-                                <div class="result-title">${folder}</div>
-                            </div>
-                            <div class="result-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Date</span>
-                                    <span class="meta-value">${formattedDate}</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Time</span>
-                                    <span class="meta-value">${relativeTime}</span>
-                                </div>
-                            </div>
-                            <div class="result-actions">
-                                <a href="${reportUrl}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Report</a>
-                            </div>
-                        </div>
-                    `
+                return `
+                    <tr data-url="${reportUrl}" tabindex="0" role="link" aria-label="Open report ${headerLabel}">
+                    <td class="mono">${headerLabel}</td>
+                    <td>${formattedDate}</td>
+                    <td class="muted">${relativeTime}</td>
+                    </tr>
+                `
+            })
+            .join("")
+
+            container.innerHTML = `
+                <table class="results-table" aria-label="Playwright test runs">
+                <thead>
+                    <tr>
+                    <th>Header</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rowsHtml}
+                </tbody>
+                </table>
+            `
+
+            const openRow = (row) => {
+                const url = row.getAttribute("data-url")
+                if (!url) return
+                window.open(url, "_blank", "noopener,noreferrer")
+            }
+
+            container.querySelectorAll("tbody tr").forEach((row) => {
+                row.addEventListener("click", () => openRow(row))
+                row.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") openRow(row)
                 })
-                .join("")
+            })
         }
 
         document.addEventListener("DOMContentLoaded", init)
