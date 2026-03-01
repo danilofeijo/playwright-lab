@@ -2,7 +2,7 @@ name: Delete old folders from github pages
 
 on:
   # schedule:
-  #   - cron: '0 12 * * *' # Every day at 12:00 UTC
+  #   - cron: '0 12 * * 5' # At 12:00 UTC, only on Friday
   workflow_dispatch:
     inputs:
       n_days:
