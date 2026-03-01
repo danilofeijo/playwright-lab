@@ -3,16 +3,28 @@ name: Delete old folders from github pages
 on:
   # schedule:
   #   - cron: '0 12 * * 5' # At 12:00 UTC, only on Friday
+  workflow_run:
+    workflows: ['Playwright Tests']
+    types:
+      - completed
+    branches: gh-pages
   workflow_dispatch:
     inputs:
       n_days:
         description: 'Number of days to determine which folders to delete. Example: 10 will delete all folders older than 10 days'
         required: true
-        default: '10'
-      folder_name:
-        description: 'Name of the folder where you store the reports. Default is root'
+        type: number
+        default: 10
+      delete_dev:
+        description: 'Want to delete dev-results folder? Default is true'
         required: true
-        default: '.'
+        type: boolean
+        default: true
+      delete_stg:
+        description: 'Want to delete stg-results folder? Default is true'
+        required: true
+        type: boolean
+        default: true
 
 jobs:
   delete_old_folders:
@@ -31,8 +43,13 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Pray then Run the script
-        run: python rm_old_folders.py --n-days ${{ github.event.inputs.n_days }} --folder-name ${{ github.event.inputs.folder_name }}
+      - name: Run the script (dev-results)
+        if: ${{ github.event.inputs.delete_dev }}
+        run: python rm_old_folders.py --n-days ${{ github.event.inputs.n_days }} --folder-name ./dev-results
+
+      - name: Run the script (stg-results)
+        if: ${{ github.event.inputs.delete_stg }}
+        run: python rm_old_folders.py --n-days ${{ github.event.inputs.n_days }} --folder-name ./stg-results
 
       - name: Generate manifests (dev-results, stg-results)
         run: |
