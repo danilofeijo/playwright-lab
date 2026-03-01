@@ -134,25 +134,6 @@
             color: #999;
         }
 
-        /* .results-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .result-card {
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        } */
-
         .results-table {
             width: 100%;
             border-collapse: collapse;
@@ -515,68 +496,6 @@
 
             return date.toLocaleDateString()
         }
-
-        // function renderResults() {
-        //     const container = document.getElementById("results-container")
-        //     const results = data[currentEnv]
-        //     const count = results.length
-
-        //     document.getElementById("result-count").textContent =
-        //         count === 0
-        //             ? "No results available"
-        //             : `${count} test run${count !== 1 ? "s" : ""}`
-
-        //     if (count === 0) {
-        //         container.innerHTML = `
-        //             <div style="grid-column: 1 / -1;">
-        //                 <div class="empty-state">
-        //                     <div class="empty-state-icon">📭</div>
-        //                     <h3>No Test Results</h3>
-        //                     <p>No test results available for this environment yet.</p>
-        //                 </div>
-        //             </div>
-        //         `
-        //         return
-        //     }
-
-        //     container.innerHTML = results
-        //         .map((folder) => {
-        //             let date
-        //             try {
-        //                 date = parseTimestamp(folder)
-        //             } catch (e) {
-        //                 date = new Date()
-        //             }
-
-        //             const formattedDate = formatDate(date)
-        //             const relativeTime = getRelativeTime(date)
-
-        //             const reportUrl = `${environments[currentEnv].path}${folder}/index.html`
-
-        //             return `
-        //                 <div class="result-card">
-        //                     <div class="result-card-header">
-        //                         <div class="result-icon">📋</div>
-        //                         <div class="result-title">${folder}</div>
-        //                     </div>
-        //                     <div class="result-meta">
-        //                         <div class="meta-item">
-        //                             <span class="meta-label">Date</span>
-        //                             <span class="meta-value">${formattedDate}</span>
-        //                         </div>
-        //                         <div class="meta-item">
-        //                             <span class="meta-label">Time</span>
-        //                             <span class="meta-value">${relativeTime}</span>
-        //                         </div>
-        //                     </div>
-        //                     <div class="result-actions">
-        //                         <a href="${reportUrl}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Report</a>
-        //                     </div>
-        //                 </div>
-        //             `
-        //         })
-        //         .join("")
-        // }
 
         function renderResults() {
             const container = document.getElementById("results-container")
