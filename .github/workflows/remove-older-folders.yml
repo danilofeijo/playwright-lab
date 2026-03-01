@@ -8,7 +8,7 @@ on:
       n_days:
         description: 'Number of days to determine which folders to delete. Example: 10 will delete all folders older than 10 days'
         required: true
-        default: 10
+        default: '10'
       folder_name:
         description: 'Name of the folder where you store the reports. Default is root'
         required: true
@@ -44,17 +44,15 @@ jobs:
 
             runs=$(ls -1 "$env_dir" 2>/dev/null | grep -E '^[0-9]{8}_[0-9]{6}Z$' | sort -r || true)
 
-            echo '{' > "$env_dir/manifest.json"
-            echo '  "runs": [' > "$env_dir/manifest.json"
+            echo '{ "runs": [' > "$env_dir/manifest.json"
             first=1
             for folder in $runs
             do
               if [ $first -eq 0 ]; then echo ',' >> "$env_dir/manifest.json"; fi
               first=0
-              echo "    { \"folder\": \"${folder}\", \"url\": \"${env_dir}/${folder}/index.html\" }," >> "$env_dir/manifest.json"
+              echo "  { \"folder\": \"${folder}\", \"url\": \"${env_dir}/${folder}/index.html\" }" >> "$env_dir/manifest.json"
             done
-            echo '  ]' >> "$env_dir/manifest.json"
-            echo '}' >> "$env_dir/manifest.json"
+            echo '] }' >> "$env_dir/manifest.json"
           }
 
           generate_manifest "dev-results"
