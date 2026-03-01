@@ -44,15 +44,17 @@ jobs:
 
             runs=$(ls -1 "$env_dir" 2>/dev/null | grep -E '^[0-9]{8}_[0-9]{6}Z$' | sort -r || true)
 
-            echo '{ "runs": [' > "$env_dir/manifest.json"
+            echo '{' > "$env_dir/manifest.json"
+            echo '  "runs": [' > "$env_dir/manifest.json"
             first=1
             for folder in $runs
             do
               if [ $first -eq 0 ]; then echo ',' >> "$env_dir/manifest.json"; fi
               first=0
-              echo "  { \"folder\": \"${folder}\", \"url\": \"${env_dir}/${folder}/index.html\" }" >> "$env_dir/manifest.json"
+              echo "    { \"folder\": \"${folder}\", \"url\": \"${env_dir}/${folder}/index.html\" }," >> "$env_dir/manifest.json"
             done
-            echo '] }' >> "$env_dir/manifest.json"
+            echo '  ]' >> "$env_dir/manifest.json"
+            echo '}' >> "$env_dir/manifest.json"
           }
 
           generate_manifest "dev-results"
