@@ -20,11 +20,30 @@ test.describe('On login page', { tag: ['@ui'] }, () => {
       await expect(page).toHaveURL(homePage.urlPathAdmin)
     })
 
-    test.skip('Should not log in with wrong credentials', async () => {
-      // TODO - Develop test scenario
+    test('Should not log in with wrong email', async ({ page, loginPage, adminUser }) => {
       // Arrange
+      adminUser.email = 'wrong@email.com'
+
       // Act
+      await loginPage.loginUser(adminUser.email, adminUser.password)
+
       // Assert
+      await expect(loginPage.errorAlert).toBeVisible()
+      await expect(loginPage.errorAlert).toHaveText('×Email e/ou senha inválidos')
+      await expect(page).toHaveURL(loginPage.urlPath)
+    })
+
+    test('Should not log in with wrong password', async ({ page, loginPage, adminUser }) => {
+      // Arrange
+      adminUser.password = 'wrongP@s5word'
+
+      // Act
+      await loginPage.loginUser(adminUser.email, adminUser.password)
+
+      // Assert
+      await expect(loginPage.errorAlert).toBeVisible()
+      await expect(loginPage.errorAlert).toHaveText('×Email e/ou senha inválidos')
+      await expect(page).toHaveURL(loginPage.urlPath)
     })
   })
 
