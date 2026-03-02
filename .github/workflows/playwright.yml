@@ -61,12 +61,6 @@ jobs:
         # At the end, we should have:
         #   Blob files with test runs result inside 'blob-report' folder
 
-      - name: DEBUG REPORT - before UPLOAD BLOB
-        run: |
-          echo "Content from ./playwright-lab" && ls -la ./
-          echo "Content from ./blob-report-${{ matrix.env }}" && ls -la ./blob-report-${{ matrix.env }}/
-          pwd
-
       - name: Upload Blob Report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
@@ -99,11 +93,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: DEBUG REPORT - before DOWNLOAD
-        run: |
-          echo "Content from ./playwright-lab" && ls -la ./
-          pwd
-
       # Download report (previously uploaded) to be merged
       - name: Download Blobs from Github Actions Artifacts
         uses: actions/download-artifact@v7
@@ -111,22 +100,10 @@ jobs:
           name: ${{ matrix.env }}-merged-reports-as-blob # File name of merged report stored as artifact
           path: ${{ matrix.env }}-downloaded-merged-reports-as-blob # Folder name which receives downloaded file
 
-      - name: DEBUG REPORT - before MERGE
-        run: |
-          echo "Content from ./playwright-lab" && ls -la ./
-          echo "Content from ./${{ matrix.env }}-downloaded-merged-reports-as-blob" && ls -la ./${{ matrix.env }}-downloaded-merged-reports-as-blob/
-          pwd
-
       # Merge all blobs into one single HTML Report
       # and Save new file inside '/playwright-report' folder
       - name: Merge the Blobs into One Single HTML Report
         run: npx playwright merge-reports --reporter html ./${{ matrix.env }}-downloaded-merged-reports-as-blob
-
-      - name: DEBUG REPORT - before UPLOAD
-        run: |
-          echo "Content from ./playwright-lab" && ls -la ./
-          echo "Content from ./playwright-report" && ls -la ./playwright-report/
-          pwd
 
       - name: Upload HTML Report to Artifacts History
         if: always()
