@@ -109,18 +109,18 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: ${{ matrix.env }}-merged-reports-as-blob # File name of merged report stored as artifact
-          path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Folder name which receives downloaded file
+          path: ${{ matrix.env }}-downloaded-merged-reports-as-blob # Folder name which receives downloaded file
 
       - name: DEBUG REPORT - before MERGE
         run: |
           echo "Content from ./playwright-lab" && ls -la ./
-          echo "Content from ./downloaded-merged-reports-as-blob-${{ matrix.env }}" && ls -la ./downloaded-merged-reports-as-blob-${{ matrix.env }}/
+          echo "Content from ./${{ matrix.env }}-downloaded-merged-reports-as-blob" && ls -la ./${{ matrix.env }}-downloaded-merged-reports-as-blob/
           pwd
 
       # Merge all blobs into one single HTML Report
       # and Save new file inside '/playwright-report' folder
       - name: Merge the Blobs into One Single HTML Report
-        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob-${{ matrix.env }}
+        run: npx playwright merge-reports --reporter html ./${{ matrix.env }}-downloaded-merged-reports-as-blob
 
       - name: DEBUG REPORT - before UPLOAD
         run: |
@@ -132,7 +132,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: playwright-report-${{ matrix.env }}-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
+          name: ${{ matrix.env }}-report-html-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
           path: playwright-report # Path where the reports are saved
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
