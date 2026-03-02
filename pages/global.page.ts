@@ -13,10 +13,12 @@ export class GlobalPage {
   readonly menuRelatorios: Locator
   readonly menuListarCompras: Locator
   readonly menuCarrinho: Locator
+  readonly errorAlert: Locator
 
   // Constructor
   constructor(page: Page) {
     this.page = page
+    this.errorAlert = page.getByRole('alert')
     this.navbar = page.locator('id=navbarTogglerDemo01')
     this.buttonLogout = page.getByTestId('logout')
     this.menuHome = page.getByTestId('home')
