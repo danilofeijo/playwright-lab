@@ -22,7 +22,7 @@ jobs:
           node-version: lts/*
           cache: 'npm' # Cache 50% faster
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci --frozen-lockfile
 
       - name: Run Static Check (${{ matrix.check }})
@@ -96,7 +96,7 @@ jobs:
           node-version: lts/*
           cache: 'npm'
 
-      - name: Install Deps
+      - name: Install Dependencies
         run: npm ci
 
       - name: DEBUG REPORT - before DOWNLOAD
@@ -147,7 +147,8 @@ jobs:
         # run:  echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
         run: |
           cat << EOF >> "$GITHUB_STEP_SUMMARY"
-          #### Test results - ${{ matrix.env }} (available in a minute)
-          - Test Run - ${{ matrix.env }}: [${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }})
-          - Check Reports history at [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab)
+          #### [${{ matrix.env }}] Test Results - available in a minute
+          Test Results (${{ matrix.env }}) successfully uploaded.
+          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }});
+          - Report History: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
           EOF
