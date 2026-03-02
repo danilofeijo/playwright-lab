@@ -24,9 +24,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI, // Fail the build on CI if you accidentally left test.only in the source code.
   retries: process.env.CI ? 1 : 0, // Retry on CI (2) and anyother envs (0).
   workers: process.env.CI ? 1 : undefined, // Opt out of parallel tests on CI.
-  reporter: process.env.CI
-    ? [['list'], ['blob', { outputDir: `./blob-report-${ENV}` }], ['github']]
-    : [['list'], ['blob']],
+  reporter: process.env.CI ? [['blob', { outputDir: `./blob-report-${ENV}` }], ['github'], ['list']] : [['list']],
 
   /**
    * Reporter examples
