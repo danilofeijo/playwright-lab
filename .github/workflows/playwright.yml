@@ -21,41 +21,45 @@ jobs:
         with:
           node-version: lts/*
           cache: 'npm' # Cache 50% faster
+
       - name: Install dependencies
         run: npm ci --frozen-lockfile
-      - name: ${{ matrix.check }}
+
+      - name: Run Static Check (${{ matrix.check }})
         run: npm run check:${{ matrix.check }}
+
   ui-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: lint-checks # Expect lint-checks pass to start
+    needs: lint-checks # Wait until lint-checks to be successful
     strategy:
       matrix:
         env: [dev, stg] # [dev, stg] for multi-env parallel execution
-        shard: [1/1]
+        shard: [1/1] # [1/2, 2/2] Split tests in 2 parallel jobs
       fail-fast: true # If one job fail, abbort parallel jobs
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'npm'
+          cache: 'npm' # Cache 50% faster
+
       - name: Install Dependencies
         run: npm ci
-      # - name: Run Playwright  # ← Docker mágico
-      #   uses: microsoft/playwright-github-action@v2
+
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
-      - name: Run Playwright tests (${{ matrix.env }})
+
+      - name: Run Playwright Tests (${{ matrix.env }})
         env:
           ENV: ${{ matrix.env }}
           BASE_URL_FRONT: ${{ secrets.BASE_URL_FRONT }}
           BASE_URL_API: ${{ secrets.BASE_URL_API }}
           HEADLESS: 'true'
           CI: 'true'
-        # run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }}
         run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
-        # Create 'blob-report' folder where it will put all the reports
+        # At the end, we should have:
+        #   Blob files with test runs result inside 'blob-report' folder
 
       - name: DEBUG REPORT - before UPLOAD BLOB
         run: |
@@ -63,52 +67,59 @@ jobs:
           echo "Content from ./blob-report-${{ matrix.env }}" && ls -la ./blob-report-${{ matrix.env }}/
           pwd
 
-      - name: Upload Blob report to GitHub Actions Artifact
+      - name: Upload Blob Report to GitHub Actions Artifact
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.env }}-merged-reports-as-blob # Naming the uploaded file
-          path: blob-report-${{ matrix.env }} # Path where reports are stored
+          path: blob-report-${{ matrix.env }} # Origin path, where reports are stored
           retention-days: 15 # Suggested 90
 
-  merge-reports-and-upload:
+  test-reports:
     if: always()
     runs-on: ubuntu-latest
     needs: [ui-tests]
     strategy:
       matrix:
         env: [dev, stg]
+      max-parallel: 1 # Avoid parallel execution (to prevent conflicts when pushing to GitHub Pages)
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
     steps:
-      - name: Set a timestamp
+      - name: Set a Timestamp
         id: timestampid
         run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          cache: 'npm'
+
       - name: Install Deps
         run: npm ci
-      # Download report previously uploaded to merge then and create one single small html report
+
       - name: DEBUG REPORT - before DOWNLOAD
         run: |
           echo "Content from ./playwright-lab" && ls -la ./
           pwd
 
-      - name: Download blob reports form Github Actions Artifacts
+      # Download report (previously uploaded) to be merged
+      - name: Download Blobs from Github Actions Artifacts
         uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.env }}-merged-reports-as-blob # Name of the file stored as artifact (as uploaded at the previously job)
-          path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Name of the folder where the download will be saved
-      # User Playwright to generate a report and store it inside '/playwright-report' folder
+          name: ${{ matrix.env }}-merged-reports-as-blob # File name of merged report stored as artifact
+          path: downloaded-merged-reports-as-blob-${{ matrix.env }} # Folder name which receives downloaded file
+
       - name: DEBUG REPORT - before MERGE
         run: |
           echo "Content from ./playwright-lab" && ls -la ./
           echo "Content from ./downloaded-merged-reports-as-blob-${{ matrix.env }}" && ls -la ./downloaded-merged-reports-as-blob-${{ matrix.env }}/
           pwd
 
-      - name: Merge the blobs into one single HTML Report
+      # Merge all blobs into one single HTML Report
+      # and Save new file inside '/playwright-report' folder
+      - name: Merge the Blobs into One Single HTML Report
         run: npx playwright merge-reports --reporter html ./downloaded-merged-reports-as-blob-${{ matrix.env }}
 
       - name: DEBUG REPORT - before UPLOAD
@@ -117,20 +128,26 @@ jobs:
           echo "Content from ./playwright-report" && ls -la ./playwright-report/
           pwd
 
-      - name: /[OPTIONAL] Upload full html report to artifacts history
+      - name: Upload HTML Report to Artifacts History
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: playwright-report-${{ matrix.env }}-${{ steps.timestampid.outputs.timestamp }} # Name of the saved on history
-          path: playwright-report # Path where the reports are
+          path: playwright-report # Path where the reports are saved
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
-      - name: Push the new files to GitHub pages
+      - name: Push HTML Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./playwright-report
           destination_dir: ${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}
 
-      - name: Share URL in summary
-        run: echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
+      - name: Share URLs in summary
+        # run:  echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
+        run: |
+          cat << EOF >> "$GITHUB_STEP_SUMMARY"
+          #### Test results - ${{ matrix.env }} (available in a minute)
+          - Test Run - ${{ matrix.env }}: [${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }})
+          - Check Reports history at [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab)
+          EOF
