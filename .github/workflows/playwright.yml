@@ -31,7 +31,7 @@ jobs:
   ui-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: lint-checks # Wait until lint-checks to be successful
+    # needs: lint-checks # Wait until lint-checks to be successful
     strategy:
       matrix:
         env: [dev, stg] # [dev, stg] for multi-env parallel execution
