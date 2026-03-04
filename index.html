@@ -491,9 +491,17 @@
             if (diffSec < 60) return "Just now"
             if (diffMin < 60) return `${diffMin}m ago`
             if (diffHours < 24 && diffDays === 0) return `${diffHours}h ago`
-            if (diffDays < 2) return "Yesterday"
-            if (diffDays < 7) return `${diffDays}d ago`
+            // if (diffDays < 2) return "Yesterday"
+            // if (diffDays < 7) return `${diffDays}d ago`
 
+            const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+            const runDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+            const diffDays2 = Math.round((nowDate - runDate) / (1000 * 60 * 60 * 24))
+
+            if (diffDays2 === 1) return "Yesterday"
+            if (diffDays2 < 7) return `${diffDays}d ago`
+            
             return date.toLocaleDateString()
         }
 
