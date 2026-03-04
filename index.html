@@ -476,7 +476,6 @@
                 day: "numeric",
                 hour: "2-digit",
                 minute: "2-digit",
-                // second: "2-digit",
             })
         }
 
@@ -544,8 +543,8 @@
                             dateObj = new Date()
                         }
 
-                    const iso = dateObj.toISOString().replace(".000", "")
-                    const headerLabel = `${envPrefix} ${iso}`
+                    const iso = dateObj.toISOString().replace(".000Z", "")
+                    const headerLabel = `${envPrefix}-${iso}`
 
                     const formattedDate = formatDate(dateObj)
                     const relativeTime = getRelativeTime(dateObj)
