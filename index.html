@@ -482,26 +482,25 @@
 
         function getRelativeTime(date) {
             const now = new Date()
+            const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+            const runDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
             const diffMs = now - date
             const diffSec = Math.floor(diffMs / 1000)
             const diffMin = Math.floor(diffSec / 60)
             const diffHours = Math.floor(diffMin / 60)
-            const diffDays = Math.floor(diffHours / 24)
+            const diffDays = Math.round((nowDate - runDate) / (1000 * 60 * 60 * 24))
 
+            // For short intervals, relative time
             if (diffSec < 60) return "Just now"
             if (diffMin < 60) return `${diffMin}m ago`
-            if (diffHours < 24 && diffDays === 0) return `${diffHours}h ago`
-            // if (diffDays < 2) return "Yesterday"
-            // if (diffDays < 7) return `${diffDays}d ago`
+            if (diffHours < 24 && diffDays < 1) return `${diffHours}h ago`
 
-            const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-            const runDate = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-
-            const diffDays2 = Math.round((nowDate - runDate) / (1000 * 60 * 60 * 24))
-
-            if (diffDays2 === 1) return "Yesterday"
-            if (diffDays2 < 7) return `${diffDays}d ago`
+            // For longer intervals, relative date
+            if (diffDays < 2) return "Yesterday"
+            if (diffDays < 7) return `${diffDays}d ago`
             
+            // For more than a week, absolute date
             return date.toLocaleDateString()
         }
 
