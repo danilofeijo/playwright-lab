@@ -1,0 +1,13 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - img [ref=e6]
+  - heading "Login" [level=1] [ref=e7]
+  - textbox "Digite seu email" [ref=e9]
+  - textbox "Digite sua senha" [ref=e11]
+  - button "Entrar" [ref=e12] [cursor=pointer]
+  - generic [ref=e13]:
+    - text: Não é cadastrado?
+    - generic [ref=e14] [cursor=pointer]: Cadastre-se
+```
