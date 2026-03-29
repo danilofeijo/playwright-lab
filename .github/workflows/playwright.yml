@@ -131,24 +131,33 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Download DEV HTML Report from Artifacts
+      - name: DEV - Download HTML Report from Artifacts
         uses: actions/download-artifact@v7
         with:
           name: dev-report-html-${{ needs.setup.outputs.timestamp }}
           path: ./pages-build/dev-results/${{ needs.setup.outputs.timestamp }}
 
-      - name: Download STG HTML Report from Artifacts
+      - name: DEV - Push Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report/${{ needs.setup.outputs.timestamp }}
+          # destination_dir: dev-results/${{ needs.setup.outputs.timestamp }}
+
+      - name: STG - Download HTML Report from Artifacts
         uses: actions/download-artifact@v7
         with:
           name: stg-report-html-${{ needs.setup.outputs.timestamp }}
           path: ./pages-build/stg-results/${{ needs.setup.outputs.timestamp }}
 
-      - name: Push all HTML Reports to GitHub Pages
+      - name: STG - Push Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./pages-build
+          publish_dir: ./pages-build/stg-results/${{ needs.setup.outputs.timestamp }}
+          # destination_dir: stg-results/${{ needs.setup.outputs.timestamp }}
 
       - name: Share URLs in summary
         run: |
