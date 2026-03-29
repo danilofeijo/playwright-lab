@@ -97,7 +97,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # Download report (previously uploaded) to be merged
+      # Download reports to be merged
       - name: Download Blobs from Github Actions Artifacts
         uses: actions/download-artifact@v7
         with:
@@ -117,55 +117,21 @@ jobs:
           path: playwright-report # Path where the reports are saved
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
-  publish-reports:
-    if: always()
-    runs-on: ubuntu-latest
-    needs: [test-reports, setup]
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: DEV - Download HTML Report from Artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: dev-report-html-${{ needs.setup.outputs.timestamp }}
-          path: ./pages-build/dev-results/${{ needs.setup.outputs.timestamp }}
-
-      - name: DEV - Push Report to GitHub Pages
-        if: always()
+      - name: Push HTML Report to GitHub Pages
+        # Only push to GitHub Pages if the branch is 'main' (avoid pushing from PRs or other branches)
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./playwright-report/${{ needs.setup.outputs.timestamp }}
-          # destination_dir: dev-results/${{ needs.setup.outputs.timestamp }}
-
-      - name: STG - Download HTML Report from Artifacts
-        uses: actions/download-artifact@v7
-        with:
-          name: stg-report-html-${{ needs.setup.outputs.timestamp }}
-          path: ./pages-build/stg-results/${{ needs.setup.outputs.timestamp }}
-
-      - name: STG - Push Report to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./pages-build/stg-results/${{ needs.setup.outputs.timestamp }}
-          # destination_dir: stg-results/${{ needs.setup.outputs.timestamp }}
+          publish_dir: ./playwright-report
+          destination_dir: ${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}
 
       - name: Share URLs in summary
+        # run:  echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
         run: |
           cat << EOF >> "$GITHUB_STEP_SUMMARY"
-          #### Test Results - available in a minute
-          Both test environments successfully uploaded and available on:
-          - DEV: [./dev-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/dev-results/${{ needs.setup.outputs.timestamp }});
-          - STG: [./stg-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/stg-results/${{ needs.setup.outputs.timestamp }});
-
-          You can also check Report History on: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
+          #### [${{ matrix.env }}] Test Results - available in a minute
+          Test Results (${{ matrix.env }}) successfully uploaded.
+          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }});
+          - Report History: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
           EOF
