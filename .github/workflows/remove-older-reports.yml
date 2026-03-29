@@ -11,17 +11,17 @@ on:
   workflow_dispatch:
     inputs:
       n_days:
-        description: 'Number of days to determine which folders to delete. Example: 10 will delete all folders older than 10 days'
+        description: 'Reports Age (E.g. 10 will delete reports older than 10 days)'
         required: true
         type: number
         default: 15
       delete_dev:
-        description: 'Want to delete dev-results folder? Default is true'
+        description: 'Clean up Dev reports (true by default).'
         required: true
         type: boolean
         default: true
       delete_stg:
-        description: 'Want to delete stg-results folder? Default is true'
+        description: 'Clean up Stage reports (true by default).'
         required: true
         type: boolean
         default: true
@@ -31,6 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      N_DAYS: ${{ github.event.inputs.n_days || '15' }} # Defaults to 15 days
+      DELETE_DEV: ${{ github.event.inputs.delete_dev != 'false' }} # Defaults to true
+      DELETE_STG: ${{ github.event.inputs.delete_stg != 'false' }} # Defaults to true
 
     steps:
       - name: Checkout code
@@ -44,12 +48,12 @@ jobs:
           python-version: 3.9
 
       - name: Run the script (dev-results)
-        if: ${{ github.event.inputs.delete_dev }}
-        run: python rm_old_folders.py --n-days ${{ github.event.inputs.n_days }} --folder-name ./dev-results
+        if: ${{ env.DELETE_DEV == 'true' }}
+        run: python rm_old_folders.py --n-days ${{ env.N_DAYS }} --folder-name ./dev-results
 
       - name: Run the script (stg-results)
-        if: ${{ github.event.inputs.delete_stg }}
-        run: python rm_old_folders.py --n-days ${{ github.event.inputs.n_days }} --folder-name ./stg-results
+        if: ${{ env.DELETE_STG == 'true' }}
+        run: python rm_old_folders.py --n-days ${{ env.N_DAYS }} --folder-name ./stg-results
 
       - name: Generate manifests (dev-results, stg-results)
         run: |
