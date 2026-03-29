@@ -1,0 +1,16 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - img [ref=e6]
+  - heading "Login" [level=1] [ref=e7]
+  - alert [ref=e8]:
+    - button "Close" [ref=e9] [cursor=pointer]: ×
+    - text: Email deve ser um email válido
+  - textbox "Digite seu email" [ref=e11]: lestertremblayjr.@playwright-lab.com
+  - textbox "Digite sua senha" [ref=e13]: jr1s4mnx5Mwf
+  - button "Entrar" [active] [ref=e14] [cursor=pointer]
+  - generic [ref=e15]:
+    - text: Não é cadastrado?
+    - generic [ref=e16] [cursor=pointer]: Cadastre-se
+```

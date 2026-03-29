@@ -1,0 +1,20 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - img [ref=e6]
+  - heading "Cadastro" [level=2] [ref=e7]
+  - alert [ref=e8]:
+    - button "Close" [ref=e9] [cursor=pointer]: ×
+    - text: Email deve ser um email válido
+  - textbox "Digite seu nome" [ref=e11]: Nick Schoen Jr.
+  - textbox "Digite seu email" [ref=e13]: nickschoenjr.@playwright-lab.com
+  - textbox "Digite sua senha" [ref=e15]: m_2dTmtf0Nzb
+  - generic [ref=e17]:
+    - checkbox "Cadastrar como administrador?" [checked] [ref=e18]
+    - generic [ref=e19]: Cadastrar como administrador?
+  - button "Cadastrar" [active] [ref=e21] [cursor=pointer]
+  - generic [ref=e22]:
+    - text: Já é cadastrado?
+    - generic [ref=e23] [cursor=pointer]: Entrar
+```
