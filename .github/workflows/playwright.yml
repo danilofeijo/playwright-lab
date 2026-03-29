@@ -114,6 +114,8 @@ jobs:
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
       - name: Push HTML Report to GitHub Pages
+        # Only push to GitHub Pages if the branch is 'main' (avoid pushing from PRs or other branches)
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
