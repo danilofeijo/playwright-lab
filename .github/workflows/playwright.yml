@@ -76,7 +76,7 @@ jobs:
     strategy:
       matrix:
         env: [dev, stg]
-      # max-parallel: 1 # Avoid parallel execution (to prevent conflicts when merging reports)
+      max-parallel: 1 # Avoid parallel execution (to prevent conflicts when merging reports)
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
