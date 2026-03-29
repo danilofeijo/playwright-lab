@@ -8,6 +8,16 @@ on:
     branches: [main]
   workflow_dispatch:
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+    steps:
+      - name: Set a Timestamp
+        id: timestampid
+        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+
   lint-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -72,7 +82,7 @@ jobs:
   test-reports:
     if: always()
     runs-on: ubuntu-latest
-    needs: [ui-tests]
+    needs: [ui-tests, setup]
     strategy:
       matrix:
         env: [dev, stg]
@@ -103,18 +113,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ matrix.env }}-report-html-${{ github.run_id }} # Name of the saved on history - github.run_id ensures same value across all matrix runs
+          name: ${{ matrix.env }}-report-html-${{ needs.setup.outputs.timestamp }}
           path: playwright-report # Path where the reports are saved
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
-  deploy-pages:
+  publish-reports:
     if: always()
     runs-on: ubuntu-latest
-    needs: [test-reports]
-    strategy:
-      matrix:
-        env: [dev, stg]
-      max-parallel: 1 # Avoid parallel execution when pushing to GitHub Pages
+    needs: [test-reports, setup]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -125,27 +131,32 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # Download the already-merged HTML report
-      - name: Download HTML Report from Artifacts
+      - name: Download DEV HTML Report from Artifacts
         uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.env }}-report-html-${{ github.run_id }}
-          path: playwright-report
+          name: dev-report-html-${{ needs.setup.outputs.timestamp }}
+          path: ./pages-build/dev-results/${{ needs.setup.outputs.timestamp }}
 
-      - name: Push HTML Report to GitHub Pages
-        # Only push to GitHub Pages if the branch is 'main' (avoid pushing from PRs or other branches)
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Download STG HTML Report from Artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: stg-report-html-${{ needs.setup.outputs.timestamp }}
+          path: ./pages-build/stg-results/${{ needs.setup.outputs.timestamp }}
+
+      - name: Push all HTML Reports to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./playwright-report
-          destination_dir: ${{ matrix.env }}-results/${{ github.run_id }}
+          publish_dir: ./pages-build
 
       - name: Share URLs in summary
         run: |
           cat << EOF >> "$GITHUB_STEP_SUMMARY"
-          #### [${{ matrix.env }}] Test Results - available in a minute
-          Test Results (${{ matrix.env }}) successfully uploaded.
-          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ github.run_id }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ github.run_id }});
-          - Report History: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
+          #### Test Results - available in a minute
+          Both test environments successfully uploaded and available on:
+          - DEV: [./dev-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/dev-results/${{ needs.setup.outputs.timestamp }});
+          - STG: [./stg-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/stg-results/${{ needs.setup.outputs.timestamp }});
+
+          You can also check Report History on: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
           EOF
