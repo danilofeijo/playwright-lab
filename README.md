@@ -20,6 +20,7 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 ### Must Have
 
 - ✅ Test structure to ease maintenance - [Page Object model][ref-doc-pom]
+- ✅ Project structure to better scale - [Project Structure][ref-doc-projectstructure]
 - ✅ Fake but realistic test data - [Faker][tool-faker]
 - ✅ Multi-environment support - [Environment variables configuration][ref-article-multienv]
 - ✅ Test retry to identify and mitigate flakiness - [Playright test retry ][ref-doc-retry]
@@ -107,6 +108,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [tool-serverest]: https://serverest.dev/
 [tool-playwright]: https://playwright.dev/
 [ref-doc-pom]: https://playwright.dev/docs/pom
+[ref-doc-projectstructure]: https://www.linkedin.com/pulse/how-structure-your-playwright-project-scale-sanity-speed-dimitrova-h5hyf/
 [tool-faker]: https://www.npmjs.com/package/faker
 [ref-article-multienv]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-11-adding-multi-environment-support/
 [ref-doc-retry]: https://playwright.dev/docs/test-retries#retries
