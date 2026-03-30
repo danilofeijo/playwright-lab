@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test'
-import { generateUserData } from '../helpers/utils'
+import { generateUserData } from '../../helpers/utils'
 
 interface SignupFixtures {
   signupData: {

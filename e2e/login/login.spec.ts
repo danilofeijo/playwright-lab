@@ -1,7 +1,7 @@
 import { mergeTests, expect } from '@playwright/test'
-import { pageTest } from '../fixtures/pages.fixtures'
-import { loginTest } from '../fixtures/login.fixture'
-import { serverestMocks } from './mocks'
+import { pageTest } from '../global/pages.fixtures'
+import { loginTest } from './login.fixture'
+import { serverestMocks } from '../../helpers/mocks'
 
 const test = mergeTests(pageTest, loginTest)
 

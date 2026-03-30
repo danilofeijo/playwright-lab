@@ -1,5 +1,5 @@
 import { type Locator, type Page } from '@playwright/test'
-import { GlobalPage } from '../pages/global.page'
+import { GlobalPage } from '../global/global.page'
 
 interface UserData {
   nome: string

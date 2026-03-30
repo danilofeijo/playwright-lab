@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test'
-import { generateUserData } from '../helpers/utils'
-import { api } from '../api/serverest-client' // ou do path que você definiu
+import { generateUserData } from '../../helpers/utils'
+import { api } from '../../api/serverest-client'
 
 interface LoginUser {
   id: string

@@ -1,8 +1,8 @@
 import { test as base } from '@playwright/test'
-import { GlobalPage } from '../pages/global.page'
-import { SignupPage } from '../pages/signup.page'
-import { LoginPage } from '../pages/login.page'
-import { HomePage } from '../pages/home.page'
+import { GlobalPage } from './global.page'
+import { SignupPage } from '../signup/signup.page'
+import { LoginPage } from '../login/login.page'
+import { HomePage } from '../home/home.page'
 
 interface PagesFixtures {
   globalPage: GlobalPage
