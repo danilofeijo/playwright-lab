@@ -116,7 +116,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 - [Configure projects for multiple environments][ref-doc-envConfig]
 - [ESLint + Prettier, a dupla perfeita para produtividade e padronização de código.][ref-article-eslintAndPrettier]
 - [Adding ESlint, Prettier, and Husky][ref-article-playwrightCombo]
-- [How to structure your playwright project for Scale, Sanity, and Speed][ref-article-structure-pw-project]
+- [How to structure your playwright project for Scale, Sanity, and Speed][ref-doc-projectstructure]
 - < More itens will be added soon >
 
 <!-- Intro Links -->
@@ -158,7 +158,6 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [ref-article-eslintAndPrettier]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-article-playwrightCombo]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-8-adding-eslint-prettier-and-husky/
 [ref-article-reportOnGithubPages]: https://blog.martioli.com/publish-your-playwright-reports-to-github-pages/
-[ref-article-structure-pw-project]: https://www.linkedin.com/pulse/how-structure-your-playwright-project-scale-sanity-speed-dimitrova-h5hyf/
 
 <!--
 Plano de Revisão
