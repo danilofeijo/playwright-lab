@@ -1,3 +1,10 @@
+# TODO Duplicate workflow file
+# TODO Split in 2 workflows: one for dev and one for stg (to avoid parallel execution and conflicts when pushing to GitHub Pages)
+# TODO Rename 'test-reports' job to 'publish-reports' (as it is not only about testing but also about publishing reports)
+# TODO Rename workflow name accordingly (e.g. 'Playwright Tests - Dev' and 'Playwright Tests - Stg')
+# TODO Rename workflow file accordingly (e.g. 'ui-tests-dev.yml' and 'ui-tests-stg.yml')
+# TODO Make STG workflow triggered only if DEV workflow is successful (to avoid running STG tests if DEV tests are failing)
+
 name: Playwright Tests
 on:
   schedule:
