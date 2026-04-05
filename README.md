@@ -40,16 +40,37 @@ This repo is an enhanced version of [cypress-lab repo][ref-repo-cylab] which was
 
 ## Setup
 
-1. Clone the repo and access project folder
-   `git clone https://github.com/danilofeijo/playwright-lab.git && cd playwright-lab`
+### Quick Start (Recommended)
 
-2. Install project dependencies
-   `npm install`
+1. Clone the repo and access the project folder:
 
-3. Install Playwright
-   `npx playwright install`
+   ```bash
+   git clone https://github.com/danilofeijo/playwright-lab.git && cd playwright-lab
+   ```
 
-\*\* Important! Assure that you have NodeJs up and running, given we are talking about npm.
+2. Run the installation script:
+   ```bash
+   ./install.sh
+   ```
+
+That's it! The script will handle all the setup for you.
+
+### Manual Setup (Optional)
+
+If you prefer to install dependencies manually:
+
+1. Install project dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Install Playwright browsers:
+   ```bash
+   npx playwright install
+   ```
+
+**⚠️ Prerequisites:** Make sure you have [Node.js][tool-node] installed on your system.
 
 ## CLI commands
 
@@ -95,6 +116,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 - [Configure projects for multiple environments][ref-doc-envConfig]
 - [ESLint + Prettier, a dupla perfeita para produtividade e padronização de código.][ref-article-eslintAndPrettier]
 - [Adding ESlint, Prettier, and Husky][ref-article-playwrightCombo]
+- [How to structure your playwright project for Scale, Sanity, and Speed][ref-article-structure-pw-project]
 - < More itens will be added soon >
 
 <!-- Intro Links -->
@@ -102,6 +124,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [img-icon-flask]: img/icon-lab-128.png 'Flask icon'
 [img-logo-playwright]: img/playwright-logo.png 'Playwright logo'
 [ref-repo-cylab]: https://github.com/danilofeijo/cypress-lab
+[tool-node]: https://nodejs.org/
 
 <!-- Feature links -->
 
@@ -135,6 +158,7 @@ Here are some shortcuts to help you develop, debug and fix tests. Often used for
 [ref-article-eslintAndPrettier]: https://medium.com/cwi-software/eslint-prettier-a-dupla-perfeita-para-produtividade-e-padroniza%C3%A7%C3%A3o-de-c%C3%B3digo-6a7730cfa358
 [ref-article-playwrightCombo]: https://playwrightsolutions.com/the-definitive-guide-to-api-test-automation-with-playwright-part-8-adding-eslint-prettier-and-husky/
 [ref-article-reportOnGithubPages]: https://blog.martioli.com/publish-your-playwright-reports-to-github-pages/
+[ref-article-structure-pw-project]: https://www.linkedin.com/pulse/how-structure-your-playwright-project-scale-sanity-speed-dimitrova-h5hyf/
 
 <!--
 Plano de Revisão
