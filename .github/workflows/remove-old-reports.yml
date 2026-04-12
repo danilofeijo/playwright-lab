@@ -1,10 +1,10 @@
 name: Delete Old Reports
 
 on:
-  # schedule:
-  #   - cron: '0 12 * * 5' # At 12:00 UTC, only on Friday
+  schedule:
+    - cron: '0 17 * * 0' # At 17:00 UTC, only on Friday
   workflow_run:
-    workflows: ['Playwright Tests']
+    workflows: ['Web Testing Check - Stg']
     branches: main
     types:
       - completed
