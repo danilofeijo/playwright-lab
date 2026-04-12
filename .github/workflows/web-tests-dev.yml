@@ -1,0 +1,138 @@
+name: Web Testing Check - Dev
+on:
+  schedule:
+    - cron: '0 12 * * 1-5' # Every weekday at 12:00 UTC
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+    steps:
+      - name: Set a Timestamp
+        id: timestampid
+        run: echo "timestamp=$(date --utc +%Y%m%d_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+
+  lint-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        check: [eslint, prettier] # Define Parallel checks
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm' # Cache 50% faster
+
+      - name: Install Dependencies
+        run: npm ci --frozen-lockfile
+
+      - name: Run Static Check (${{ matrix.check }})
+        run: npm run check:${{ matrix.check }}
+
+  test-execution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # needs: lint-checks # Wait until lint-checks to be successful
+    strategy:
+      matrix:
+        env: [dev] # [dev, stg] for multi-env parallel execution
+        shard: [1/1] # [1/2, 2/2] Split tests in 2 parallel jobs
+      fail-fast: true # If one job fail, abbort parallel jobs
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm' # Cache 50% faster
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Playwright Tests (${{ matrix.env }})
+        env:
+          ENV: ${{ matrix.env }}
+          BASE_URL_FRONT: ${{ secrets.BASE_URL_FRONT }}
+          BASE_URL_API: ${{ secrets.BASE_URL_API }}
+          HEADLESS: 'true'
+          CI: 'true'
+        # run: npm run test:${{ matrix.env }}:${{ (matrix.env == 'dev' && 'smoke') || 'full' }} --shard ${{ matrix.shard }}
+        run: npm run test:${{ matrix.env }}:smoke --shard ${{ matrix.shard }}
+        # At the end, we should have:
+        #   Blob files with test runs result inside 'blob-report' folder
+
+      - name: Upload Blob Report to GitHub Actions Artifact
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.env }}-merged-reports-as-blob # Naming the uploaded file
+          path: blob-report-${{ matrix.env }} # Origin path, where reports are stored
+          retention-days: 15 # Suggested 90
+
+  report-publishing:
+    if: always()
+    runs-on: ubuntu-latest
+    needs: [test-execution, setup]
+    strategy:
+      matrix:
+        env: [dev]
+      max-parallel: 1 # Avoid parallel execution (to prevent conflicts when merging reports)
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # Download reports to be merged
+      - name: Download Blobs from Github Actions Artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ matrix.env }}-merged-reports-as-blob # File name of merged report stored as artifact
+          path: ${{ matrix.env }}-downloaded-merged-reports-as-blob # Folder name which receives downloaded file
+
+      # Merge all blobs into one single HTML Report
+      # and Save new file inside '/playwright-report' folder
+      - name: Merge the Blobs into One Single HTML Report
+        run: npx playwright merge-reports --reporter html ./${{ matrix.env }}-downloaded-merged-reports-as-blob
+
+      - name: Upload HTML Report to Artifacts History
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.env }}-report-html-${{ needs.setup.outputs.timestamp }}
+          path: playwright-report # Path where the reports are saved
+          retention-days: 15 # Suggested 90. Set 15 as a first experiment
+
+      - name: Push HTML Report to GitHub Pages
+        # Only push to GitHub Pages if the branch is 'main' (avoid pushing from PRs or other branches)
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          destination_dir: ${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}
+
+      - name: Share URLs in summary
+        # run:  echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
+        run: |
+          cat << EOF >> "$GITHUB_STEP_SUMMARY"
+          #### [${{ matrix.env }}] Test Results - available in a minute
+          Test Results (${{ matrix.env }}) successfully uploaded.
+          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }});
+          - Report History: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
+          EOF
