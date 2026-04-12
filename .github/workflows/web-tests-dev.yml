@@ -114,7 +114,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ matrix.env }}-report-html-${{ needs.setup.outputs.timestamp }}
+          name: ${{ matrix.env }}-report-html-${{ needs.set-timestamp.outputs.timestamp }}
           path: playwright-report # Path where the reports are saved
           retention-days: 15 # Suggested 90. Set 15 as a first experiment
 
@@ -125,7 +125,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./playwright-report
-          destination_dir: ${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}
+          destination_dir: ${{ matrix.env }}-results/${{ needs.set-timestamp.outputs.timestamp }}
 
       - name: Share URLs in summary
         # run:  echo "### Test results (link available after 25 seconds) - https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
@@ -133,6 +133,6 @@ jobs:
           cat << EOF >> "$GITHUB_STEP_SUMMARY"
           #### [${{ matrix.env }}] Test Results - available in a minute
           Test Results (${{ matrix.env }}) successfully uploaded.
-          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ needs.setup.outputs.timestamp }});
+          - Current Test Run (${{ matrix.env }}): [./${{ matrix.env }}-results/${{ needs.set-timestamp.outputs.timestamp }}](https://${{ github.repository_owner }}.github.io/playwright-lab/${{ matrix.env }}-results/${{ needs.set-timestamp.outputs.timestamp }});
           - Report History: [Playwright Test Results](https://${{ github.repository_owner }}.github.io/playwright-lab).
           EOF
