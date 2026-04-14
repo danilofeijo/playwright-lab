@@ -1,0 +1,89 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: signup/signup.spec.ts >> On Signup page @ui >> Should create an admin user
+- Location: e2e/signup/signup.spec.ts:9:3
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('heading', { name: /Bem Vindo/ })
+Expected: visible
+Timeout: 8000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 8000ms
+  - waiting for getByRole('heading', { name: /Bem Vindo/ })
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - img [ref=e6]
+  - heading "Cadastro" [level=2] [ref=e7]
+  - alert [ref=e8]:
+    - button "Close" [ref=e9] [cursor=pointer]: ×
+    - text: Email deve ser um email válido
+  - textbox "Digite seu nome" [ref=e11]: Aubrey Hills Sr.
+  - textbox "Digite seu email" [ref=e13]: aubreyhillssr.@playwright-lab.com
+  - textbox "Digite sua senha" [ref=e15]: j7_qEuJamzra
+  - generic [ref=e17]:
+    - checkbox "Cadastrar como administrador?" [checked] [ref=e18]
+    - generic [ref=e19]: Cadastrar como administrador?
+  - button "Cadastrar" [active] [ref=e21] [cursor=pointer]
+  - generic [ref=e22]:
+    - text: Já é cadastrado?
+    - generic [ref=e23] [cursor=pointer]: Entrar
+```
+
+# Test source
+
+```ts
+  1  | import { mergeTests, expect } from '@playwright/test'
+  2  | 
+  3  | import { pageTest } from '../global/pages.fixtures'
+  4  | import { signupTest } from './signup.fixture'
+  5  | 
+  6  | const test = mergeTests(pageTest, signupTest)
+  7  | 
+  8  | test.describe('On Signup page @ui', () => {
+  9  |   test('Should create an admin user', async ({ signupPage, signupData, page, homePage }) => {
+  10 |     // Act
+  11 |     await signupPage.signup(signupData)
+  12 | 
+  13 |     // Assert
+> 14 |     await expect(homePage.headerAdmin).toBeVisible() // or .not.toBeHidden()
+     |                                        ^ Error: expect(locator).toBeVisible() failed
+  15 |     await expect(homePage.headerAdmin).toContainText(signupData.nome)
+  16 |     await expect(homePage.menuCadastrarUsuarios).toHaveText('Cadastrar Usuários')
+  17 |     await expect(homePage.menuCarrinho).toBeHidden() // or .not.toBeVisible()
+  18 |     await expect(page).toHaveURL(homePage.urlPathAdmin)
+  19 |   })
+  20 | 
+  21 |   test('Should create a common user', { tag: ['@smoke'] }, async ({ signupPage, signupData, page, homePage }) => {
+  22 |     // Arrange
+  23 |     signupData.administrador = 'false'
+  24 | 
+  25 |     // Act
+  26 |     await signupPage.signup(signupData)
+  27 | 
+  28 |     // Assert
+  29 |     await expect(homePage.headerCommon).toBeVisible()
+  30 |     await expect(homePage.headerCommon).toContainText('Serverest Store')
+  31 |     await expect(homePage.menuCarrinho).toHaveText('Carrinho')
+  32 |     await expect(homePage.menuCadastrarUsuarios).toBeHidden()
+  33 |     await expect(page).toHaveURL(homePage.urlPathCommon)
+  34 |   })
+  35 | })
+  36 | 
+```
