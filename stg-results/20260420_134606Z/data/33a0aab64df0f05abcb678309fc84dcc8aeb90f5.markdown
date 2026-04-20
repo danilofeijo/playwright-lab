@@ -1,0 +1,117 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: login/login.spec.ts >> On login page >> as Common user >> Should not log in after Internal Server Error
+- Location: e2e/login/login.spec.ts:51:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: page.waitForResponse: Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e5]:
+  - img [ref=e6]
+  - heading "Login" [level=1] [ref=e7]
+  - textbox "Digite seu email" [ref=e9]: amberkerluke@playwright-lab.com
+  - textbox "Digite sua senha" [ref=e11]: 6Qt9FbOvEDt0
+  - button "Entrar" [active] [ref=e12] [cursor=pointer]
+  - generic [ref=e13]:
+    - text: Não é cadastrado?
+    - generic [ref=e14] [cursor=pointer]: Cadastre-se
+```
+
+# Test source
+
+```ts
+  1  | import { mergeTests, expect } from '@playwright/test'
+  2  | import { pageTest } from '../global/pages.fixtures'
+  3  | import { loginTest } from './login.fixture'
+  4  | import { serverestMocks } from '../../helpers/mocks'
+  5  | 
+  6  | const test = mergeTests(pageTest, loginTest)
+  7  | 
+  8  | test.describe('On login page', { tag: ['@ui'] }, () => {
+  9  |   test.beforeEach(async ({ loginPage }) => {
+  10 |     await loginPage.visitPage()
+  11 |   })
+  12 | 
+  13 |   test.describe('as Admin user', () => {
+  14 |     test('Should log in with valid credentials @smoke', async ({ page, loginPage, adminUser, homePage }) => {
+  15 |       // Act
+  16 |       await loginPage.loginUser(adminUser.email, adminUser.password)
+  17 | 
+  18 |       // Assert
+  19 |       await expect(homePage.headerAdmin).toContainText(adminUser.nome)
+  20 |       await expect(page).toHaveURL(homePage.urlPathAdmin)
+  21 |     })
+  22 | 
+  23 |     test('Should not log in with wrong email', async ({ page, loginPage, adminUser }) => {
+  24 |       // Arrange
+  25 |       adminUser.email = 'wrong@email.com'
+  26 | 
+  27 |       // Act
+  28 |       await loginPage.loginUser(adminUser.email, adminUser.password)
+  29 | 
+  30 |       // Assert
+  31 |       await expect(loginPage.errorAlert).toBeVisible()
+  32 |       await expect(loginPage.errorAlert).toHaveText('×Email e/ou senha inválidos')
+  33 |       await expect(page).toHaveURL(loginPage.urlPath)
+  34 |     })
+  35 | 
+  36 |     test('Should not log in with wrong password', async ({ page, loginPage, adminUser }) => {
+  37 |       // Arrange
+  38 |       adminUser.password = 'wrongP@s5word'
+  39 | 
+  40 |       // Act
+  41 |       await loginPage.loginUser(adminUser.email, adminUser.password)
+  42 | 
+  43 |       // Assert
+  44 |       await expect(loginPage.errorAlert).toBeVisible()
+  45 |       await expect(loginPage.errorAlert).toHaveText('×Email e/ou senha inválidos')
+  46 |       await expect(page).toHaveURL(loginPage.urlPath)
+  47 |     })
+  48 |   })
+  49 | 
+  50 |   test.describe('as Common user', () => {
+  51 |     test('Should not log in after Internal Server Error', async ({ page, loginPage, adminUser, homePage }) => {
+  52 |       // Arrange
+  53 |       await page.route(`${process.env.BASE_URL_API}/login`, serverestMocks.error500)
+  54 | 
+  55 |       const userData = {
+  56 |         ...adminUser,
+  57 |         administrador: 'false',
+  58 |       }
+  59 | 
+  60 |       // Act
+  61 |       await loginPage.loginUser(userData.email, userData.password)
+  62 | 
+> 63 |       const response = await page.waitForResponse(
+     |                                   ^ Error: page.waitForResponse: Test timeout of 30000ms exceeded.
+  64 |         (response) => response.status() === 500 && response.request().method() === 'POST'
+  65 |       )
+  66 | 
+  67 |       // Assert
+  68 |       await expect(homePage.headerAdmin).toHaveCount(0)
+  69 |       expect(response.status()).toBe(500)
+  70 |       expect(response.statusText()).toBe('Internal Server Error')
+  71 |       await expect(page).toHaveURL(loginPage.urlPath)
+  72 |     })
+  73 | 
+  74 |     // TODO - List more tests to develop
+  75 |   })
+  76 | })
+  77 | 
+```
