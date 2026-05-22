@@ -1,4 +1,6 @@
 { "runs": [
+  { "folder": "20260522_144145Z", "url": "stg-results/20260522_144145Z/index.html" }
+,
   { "folder": "20260521_152937Z", "url": "stg-results/20260521_152937Z/index.html" }
 ,
   { "folder": "20260520_152400Z", "url": "stg-results/20260520_152400Z/index.html" }
@@ -16,6 +18,4 @@
   { "folder": "20260511_145547Z", "url": "stg-results/20260511_145547Z/index.html" }
 ,
   { "folder": "20260508_135111Z", "url": "stg-results/20260508_135111Z/index.html" }
-,
-  { "folder": "20260507_141848Z", "url": "stg-results/20260507_141848Z/index.html" }
 ] }
