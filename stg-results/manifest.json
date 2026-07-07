@@ -1,4 +1,6 @@
 { "runs": [
+  { "folder": "20260707_143607Z", "url": "stg-results/20260707_143607Z/index.html" }
+,
   { "folder": "20260706_153508Z", "url": "stg-results/20260706_153508Z/index.html" }
 ,
   { "folder": "20260703_140618Z", "url": "stg-results/20260703_140618Z/index.html" }
